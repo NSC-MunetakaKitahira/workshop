@@ -35,6 +35,7 @@
 
 以上で参加できるようになりました。
 
-## 現在のお題
+## 現在のお題：apricot
 
-準備中。
+汚いソースコードをみんなでリファクタリングしましょう。
+参加する場合は、[こちら](https://github.com/NSC-MunetakaKitahira/workshop/issues/3)を見てください。
