@@ -3,39 +3,39 @@ package apricot.dom;
 import java.util.List;
 
 /**
- * A‹ÆŠÔ‘Ñ
+ * å°±æ¥­æ™‚é–“å¸¯
  */
 public class WorkShift {
 	
 	/**
-	 * n‹Æ
+	 * å§‹æ¥­æ™‚åˆ»
 	 */
 	private int workStart;
 	
 	/**
-	 * I‹Æi’èj
+	 * çµ‚æ¥­æ™‚åˆ»ï¼ˆå®šæ™‚ï¼‰
 	 */
 	private int workEnd;
 	
 	/**
-	 * c‹Æ‚ÌŠJn‚ÌƒŠƒXƒg
+	 * æ®‹æ¥­ã®é–‹å§‹æ™‚åˆ»ã®ãƒªã‚¹ãƒˆ
 	 */
 	private List<Integer> overtimeStarts;
 	
 	/**
-	 * c‹Æ‚ÌI—¹‚ÌƒŠƒXƒg
-	 * ŠJn‚Æ“¯‚¶ƒCƒ“ƒfƒbƒNƒX‚Ì—v‘f‚ªƒyƒA
+	 * æ®‹æ¥­ã®çµ‚äº†æ™‚åˆ»ã®ãƒªã‚¹ãƒˆ
+	 * é–‹å§‹æ™‚åˆ»ã¨åŒã˜ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®è¦ç´ ãŒãƒšã‚¢
 	 */
 	private List<Integer> overtimeEnds;
 	
 	/**
-	 * ‹xŒe‚ÌŠJn‚ÌƒŠƒXƒg
+	 * ä¼‘æ†©ã®é–‹å§‹æ™‚åˆ»ã®ãƒªã‚¹ãƒˆ
 	 */
 	private List<Integer> breakStarts;
 	
 	/**
-	 * ‹xŒe‚ÌI—¹‚ÌƒŠƒXƒg
-	 * ŠJn‚Æ“¯‚¶ƒCƒ“ƒfƒbƒNƒX‚Ì—v‘f‚ªƒyƒA
+	 * ä¼‘æ†©ã®çµ‚äº†æ™‚åˆ»ã®ãƒªã‚¹ãƒˆ
+	 * é–‹å§‹æ™‚åˆ»ã¨åŒã˜ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®è¦ç´ ãŒãƒšã‚¢
 	 */
 	private List<Integer> breakEnds;
 	

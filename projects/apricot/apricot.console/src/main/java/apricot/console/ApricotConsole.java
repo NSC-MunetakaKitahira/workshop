@@ -10,9 +10,9 @@ import apricot.dom.WorkShiftRepository;
 public class ApricotConsole {
 
 	/**
-	 * ƒGƒ“ƒgƒŠƒ|ƒCƒ“ƒg
+	 * ã‚¨ãƒ³ãƒˆãƒªãƒã‚¤ãƒ³ãƒˆ
 	 * 
-	 * @param args ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“ˆø”‚Íg‚í‚È‚¢
+	 * @param args ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°ã¯ä½¿ã‚ãªã„
 	 */
 	public static void main(String[] args) {
 		
@@ -20,13 +20,13 @@ public class ApricotConsole {
 		String startTime;
 		String endTime;
 
-		System.out.println("‚Í \"8:30\" ‚ÌŒ`®‚Å“ü—Í‚µ‚Ä‚­‚¾‚³‚¢B");
+		System.out.println("æ™‚åˆ»ã¯ \"8:30\" ã®å½¢å¼ã§å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
 		
 		try(Scanner scan = new Scanner(System.in)) {
-			System.out.print("ŠJn = ");
+			System.out.print("é–‹å§‹æ™‚åˆ» = ");
 			startTime = scan.nextLine();
 	
-			System.out.print("I—¹ = ");
+			System.out.print("çµ‚äº†æ™‚åˆ» = ");
 			endTime = scan.nextLine();
 		}
 		

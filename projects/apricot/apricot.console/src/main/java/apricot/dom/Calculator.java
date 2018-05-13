@@ -7,10 +7,10 @@ public class Calculator {
 
 	public static void calculate(int timeStampStart, int timeStampEnd, WorkShift workShift) {
 		
-		// ÀA‹ÆŠÔ: o‹Î`‘Ş‹Î‚ÆAn‹Æ`I‹Æ‚Æ‚Ìd•¡”ÍˆÍ
+		// å®Ÿå°±æ¥­æ™‚é–“: å‡ºå‹¤ï½é€€å‹¤ã¨ã€å§‹æ¥­ï½çµ‚æ¥­ã¨ã®é‡è¤‡ç¯„å›²
 		int[] actualWorkTime = Commons.getDuplication(timeStampStart, timeStampEnd, workShift.getWorkStart(), workShift.getWorkEnd());
 		
-		// Àc‹ÆŠÔ‘Ñ: o‹Î`‘Ş‹Î‚ÆAŠec‹ÆŠÔ‘Ñ‚Æ‚Ìd•¡
+		// å®Ÿæ®‹æ¥­æ™‚é–“å¸¯: å‡ºå‹¤ï½é€€å‹¤ã¨ã€å„æ®‹æ¥­æ™‚é–“å¸¯ã¨ã®é‡è¤‡
 		List<Integer[]> actualOverworkTimes = new ArrayList<>();
 		for (int i = 0; i < workShift.getOvertimeStarts().size(); i++) {
 			int[] duplication = Commons.getDuplication(
@@ -21,11 +21,11 @@ public class Calculator {
 			
 			if (duplication.length != 2) continue;
 
-			// int”z—ñ‚ğList<Integer[]>‚É’Ç‰Á‚Å‚«‚È‚¢‚Ì‚ÅAInteger”z—ñ‚É•ÏŠ·
+			// inté…åˆ—ã‚’List<Integer[]>ã«è¿½åŠ ã§ããªã„ã®ã§ã€Integeré…åˆ—ã«å¤‰æ›
 			actualOverworkTimes.add(new Integer[] { duplication[0], duplication[1] });
 		}
 		
-		// À‹xŒeŠÔ‘Ñ: o‹Î`‘Ş‹Î‚ÆAŠe‹xŒeŠÔ‘Ñ‚Æ‚Ìd•¡
+		// å®Ÿä¼‘æ†©æ™‚é–“å¸¯: å‡ºå‹¤ï½é€€å‹¤ã¨ã€å„ä¼‘æ†©æ™‚é–“å¸¯ã¨ã®é‡è¤‡
 		List<Integer[]> actualBreakTimes = new ArrayList<>();
 		for (int i = 0; i < workShift.getBreakStarts().size(); i++) {
 			int[] duplication = Commons.getDuplication(
@@ -36,11 +36,11 @@ public class Calculator {
 			
 			if (duplication.length != 2) continue;
 
-			// int”z—ñ‚ğList<Integer[]>‚É’Ç‰Á‚Å‚«‚È‚¢‚Ì‚ÅAInteger”z—ñ‚É•ÏŠ·
+			// inté…åˆ—ã‚’List<Integer[]>ã«è¿½åŠ ã§ããªã„ã®ã§ã€Integeré…åˆ—ã«å¤‰æ›
 			actualBreakTimes.add(new Integer[] { duplication[0], duplication[1] });
 		}
 		
-		// ÀA‹ÆŠÔ‘Ñ‚©‚çÀ‹xŒeŠÔ‘Ñ‚Éd•¡‚µ‚Ä‚¢‚é•”•ª‚ğœŠO
+		// å®Ÿå°±æ¥­æ™‚é–“å¸¯ã‹ã‚‰å®Ÿä¼‘æ†©æ™‚é–“å¸¯ã«é‡è¤‡ã—ã¦ã„ã‚‹éƒ¨åˆ†ã‚’é™¤å¤–
 		List<Integer[]> actualWorkTimesWithoutBreak = new ArrayList<>();
 		for (int i = 0; i < actualBreakTimes.size(); i++) {
 			int workStart = actualWorkTime[0];
@@ -60,7 +60,7 @@ public class Calculator {
 			}
 		}
 		
-		// Àc‹ÆŠÔ‘Ñ‚©‚çÀ‹xŒeŠÔ‘Ñ‚Éd•¡‚µ‚Ä‚¢‚é•”•ª‚ğœŠO
+		// å®Ÿæ®‹æ¥­æ™‚é–“å¸¯ã‹ã‚‰å®Ÿä¼‘æ†©æ™‚é–“å¸¯ã«é‡è¤‡ã—ã¦ã„ã‚‹éƒ¨åˆ†ã‚’é™¤å¤–
 		List<Integer[]> actualOverworkTimesWithoutBreak = new ArrayList<>();
 		for (int i = 0; i < actualOverworkTimes.size(); i++) {
 			for (int j = 0; j < actualBreakTimes.size(); j++) {
@@ -82,34 +82,34 @@ public class Calculator {
 			}
 		}
 		
-		System.out.println("A‹ÆŠÔ");
+		System.out.println("å°±æ¥­æ™‚é–“");
 		int sumWorkTime = 0;
 		for (int i = 0; i < actualWorkTimesWithoutBreak.size(); i++) {
 			int start = actualWorkTimesWithoutBreak.get(i)[0];
 			int end = actualWorkTimesWithoutBreak.get(i)[1];
-			System.out.println(Commons.formatTime(start) + "`" + Commons.formatTime(end));
+			System.out.println(Commons.formatTime(start) + "ï½" + Commons.formatTime(end));
 			sumWorkTime += end - start;
 		}
-		System.out.println("‡Œv: " + Commons.formatTime(sumWorkTime));
+		System.out.println("åˆè¨ˆ: " + Commons.formatTime(sumWorkTime));
 		
-		System.out.println("c‹ÆŠÔ");
+		System.out.println("æ®‹æ¥­æ™‚é–“");
 		int sumOverworkTime = 0;
 		for (int i = 0; i < actualOverworkTimesWithoutBreak.size(); i++) {
 			int start = actualOverworkTimesWithoutBreak.get(i)[0];
 			int end = actualOverworkTimesWithoutBreak.get(i)[1];
-			System.out.println(Commons.formatTime(start) + "`" + Commons.formatTime(end));
+			System.out.println(Commons.formatTime(start) + "ï½" + Commons.formatTime(end));
 			sumOverworkTime += end - start;
 		}
-		System.out.println("‡Œv: " + Commons.formatTime(sumOverworkTime));
+		System.out.println("åˆè¨ˆ: " + Commons.formatTime(sumOverworkTime));
 		
-		System.out.println("‹xŒeŠÔ");
+		System.out.println("ä¼‘æ†©æ™‚é–“");
 		int sumBreakTime = 0;
 		for (int i = 0; i < actualBreakTimes.size(); i++) {
 			int start = actualBreakTimes.get(i)[0];
 			int end = actualBreakTimes.get(i)[1];
-			System.out.println(Commons.formatTime(start) + "`" + Commons.formatTime(end));
+			System.out.println(Commons.formatTime(start) + "ï½" + Commons.formatTime(end));
 			sumBreakTime += end - start;
 		}
-		System.out.println("‡Œv: " + Commons.formatTime(sumBreakTime));
+		System.out.println("åˆè¨ˆ: " + Commons.formatTime(sumBreakTime));
 	}
 }

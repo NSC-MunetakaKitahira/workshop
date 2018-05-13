@@ -3,7 +3,7 @@ package apricot.dom;
 import java.util.Arrays;
 
 /**
- * �e�X�g�p�̃f�[�^����邾���̃��|�W�g��
+ * テスト用のデータを作るだけのリポジトリ
  */
 public class WorkShiftRepository {
 

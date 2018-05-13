@@ -13,9 +13,9 @@ public class Commons {
 	}
 	
 	/**
-	 * start1/end1‚Æstart2/end2‚Ìd•¡”ÍˆÍ‚ğ”z—ñ‚Å•Ô‚·B
-	 * Œ‹‰Ê”z—ñ‚ÍAindex:0‚ªŠJnAindex:1‚ªI—¹B
-	 * d•¡‚µ‚Ä‚¢‚È‚¢ê‡‚ÍA‹ó‚Ì”z—ñ‚ğ•Ô‚·B
+	 * start1/end1ã¨start2/end2ã®é‡è¤‡ç¯„å›²ã‚’é…åˆ—ã§è¿”ã™ã€‚
+	 * çµæœé…åˆ—ã¯ã€index:0ãŒé–‹å§‹ã€index:1ãŒçµ‚äº†ã€‚
+	 * é‡è¤‡ã—ã¦ã„ãªã„å ´åˆã¯ã€ç©ºã®é…åˆ—ã‚’è¿”ã™ã€‚
 	 * @param start1
 	 * @param end1
 	 * @param start2
@@ -60,14 +60,14 @@ public class Commons {
 			return new int[] { start1,  end2 };
 		}
 		
-		throw new RuntimeException("‚½‚Ô‚ñ‘¼‚ÌƒP[ƒX‚Í–³‚¢H");
+		throw new RuntimeException("ãŸã¶ã‚“ä»–ã®ã‚±ãƒ¼ã‚¹ã¯ç„¡ã„ï¼Ÿ");
 	}
 	
 	/**
-	 * start1/end1‚©‚çAstart2/end2‚Ì”ÍˆÍ‚ğœŠO‚µ‚½”ÍˆÍ‚ğ”z—ñ‚Å•Ô‚·B
-	 * Œ‹‰Ê”z—ñ‚ÍAindex:0‚ªŠJnAindex:1‚ªI—¹B
-	 * start1/end1‚Ì”ÍˆÍ‚ª2‚Â‚É•ª’f‚³‚ê‚éê‡Aindex:2‚ª2‚Â–Ú‚Ì”ÍˆÍ‚ÌŠJnAindex:3‚ª‚»‚ÌI—¹B
-	 * start1/end1‚Ì”ÍˆÍ‚ªŠ®‘S‚ÉœŠO‚³‚ê‚éê‡A‹ó‚Ì”z—ñ‚ğ•Ô‚·B
+	 * start1/end1ã‹ã‚‰ã€start2/end2ã®ç¯„å›²ã‚’é™¤å¤–ã—ãŸç¯„å›²ã‚’é…åˆ—ã§è¿”ã™ã€‚
+	 * çµæœé…åˆ—ã¯ã€index:0ãŒé–‹å§‹ã€index:1ãŒçµ‚äº†ã€‚
+	 * start1/end1ã®ç¯„å›²ãŒ2ã¤ã«åˆ†æ–­ã•ã‚Œã‚‹å ´åˆã€index:2ãŒ2ã¤ç›®ã®ç¯„å›²ã®é–‹å§‹ã€index:3ãŒãã®çµ‚äº†ã€‚
+	 * start1/end1ã®ç¯„å›²ãŒå®Œå…¨ã«é™¤å¤–ã•ã‚Œã‚‹å ´åˆã€ç©ºã®é…åˆ—ã‚’è¿”ã™ã€‚
 	 * @param start1
 	 * @param end1
 	 * @param start2
@@ -124,7 +124,7 @@ public class Commons {
 			return new int[] { end2,  end1 };
 		}
 		
-		throw new RuntimeException("‚½‚Ô‚ñ‘¼‚ÌƒP[ƒX‚Í–³‚¢H");
+		throw new RuntimeException("ãŸã¶ã‚“ä»–ã®ã‚±ãƒ¼ã‚¹ã¯ç„¡ã„ï¼Ÿ");
 	}
 	
 	public static String formatTime(int time) {
