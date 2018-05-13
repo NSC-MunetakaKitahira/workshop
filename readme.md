@@ -29,6 +29,9 @@
 	1. 「Project root directory」に先ほどクローンしたソースコードのフォルダの中の、「projects/apricot」フォルダを指定。
 		- 「build.gradle」というファイルがあるフォルダです。
 	1. 正しいフォルダを指定すれば「Finish」ボタンが押せるようになるので、クリック。
+1. EclipseでjavaファイルをUTF-8として読み込めるようにする
+	- SourceTreeでの文字化けを防ぐため、文字コードはUTF-8を使います。
+	- [こちらの記事](http://proengineer.internous.co.jp/content/columnfeature/9147#12)に従って、Eclipseのデフォルトの文字コードを変更してください。
 1. コンソールアプリの実行方法
 	- 再生ボタンっぽいアイコンを押せば実行できるはずです。
 	- 虫っぽいアイコンがデバッグ実行です。
