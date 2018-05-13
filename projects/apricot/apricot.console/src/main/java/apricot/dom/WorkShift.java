@@ -10,79 +10,79 @@ public class WorkShift {
 	/**
 	 * 始業時刻
 	 */
-	private int workStart;
+	private TimeOfDay workStart;
 	
 	/**
 	 * 終業時刻（定時）
 	 */
-	private int workEnd;
+	private TimeOfDay workEnd;
 	
 	/**
 	 * 残業の開始時刻のリスト
 	 */
-	private List<Integer> overtimeStarts;
+	private List<TimeOfDay> overtimeStarts;
 	
 	/**
 	 * 残業の終了時刻のリスト
 	 * 開始時刻と同じインデックスの要素がペア
 	 */
-	private List<Integer> overtimeEnds;
+	private List<TimeOfDay> overtimeEnds;
 	
 	/**
 	 * 休憩の開始時刻のリスト
 	 */
-	private List<Integer> breakStarts;
+	private List<TimeOfDay> breakStarts;
 	
 	/**
 	 * 休憩の終了時刻のリスト
 	 * 開始時刻と同じインデックスの要素がペア
 	 */
-	private List<Integer> breakEnds;
+	private List<TimeOfDay> breakEnds;
 	
-	public int getWorkStart() {
+	public TimeOfDay getWorkStart() {
 		return workStart;
 	}
 	
-	public void setWorkStart(int workStart) {
+	public void setWorkStart(TimeOfDay workStart) {
 		this.workStart = workStart;
 	}
 	
-	public int getWorkEnd() {
+	public TimeOfDay getWorkEnd() {
 		return workEnd;
 	}
 	
-	public void setWorkEnd(int workEnd) {
+	public void setWorkEnd(TimeOfDay workEnd) {
 		this.workEnd = workEnd;
 	}
 	
-	public List<Integer> getOvertimeStarts() {
+	public List<TimeOfDay> getOvertimeStarts() {
 		return overtimeStarts;
 	}
 	
-	public void setOvertimeStarts(List<Integer> overtimeStarts) {
+	public void setOvertimeStarts(List<TimeOfDay> overtimeStarts) {
 		this.overtimeStarts = overtimeStarts;
 	}
 	
-	public List<Integer> getOvertimeEnds() {
+	public List<TimeOfDay> getOvertimeEnds() {
 		return overtimeEnds;
 	}
 	
-	public void setOvertimeEnds(List<Integer> overtimeEnds) {
+	public void setOvertimeEnds(List<TimeOfDay> overtimeEnds) {
 		this.overtimeEnds = overtimeEnds;
 	}
 	
-	public List<Integer> getBreakStarts() {
+	public List<TimeOfDay> getBreakStarts() {
 		return breakStarts;
 	}
 	
-	public void setBreakStarts(List<Integer> breakStarts) {
+	public void setBreakStarts(List<TimeOfDay> breakStarts) {
 		this.breakStarts = breakStarts;
 	}
-	public List<Integer> getBreakEnds() {
+	public List<TimeOfDay> getBreakEnds() {
 		return breakEnds;
 	}
 	
-	public void setBreakEnds(List<Integer> breakEnds) {
+	public void setBreakEnds(List<TimeOfDay> breakEnds) {
 		this.breakEnds = breakEnds;
 	}
 }

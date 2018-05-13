@@ -4,12 +4,12 @@ import java.util.List;
 
 public class Commons {
 
-	public static int parseTimeString(String timeString) {
+	public static TimeOfDay parseTimeString(String timeString) {
 		timeString = timeString.replace(":", "");
 		int time = Integer.parseInt(timeString);
 		int minutes = time % 100;
 		int hours = time / 100;
-		return hours * 60 + minutes;
+		return new TimeOfDay(hours * 60 + minutes);
 	}
 	
 	/**
@@ -22,42 +22,42 @@ public class Commons {
 	 * @param end2
 	 * @return
 	 */
-	public static int[] getDuplication(int start1, int end1, int start2, int end2) {
+	public static TimeOfDay[] getDuplication(TimeOfDay start1, TimeOfDay end1, TimeOfDay start2, TimeOfDay end2) {
 
 		// <--->
 		//       <--->
-		if (end1 < start2) {
-			return new int[] {};
+		if (end1.value() < start2.value()) {
+			return new TimeOfDay[] {};
 		}
 		
 		//       <--->
 		// <--->
-		if (end2 < start1) {
-			return new int[] {};
+		if (end2.value() < start1.value()) {
+			return new TimeOfDay[] {};
 		}
 		
 		// <--------->
 		//   <---->
-		if (start1 <= start2 && end2 <= end1) {
-			return new int[] { start2, end2 };
+		if (start1.value() <= start2.value() && end2.value() <= end1.value()) {
+			return new TimeOfDay[] { start2, end2 };
 		}
 
 		//   <---->
 		// <--------->
-		if (start2 <= start1 && end1 <= end2) {
-			return new int[] { start1, end1 };
+		if (start2.value() <= start1.value() && end1.value() <= end2.value()) {
+			return new TimeOfDay[] { start1, end1 };
 		}
 		
 		// <------>
 		//    <------>
-		if (start1 <= start2 && end1 <= end2) {
-			return new int[] { start2, end1 };
+		if (start1.value() <= start2.value() && end1.value() <= end2.value()) {
+			return new TimeOfDay[] { start2, end1 };
 		}
 
 		//    <------>
 		// <------>
-		if (start2 <= start1 && end2 <= end1) {
-			return new int[] { start1,  end2 };
+		if (start2.value() <= start1.value() && end2.value() <= end1.value()) {
+			return new TimeOfDay[] { start1,  end2 };
 		}
 		
 		throw new RuntimeException("たぶん他のケースは無い？");
@@ -74,54 +74,54 @@ public class Commons {
 	 * @param end2
 	 * @return
 	 */
-	public static int[] getSubtraction(int start1, int end1, int start2, int end2) {
+	public static TimeOfDay[] getSubtraction(TimeOfDay start1, TimeOfDay end1, TimeOfDay start2, TimeOfDay end2) {
 
 		// <--->
 		//       <--->
-		if (end1 < start2) {
-			return new int[] { start1, end1 };
+		if (end1.value() < start2.value()) {
+			return new TimeOfDay[] { start1, end1 };
 		}
 		
 		//       <--->
 		// <--->
-		if (end2 < start1) {
-			return new int[] { start1, end1 };
+		if (end2.value() < start1.value()) {
+			return new TimeOfDay[] { start1, end1 };
 		}
 		
 		// <--------->
 		// <---->
-		if (start1 == start2 && end2 < end1) {
-			return new int[] { end2, end1};
+		if (start1.value() == start2.value() && end2.value() < end1.value()) {
+			return new TimeOfDay[] { end2, end1};
 		}
 
 		// <--------->
 		//      <---->
-		if (start1 < start2 && end1 == end2) {
-			return new int[] { start1, start2 };
+		if (start1.value() < start2.value() && end1 == end2) {
+			return new TimeOfDay[] { start1, start2 };
 		}
 		
 		// <--------->
 		//   <---->
-		if (start1 < start2 && end2 < end1) {
-			return new int[] { start1, start2, end2, end1 };
+		if (start1.value() < start2.value() && end2.value() < end1.value()) {
+			return new TimeOfDay[] { start1, start2, end2, end1 };
 		}
 
 		//   <---->
 		// <--------->
-		if (start2 <= start1 && end1 <= end2) {
-			return new int[] { };
+		if (start2.value() <= start1.value() && end1.value() <= end2.value()) {
+			return new TimeOfDay[] { };
 		}
 		
 		// <------>
 		//    <------>
-		if (start1 <= start2 && end1 <= end2) {
-			return new int[] { start1, start2 };
+		if (start1.value() <= start2.value() && end1.value() <= end2.value()) {
+			return new TimeOfDay[] { start1, start2 };
 		}
 
 		//    <------>
 		// <------>
-		if (start2 <= start1 && end2 <= end1) {
-			return new int[] { end2,  end1 };
+		if (start2.value() <= start1.value() && end2.value() <= end1.value()) {
+			return new TimeOfDay[] { end2,  end1 };
 		}
 		
 		throw new RuntimeException("たぶん他のケースは無い？");
