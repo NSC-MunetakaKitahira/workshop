@@ -8,17 +8,18 @@ public class Calculator {
 
 	public static void calculate(TimeOfDay timeStampStart, TimeOfDay timeStampEnd, WorkShift workShift) {
 
+		// 引数の開始・終了時刻を時間帯クラスに変換
+		PeriodOfTime workPeriodTime = new PeriodOfTime(timeStampStart, timeStampEnd);
+
 		// 実就業時間: 出勤～退勤と、始業～終業との重複範囲
-		List<PeriodOfTime> actualWorkTime = Arrays.asList(Commons.getDuplication(timeStampStart, timeStampEnd, workShift.getWorkStart(), workShift.getWorkEnd()));
+		List<PeriodOfTime> actualWorkTime = Arrays.asList(Commons.getDuplication(workPeriodTime, new PeriodOfTime(workShift.getWorkStart(), workShift.getWorkEnd())));
 
 		// 実残業時間帯: 出勤～退勤と、各残業時間帯との重複
 		List<PeriodOfTime> actualOverworkTimes = new ArrayList<>();
 		for (int i = 0; i < workShift.getOvertimeStarts().size(); i++) {
 			PeriodOfTime[] duplication = Commons.getDuplication(
-					timeStampStart,
-					timeStampEnd,
-					workShift.getOvertimeStarts().get(i),
-					workShift.getOvertimeEnds().get(i));
+					workPeriodTime,
+					new PeriodOfTime(workShift.getOvertimeStarts().get(i), workShift.getOvertimeEnds().get(i)));
 			for (int j = 0; j < duplication.length; j++)
 			{
 				actualOverworkTimes.add(duplication[j]);
@@ -29,10 +30,8 @@ public class Calculator {
 		List<PeriodOfTime> actualBreakTimes = new ArrayList<>();
 		for (int i = 0; i < workShift.getBreakStarts().size(); i++) {
 			PeriodOfTime[] duplication = Commons.getDuplication(
-					timeStampStart,
-					timeStampEnd,
-					workShift.getBreakStarts().get(i),
-					workShift.getBreakEnds().get(i));
+					workPeriodTime,
+					new PeriodOfTime(workShift.getBreakStarts().get(i),workShift.getBreakEnds().get(i)));
 			for (int j = 0; j < duplication.length; j++)
 			{
 				actualBreakTimes.add(duplication[j]);
@@ -43,12 +42,7 @@ public class Calculator {
 		List<PeriodOfTime> actualWorkTimesWithoutBreak = new ArrayList<>();
 		for (int i = 0; i < actualWorkTime.size(); i++) {
 			for (int j = 0; j < actualBreakTimes.size(); j++) {
-				TimeOfDay workStart = actualWorkTime.get(i).getStartTime();
-				TimeOfDay workEnd = actualWorkTime.get(i).getEndTime();
-				TimeOfDay breakStart = actualBreakTimes.get(j).getStartTime();
-				TimeOfDay breakEnd = actualBreakTimes.get(j).getEndTime();
-
-				PeriodOfTime[] subtraction = Commons.getSubtraction(workStart, workEnd, breakStart, breakEnd);
+				PeriodOfTime[] subtraction = Commons.getSubtraction(actualWorkTime.get(i), actualBreakTimes.get(j));
 
 				for(int k = 0; k < subtraction.length; k++)
 				{
@@ -65,12 +59,7 @@ public class Calculator {
 		List<PeriodOfTime> actualOverworkTimesWithoutBreak = new ArrayList<>();
 		for (int i = 0; i < actualOverworkTimes.size(); i++) {
 			for (int j = 0; j < actualBreakTimes.size(); j++) {
-				TimeOfDay overworkStart = actualOverworkTimes.get(i).getStartTime();
-				TimeOfDay overworkEnd = actualOverworkTimes.get(i).getEndTime();
-				TimeOfDay breakStart = actualBreakTimes.get(j).getStartTime();
-				TimeOfDay breakEnd = actualBreakTimes.get(j).getEndTime();
-
-				PeriodOfTime[] subtraction = Commons.getSubtraction(overworkStart, overworkEnd, breakStart, breakEnd);
+				PeriodOfTime[] subtraction = Commons.getSubtraction(actualOverworkTimes.get(i), actualBreakTimes.get(j));
 
 				for(int k = 0; k < subtraction.length; k++)
 				{

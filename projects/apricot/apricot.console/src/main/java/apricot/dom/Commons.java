@@ -11,112 +11,108 @@ public class Commons {
 	}
 
 	/**
-	 * start1/end1とstart2/end2の重複範囲を配列で返す。
+	 * period1とperiod2の重複範囲を配列で返す。
 	 * 重複していない場合は、空の配列を返す。
-	 * @param start1
-	 * @param end1
-	 * @param start2
-	 * @param end2
+	 * @param period1
+	 * @param period2
 	 * @return 重複範囲の時間帯配列
 	 */
-	public static PeriodOfTime[] getDuplication(TimeOfDay start1, TimeOfDay end1, TimeOfDay start2, TimeOfDay end2) {
+	public static PeriodOfTime[] getDuplication(PeriodOfTime period1, PeriodOfTime period2) {
 
 		// <--->
 		//       <--->
-		if (end1.value() < start2.value()) {
+		if (period1.getEndTime().value() < period2.getStartTime().value()) {
 			return new PeriodOfTime[] {};
 		}
 
 		//       <--->
 		// <--->
-		if (end2.value() < start1.value()) {
+		if (period2.getEndTime().value() < period1.getStartTime().value()) {
 			return new PeriodOfTime[] {};
 		}
 
 		// <--------->
 		//   <---->
-		if (start1.value() <= start2.value() && end2.value() <= end1.value()) {
-			return new PeriodOfTime[] {new PeriodOfTime(start2, end2)};
+		if (period1.getStartTime().value() <= period2.getStartTime().value() && period2.getEndTime().value() <= period1.getEndTime().value()) {
+			return new PeriodOfTime[] {new PeriodOfTime(period2.getStartTime(), period2.getEndTime())};
 		}
 
 		//   <---->
 		// <--------->
-		if (start2.value() <= start1.value() && end1.value() <= end2.value()) {
-			return new PeriodOfTime[] {new PeriodOfTime(start1, end1)};
+		if (period2.getStartTime().value() <= period1.getStartTime().value() && period1.getEndTime().value() <= period2.getEndTime().value()) {
+			return new PeriodOfTime[] {period1};
 		}
 
 		// <------>
 		//    <------>
-		if (start1.value() <= start2.value() && end1.value() <= end2.value()) {
-			return new PeriodOfTime[] {new PeriodOfTime(start2, end1)};
+		if (period1.getStartTime().value() <= period2.getStartTime().value() && period1.getEndTime().value() <= period2.getEndTime().value()) {
+			return new PeriodOfTime[] {new PeriodOfTime(period2.getStartTime(), period1.getEndTime())};
 		}
 
 		//    <------>
 		// <------>
-		if (start2.value() <= start1.value() && end2.value() <= end1.value()) {
-			return new PeriodOfTime[] {new PeriodOfTime(start1,  end2)};
+		if (period2.getStartTime().value() <= period1.getStartTime().value() && period2.getEndTime().value() <= period1.getEndTime().value()) {
+			return new PeriodOfTime[] {new PeriodOfTime(period1.getStartTime(), period2.getEndTime())};
 		}
 
 		throw new RuntimeException("たぶん他のケースは無い？");
 	}
 
 	/**
-	 * start1/end1から、start2/end2の範囲を除外した範囲を配列で返す。
-	 * start1/end1の範囲が完全に除外される場合、空の配列を返す。
-	 * @param start1
-	 * @param end1
-	 * @param start2
-	 * @param end2
+	 * period1から、period2の範囲を除外した範囲を配列で返す。
+	 * period1の範囲が完全に除外される場合、空の配列を返す。
+	 * @param period1
+	 * @param period2
 	 * @return
 	 */
-	public static PeriodOfTime[] getSubtraction(TimeOfDay start1, TimeOfDay end1, TimeOfDay start2, TimeOfDay end2) {
+	public static PeriodOfTime[] getSubtraction(PeriodOfTime period1, PeriodOfTime period2) {
 
 		// <--->
 		//       <--->
-		if (end1.value() < start2.value()) {
-			return new PeriodOfTime[] { new PeriodOfTime(start1, end1) };
+		if (period1.getEndTime().value() < period2.getStartTime().value()) {
+			return new PeriodOfTime[] { period1 };
 		}
 
 		//       <--->
 		// <--->
-		if (end2.value() < start1.value()) {
-			return new PeriodOfTime[] { new PeriodOfTime(start1, end1) };
+		if (period2.getEndTime().value() < period1.getStartTime().value()) {
+			return new PeriodOfTime[] { period1 };
 		}
 
 		// <--------->
 		// <---->
-		if (start1.value() == start2.value() && end2.value() < end1.value()) {
-			return new PeriodOfTime[] { new PeriodOfTime(end2, end1) };
+		if (period1.getStartTime().value() == period2.getStartTime().value() && period2.getEndTime().value() < period1.getEndTime().value()) {
+			return new PeriodOfTime[] { new PeriodOfTime(period2.getEndTime(), period1.getEndTime()) };
 		}
 
 		// <--------->
 		//      <---->
-		if (start1.value() < start2.value() && end1.value() == end2.value()) {
-			return new PeriodOfTime[] { new PeriodOfTime(start1, start2) };
+		if (period1.getStartTime().value() < period2.getStartTime().value() && period1.getEndTime().value() == period2.getEndTime().value()) {
+			return new PeriodOfTime[] { new PeriodOfTime(period1.getStartTime(), period2.getStartTime()) };
 		}
 
 		// <--------->
 		//   <---->
-		if (start1.value() < start2.value() && end2.value() < end1.value()) {
-			return new PeriodOfTime[] { new PeriodOfTime(start1, start2), new PeriodOfTime(end2, end1) };
+		if (period1.getStartTime().value() < period2.getStartTime().value() && period2.getEndTime().value() < period1.getEndTime().value()) {
+			return new PeriodOfTime[] { new PeriodOfTime(period1.getStartTime(), period2.getStartTime()), new PeriodOfTime(period2.getEndTime(), period1.getEndTime()) };
 		}
 
 		//   <---->
 		// <--------->
-		if (start2.value() <= start1.value() && end1.value() <= end2.value()) {
+		if (period2.getStartTime().value() <= period1.getStartTime().value() && period1.getEndTime().value() <= period2.getEndTime().value()) {
 			return new PeriodOfTime[] { };
 		}
 
 		// <------>
 		//    <------>
-		if (start1.value() <= start2.value() && end1.value() <= end2.value()) {
-			return new PeriodOfTime[] { new PeriodOfTime(start1, start2) };
+		if (period1.getStartTime().value() <= period2.getStartTime().value() && period1.getEndTime().value() <= period2.getEndTime().value()) {
+			return new PeriodOfTime[] { new PeriodOfTime(period1.getStartTime(), period2.getStartTime()) };
 		}
 
 		//    <------>
 		// <------>
-		if (start2.value() <= start1.value() && end2.value() <= end1.value()) {
-			return new PeriodOfTime[] { new PeriodOfTime(end2, end1) };
+		if (period2.getStartTime().value() <= period1.getStartTime().value() && period2.getEndTime().value() <= period1.getEndTime().value()) {
+			return new PeriodOfTime[] { new PeriodOfTime(period2.getEndTime(), period1.getEndTime()) };
 		}
 
 		throw new RuntimeException("たぶん他のケースは無い？");
