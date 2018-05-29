@@ -110,13 +110,13 @@ public class TimePeriod{
 		
 		// <--->
 		//       <--->
-		if (thisEndTime.lt(targetStartTime)) {
+		if (thisEndTime.le(targetStartTime)) {
 			return DuplicationType.noDuplication;
 		}
 		
 		//       <--->
 		// <--->
-		if (thisStartTime.gt(targetStartTime)) {
+		if (thisStartTime.ge(targetEndTime)) {
 			return DuplicationType.noDuplication;
 		}
 		
