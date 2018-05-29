@@ -43,11 +43,14 @@ public class TimeTable {
 		List<TimePeriod> splitList = new ArrayList<TimePeriod>();
 		for (TimePeriod timePeriod : thisList) {
 			TimePeriod[] subtraction = target.getSubtractionWith(timePeriod);
-			if(subtraction.length > 0) {
-				splitList.addAll(Arrays.asList(subtraction));
-				target = subtraction[ subtraction.length - 1 ];
+			// 2つに分けられていたら１つ目をListに入れる.
+			if(subtraction.length >= 2) {
+				splitList.add(subtraction[0]);
 			}
+			// 分割対象の変更処理
+			target = subtraction[ subtraction.length - 1 ];
 		}
+		splitList.add(target);
 		return splitList;
 	}
 	
