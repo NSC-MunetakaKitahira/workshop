@@ -30,13 +30,20 @@ public class Time{
 	public int toInt() {
 		return timeOfInt;
 	}
+	/**
+	 * timeの時間をすべて分に換算します.
+	 */
+	public int toMinutes() {
+		return this.hours()*60 + this.minutes();
+	}
+	
 	
 	/**
 	 * timeを文字列形式で返します.
 	 */
 	@Override
 	public String toString() {
-		return Time.parseTimeFrom(timeOfInt);
+		return Time.parseTimeFrom(this.toMinutes());
 	}
 	
 	/**
@@ -61,15 +68,8 @@ public class Time{
 	 * @return 2つの時間の間に生じる
 	 */
 	public Time sub(Time target) {
-		if(this.lt(target))
-			return new Time(0);
-		int hours = this.hours() - target.hours();
-		int minutes = this.minutes() - target.minutes();
-		if(minutes < 0) {
-			hours -= 1;
-			minutes = 60 - minutes;
-		}
-		return new Time(hours*hourDivide + minutes); 
+		int timeOfMinutes = this.minutes() - target.minutes();
+		return new Time(Time.parseTimeFrom(timeOfMinutes)); 
 	}
 	/**
 	 * @param target
@@ -126,12 +126,11 @@ public class Time{
 	}
 
 	/**
-	 * 整数形式の時間を文字列形式の時間に変換します.
-	 * @param timeOfInt 整数形式の時間（e.g. 830）
+	 * 分形式の時間を文字列形式の時間に変換します.
+	 * @param timeOfMinutes 分形式の時間（e.g. 510）
 	 * @return 文字列形式の時間（e.g. "8:30"）
 	 */
-	public static String parseTimeFrom(int timeOfInt) {
-		Time time = new Time(timeOfInt);
-		return String.format(timeFormat, time.hours(), time.minutes());
+	public static String parseTimeFrom(int timeOfMinutes) {
+		return String.format(timeFormat, timeOfMinutes/60, timeOfMinutes%60);
 	}
 }
