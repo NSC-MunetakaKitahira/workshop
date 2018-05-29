@@ -33,16 +33,16 @@ public class TimeTable {
 	private static List<TimePeriod> superimposesTargetOnAllListItem (TimePeriod target,List<TimePeriod> thisList){
 		List<TimePeriod> duplicationList = new ArrayList<TimePeriod>();
 		for (TimePeriod timePeriod : thisList) {
-			TimePeriod duplication = timePeriod.getDuplicationWith(target);
+			TimePeriod duplication = target.getDuplicationWith(timePeriod);
 			if(duplication.temporalLength().toMinutes() != 0)
 				duplicationList.add(duplication);
 		}
 		return duplicationList;
 	}
-	private static List<TimePeriod> splitTargetOnAllListItem (TimePeriod target,List<TimePeriod> thisList){
+	private static List<TimePeriod> splitTargetByAllListItem (TimePeriod target,List<TimePeriod> thisList){
 		List<TimePeriod> splitList = new ArrayList<TimePeriod>();
 		for (TimePeriod timePeriod : thisList) {
-			TimePeriod[] subtraction = timePeriod.getSubtractionWith(target);
+			TimePeriod[] subtraction = target.getSubtractionWith(timePeriod);
 			if(subtraction.length > 0) {
 				splitList.addAll(Arrays.asList(subtraction));
 				target = subtraction[ subtraction.length - 1 ];
@@ -63,19 +63,19 @@ public class TimeTable {
 		List<TimePeriod> actualBreaktimeList = this.getActualBreaktimeFrom(timeStamp);
 		
 		// 実就業時間帯から実休憩時間帯に重複している部分を除外
-		List<TimePeriod> actualWorktimeListWithoutBreaktime = TimeTable.splitTargetOnAllListItem(actualWorktime, actualBreaktimeList);
+		List<TimePeriod> actualWorktimeListWithoutBreaktime = TimeTable.splitTargetByAllListItem(actualWorktime, actualBreaktimeList);
 		
 		// 実残業時間帯から実休憩時間帯に重複している部分を除外
 		List<TimePeriod> actualOvertimeListWithoutBreaktime = new ArrayList<TimePeriod>();
-		for (TimePeriod overtime : actualOverworktimeList) {
-			actualOvertimeListWithoutBreaktime.addAll(TimeTable.splitTargetOnAllListItem(overtime, actualBreaktimeList));
+		for (TimePeriod actualOvertime : actualOverworktimeList) {
+			actualOvertimeListWithoutBreaktime.addAll(TimeTable.splitTargetByAllListItem(actualOvertime, actualBreaktimeList));
 		}
 		
 		System.out.println("就業時間");
 		int sumWorktime = 0;
 		for (TimePeriod worktimeWithoutBreaktime : actualWorktimeListWithoutBreaktime) {
 			System.out.println(worktimeWithoutBreaktime.toString());
-			sumWorktime = worktimeWithoutBreaktime.temporalLength().toMinutes();
+			sumWorktime += worktimeWithoutBreaktime.temporalLength().toMinutes();
 		}
 		System.out.println("合計: " + Time.parseTimeFrom(sumWorktime));
 		
@@ -83,7 +83,7 @@ public class TimeTable {
 		int sumOvertime = 0;
 		for (TimePeriod overtimeWithoutBreaktime : actualOvertimeListWithoutBreaktime) {
 			System.out.println(overtimeWithoutBreaktime.toString());
-			sumOvertime = overtimeWithoutBreaktime.temporalLength().toMinutes();
+			sumOvertime += overtimeWithoutBreaktime.temporalLength().toMinutes();
 		}
 		System.out.println("合計: " + Time.parseTimeFrom(sumOvertime));
 				
@@ -91,7 +91,7 @@ public class TimeTable {
 		int sumBreaktime = 0;
 		for (TimePeriod actualBreaktime : actualBreaktimeList) {
 			System.out.println(actualBreaktime.toString());
-			sumBreaktime = actualBreaktime.temporalLength().toMinutes();
+			sumBreaktime += actualBreaktime.temporalLength().toMinutes();
 		}
 		System.out.println("合計: " + Time.parseTimeFrom(sumBreaktime));
 	}
