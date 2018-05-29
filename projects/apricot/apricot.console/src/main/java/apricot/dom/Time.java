@@ -5,7 +5,8 @@ package apricot.dom;
  *	これは時間をイメージしたクラスです.
  */
 public class Time{
-	private static final String timeFormat = "%tH:%tM";
+	private static final String timeFormat = "%02d:%02d";
+	private static final int hourDivide = 100;
 	int timeOfInt;
 	
 	
@@ -29,13 +30,20 @@ public class Time{
 	public int toInt() {
 		return timeOfInt;
 	}
+	/**
+	 * timeの時間をすべて分に換算します.
+	 */
+	public int toMinutes() {
+		return this.hours()*60 + this.minutes();
+	}
+	
 	
 	/**
 	 * timeを文字列形式で返します.
 	 */
 	@Override
 	public String toString() {
-		return Time.parseTimeFrom(timeOfInt);
+		return Time.parseTimeFrom(this.toMinutes());
 	}
 	
 	/**
@@ -43,15 +51,69 @@ public class Time{
 	 * @return timeの時間部分
 	 */
 	public int hours() {
-		return timeOfInt / 100;
+		return timeOfInt / hourDivide;
 	}
 	/**
 	 * 現在の分：minutesを返します.
 	 * @return timeの分部分
 	 */
 	public int minutes() {
-		return timeOfInt % 100;
+		return timeOfInt % hourDivide;
 	}
+	
+	
+	/**
+	 * 時間の引き算（e.g 12:00-8:30 = 3:30）
+	 * @param target
+	 * @return 2つの時間の間に生じる
+	 */
+	public Time sub(Time target) {
+		int timeOfMinutes = this.toMinutes() - target.toMinutes();
+		return new Time(Time.parseTimeFrom(timeOfMinutes)); 
+	}
+	/**
+	 * @param target
+	 * @return this == target
+	 */
+	public boolean eq(Time target) {
+		return this.toInt() == target.toInt(); 
+	}
+	/**
+	 * @param target
+	 * @return this != target
+	 */
+	public boolean ne(Time target) {
+		return !(this.eq(target)); 
+	}
+	/**
+	 * @param target
+	 * @return this > target
+	 */
+	public boolean gt(Time target) {
+		return this.toInt() > target.toInt(); 
+	}
+	/**
+	 * @param target
+	 * @return this < target
+	 */
+	public boolean lt(Time target) {
+		return this.toInt() < target.toInt(); 		
+	}
+	/**
+	 * @param target
+	 * @return this >= target
+	 */
+	public boolean ge(Time target) {
+		return this.gt(target) || this.eq(target); 
+	}
+	/**
+	 * @param target
+	 * @return this <= target
+	 */
+	public boolean le(Time target) {
+		return this.lt(target) || this.eq(target); 
+	}
+	
 	
 	/**
 	 * 文字列形式の時間を整数形式の時間に変換します.
@@ -60,16 +122,15 @@ public class Time{
 	 */
 	public static int parseTimeFrom(String timeOfString) {
 		Time time = new Time(timeOfString);
-		return time.hours() * 60 + time.minutes();
+		return time.hours() * hourDivide + time.minutes();
 	}
 
 	/**
-	 * 整数形式の時間を文字列形式の時間に変換します.
-	 * @param timeOfInt 整数形式の時間（e.g. 830）
+	 * 分形式の時間を文字列形式の時間に変換します.
+	 * @param timeOfMinutes 分形式の時間（e.g. 510）
 	 * @return 文字列形式の時間（e.g. "8:30"）
 	 */
-	public static String parseTimeFrom(int timeOfInt) {
-		Time time = new Time(timeOfInt);
-		return String.format(timeFormat, time.hours(), time.minutes());
+	public static String parseTimeFrom(int timeOfMinutes) {
+		return String.format(timeFormat, timeOfMinutes/60, timeOfMinutes%60);
 	}
 }
