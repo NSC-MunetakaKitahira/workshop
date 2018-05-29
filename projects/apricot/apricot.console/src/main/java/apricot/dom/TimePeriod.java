@@ -90,7 +90,7 @@ public class TimePeriod{
 		java.util.EnumMap<DuplicationType, TimePeriod[]> duplicationMap = new java.util.EnumMap<DuplicationType, TimePeriod[]>(DuplicationType.class){
 			private static final long serialVersionUID = 1L;
 			{
-				this.put(DuplicationType.noDuplication, new TimePeriod[] { new TimePeriod(thisStartTime, targetEndTime) });
+				this.put(DuplicationType.noDuplication, new TimePeriod[] { new TimePeriod(thisStartTime, thisEndTime) });
 				this.put(DuplicationType.cover, new TimePeriod[] { new TimePeriod(thisStartTime, targetStartTime), new TimePeriod(targetEndTime, thisEndTime) } );
 				this.put(DuplicationType.beCovered, new TimePeriod[] {  } );
 				this.put(DuplicationType.overtake, new TimePeriod[] { new TimePeriod( targetEndTime, thisEndTime ) } );
