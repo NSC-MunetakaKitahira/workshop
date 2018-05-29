@@ -68,7 +68,7 @@ public class Time{
 	 * @return 2つの時間の間に生じる
 	 */
 	public Time sub(Time target) {
-		int timeOfMinutes = this.minutes() - target.minutes();
+		int timeOfMinutes = this.toMinutes() - target.toMinutes();
 		return new Time(Time.parseTimeFrom(timeOfMinutes)); 
 	}
 	/**
