@@ -5,7 +5,7 @@ package apricot.dom;
  *	これは時間をイメージしたクラスです.
  */
 public class Time{
-	private static final String timeFormat = "%tH:%tM";
+	private static final String timeFormat = "%02d:%02d";
 	private static final int hourDivide = 100;
 	int timeOfInt;
 	
