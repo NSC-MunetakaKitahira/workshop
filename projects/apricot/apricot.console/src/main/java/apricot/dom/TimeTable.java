@@ -34,7 +34,7 @@ public class TimeTable {
 		List<TimePeriod> duplicationList = new ArrayList<TimePeriod>();
 		for (TimePeriod timePeriod : thisList) {
 			TimePeriod duplication = timePeriod.getDuplicationWith(target);
-			if(duplication.temporalLength().toInt() != 0)
+			if(duplication.temporalLength().toMinutes() != 0)
 				duplicationList.add(duplication);
 		}
 		return duplicationList;
@@ -75,7 +75,7 @@ public class TimeTable {
 		int sumWorktime = 0;
 		for (TimePeriod worktimeWithoutBreaktime : actualWorktimeListWithoutBreaktime) {
 			System.out.println(worktimeWithoutBreaktime.toString());
-			sumWorktime = worktimeWithoutBreaktime.temporalLength().minutes();
+			sumWorktime = worktimeWithoutBreaktime.temporalLength().toMinutes();
 		}
 		System.out.println("合計: " + Time.parseTimeFrom(sumWorktime));
 		
@@ -83,7 +83,7 @@ public class TimeTable {
 		int sumOvertime = 0;
 		for (TimePeriod overtimeWithoutBreaktime : actualOvertimeListWithoutBreaktime) {
 			System.out.println(overtimeWithoutBreaktime.toString());
-			sumOvertime = overtimeWithoutBreaktime.temporalLength().minutes();
+			sumOvertime = overtimeWithoutBreaktime.temporalLength().toMinutes();
 		}
 		System.out.println("合計: " + Time.parseTimeFrom(sumOvertime));
 				
@@ -91,7 +91,7 @@ public class TimeTable {
 		int sumBreaktime = 0;
 		for (TimePeriod actualBreaktime : actualBreaktimeList) {
 			System.out.println(actualBreaktime.toString());
-			sumBreaktime = actualBreaktime.temporalLength().minutes();
+			sumBreaktime = actualBreaktime.temporalLength().toMinutes();
 		}
 		System.out.println("合計: " + Time.parseTimeFrom(sumBreaktime));
 	}
