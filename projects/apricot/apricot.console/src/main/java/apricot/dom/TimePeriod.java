@@ -14,7 +14,7 @@ public class TimePeriod{
 	 * @param endTime Timeクラスの修了時刻
 	 */
 	public TimePeriod(Time startTime, Time endTime) {
-		this(startTime.toInt(),endTime.toInt());
+		this(startTime.toMinutes(),endTime.toMinutes());
 	}
 	/**
 	 * @param startTimeOfInt 整数形式の開始時刻（e.g. 830）

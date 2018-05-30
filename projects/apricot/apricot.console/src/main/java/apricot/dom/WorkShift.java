@@ -92,7 +92,7 @@ public class WorkShift {
 			System.out.println(worktimeWithoutBreaktime.toString());
 			sumWorktime += worktimeWithoutBreaktime.temporalLength().toMinutes();
 		}
-		System.out.println("合計: " + Time.parseTimeFrom(sumWorktime));
+		System.out.println("合計: " + Time.parseTimeOfStringFrom(sumWorktime));
 		
 		System.out.println("残業時間");
 		int sumOvertime = 0;
@@ -100,7 +100,7 @@ public class WorkShift {
 			System.out.println(overtimeWithoutBreaktime.toString());
 			sumOvertime += overtimeWithoutBreaktime.temporalLength().toMinutes();
 		}
-		System.out.println("合計: " + Time.parseTimeFrom(sumOvertime));
+		System.out.println("合計: " + Time.parseTimeOfStringFrom(sumOvertime));
 				
 		System.out.println("休憩時間");
 		int sumBreaktime = 0;
@@ -108,7 +108,7 @@ public class WorkShift {
 			System.out.println(actualBreaktime.toString());
 			sumBreaktime += actualBreaktime.temporalLength().toMinutes();
 		}
-		System.out.println("合計: " + Time.parseTimeFrom(sumBreaktime));
+		System.out.println("合計: " + Time.parseTimeOfStringFrom(sumBreaktime));
 	}
 
 }
