@@ -7,7 +7,7 @@ package apricot.dom;
 public class Time{
 	private static final String timeFormat = "%02d:%02d";
 	private static final int hourDivide = 100;
-	int timeOfInt;
+	private int timeOfInt;
 	
 	
 	/**
