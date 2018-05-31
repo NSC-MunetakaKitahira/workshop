@@ -2,10 +2,7 @@ package apricot.console;
 
 import java.util.Scanner;
 
-import apricot.dom.Calculator;
-import apricot.dom.Commons;
-import apricot.dom.WorkShift;
-import apricot.dom.WorkShiftRepository;
+import apricot.dom.*;
 
 public class ApricotConsole {
 
@@ -30,7 +27,12 @@ public class ApricotConsole {
 			endTime = scan.nextLine();
 		}
 		
-		Calculator.calculate(Commons.parseTimeString(startTime), Commons.parseTimeString(endTime), workShift);
+		WorkTime wt = new WorkTime(Commons.parseTimeString(startTime), Commons.parseTimeString(endTime), workShift);
+		wt.printActualWorkTimeWithoutBreak();
+		OverworkTime ot = new OverworkTime(Commons.parseTimeString(startTime), Commons.parseTimeString(endTime), workShift);
+		ot.printActualOverWorkTimesWithoutBreak();
+		BreakTime bt = new BreakTime(Commons.parseTimeString(startTime), Commons.parseTimeString(endTime), workShift);
+		bt.printActualBreakTime();
 	}
 	
 }

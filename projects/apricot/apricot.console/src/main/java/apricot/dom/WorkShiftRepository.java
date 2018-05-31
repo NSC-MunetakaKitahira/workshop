@@ -14,8 +14,8 @@ public class WorkShiftRepository {
 		workShift.setWorkEnd(1050);
 		workShift.setOvertimeStarts(Arrays.asList(1080, 1320));
 		workShift.setOvertimeEnds(Arrays.asList(1320, 1440));
-		workShift.setBreakStarts(Arrays.asList(720, 1080));
-		workShift.setBreakEnds(Arrays.asList(780, 1110));
+		workShift.setBreakStarts(Arrays.asList(720, 1050));
+		workShift.setBreakEnds(Arrays.asList(780, 1080));
 		
 		return workShift;
 	}

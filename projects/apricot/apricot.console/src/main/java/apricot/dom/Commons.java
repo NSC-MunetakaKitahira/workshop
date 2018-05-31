@@ -1,7 +1,5 @@
 package apricot.dom;
 
-import java.util.List;
-
 public class Commons {
 
 	public static int parseTimeString(String timeString) {
@@ -26,13 +24,13 @@ public class Commons {
 
 		// <--->
 		//       <--->
-		if (end1 < start2) {
+		if (end1 <= start2) {
 			return new int[] {};
 		}
 		
 		//       <--->
 		// <--->
-		if (end2 < start1) {
+		if (end2 <= start1) {
 			return new int[] {};
 		}
 		
@@ -91,7 +89,7 @@ public class Commons {
 		// <--------->
 		// <---->
 		if (start1 == start2 && end2 < end1) {
-			return new int[] { end2, end1};
+			return new int[] { end2, end1 };
 		}
 
 		// <--------->
@@ -109,7 +107,7 @@ public class Commons {
 		//   <---->
 		// <--------->
 		if (start2 <= start1 && end1 <= end2) {
-			return new int[] { };
+			return new int[] {};
 		}
 		
 		// <------>
@@ -121,7 +119,7 @@ public class Commons {
 		//    <------>
 		// <------>
 		if (start2 <= start1 && end2 <= end1) {
-			return new int[] { end2,  end1 };
+			return new int[] { end2, end1 };
 		}
 		
 		throw new RuntimeException("たぶん他のケースは無い？");
