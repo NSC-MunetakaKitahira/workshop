@@ -1,5 +1,8 @@
 package apricot.dom;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author yuta_sano
  *
@@ -14,7 +17,7 @@ public class TimePeriod{
 	 * @param endTime Timeクラスの修了時刻
 	 */
 	public TimePeriod(Time startTime, Time endTime) {
-		this(startTime.toInt(),endTime.toInt());
+		this(startTime.toMinutes(),endTime.toMinutes());
 	}
 	/**
 	 * @param startTimeOfInt 整数形式の開始時刻（e.g. 830）
@@ -76,8 +79,23 @@ public class TimePeriod{
 		
 		return duplicationMap.get(this.compareWith(target));		
 	}
+
 	/**
-	 * targetに指定された期間との重複している期間を取得する.
+	 * targetListに指定された期間の各々と重複している期間を取得する.
+	 * @param targetList
+	 * @return duplicationTimePeriod 重複している期間
+	 */
+	public List<TimePeriod> getDuplicationWith(List<TimePeriod> targetList) {
+		List<TimePeriod> duplicationList = new ArrayList<TimePeriod>();
+		for (TimePeriod timePeriod : targetList) {
+			TimePeriod duplication = this.getDuplicationWith(timePeriod);
+			if(duplication.temporalLength().toMinutes() != 0)
+				duplicationList.add(duplication);
+		}
+		return duplicationList;
+	}
+	/**
+	 * targetに指定された期間で分割した期間を取得する.
 	 * @param target
 	 * @return duplicationTimePeriod 分割された期間のリスト
 	 */
@@ -102,6 +120,27 @@ public class TimePeriod{
 		
 		return duplicationMap.get(this.compareWith(target));		
 	}
+	/**
+	 * targetListの要素ですべての期間で分割した期間を取得する.
+	 * @param targetList
+	 * @return duplicationTimePeriod 分割された期間のリスト
+	 */
+	public List<TimePeriod> getSubtractionWith (List<TimePeriod> targetList){
+		TimePeriod thisTimePeriod = this;
+		List<TimePeriod> splitList = new ArrayList<TimePeriod>();
+		for (TimePeriod timePeriod : targetList) {
+			TimePeriod[] subtraction = thisTimePeriod.getSubtractionWith(timePeriod);
+			// 2つに分けられていたら１つ目をListに入れる.
+			if(subtraction.length >= 2) {
+				splitList.add(subtraction[0]);
+			}
+			// 分割対象の変更処理
+			thisTimePeriod = subtraction[ subtraction.length - 1 ];
+		}
+		splitList.add(thisTimePeriod);
+		return splitList;
+	}
+
 	public DuplicationType compareWith(TimePeriod target) {
 		Time thisStartTime = this.startTime;
 		Time thisEndTime = this.endTime;
