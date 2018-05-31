@@ -2,6 +2,7 @@ package apricot.console;
 
 import java.util.Scanner;
 
+import apricot.dom.ActualResults;
 import apricot.dom.TimePeriod;
 import apricot.dom.WorkShift;
 import apricot.dom.WorkShiftRepository;
@@ -29,7 +30,8 @@ public class ApricotConsole {
 			endTime = scan.nextLine();
 		}
 		
-		workShift.calculate(new TimePeriod(startTime, endTime));
+		ActualResults actualResults = new ActualResults(new TimePeriod(startTime, endTime), workShift);
+		actualResults.show();
 	}
 	
 }
