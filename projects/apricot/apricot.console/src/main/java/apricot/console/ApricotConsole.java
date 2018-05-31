@@ -2,11 +2,6 @@ package apricot.console;
 
 import java.util.Scanner;
 
-import apricot.dom.Calculator;
-import apricot.dom.Commons;
-import apricot.dom.WorkShift;
-import apricot.dom.WorkShiftRepository;
-
 public class ApricotConsole {
 
 	/**
@@ -16,21 +11,19 @@ public class ApricotConsole {
 	 */
 	public static void main(String[] args) {
 		
-		WorkShift workShift = WorkShiftRepository.get();
-		String startTime;
-		String endTime;
+		String workStartIn;
+		String workEndIn;
 
 		System.out.println("時刻は \"8:30\" の形式で入力してください。");
 		
 		try(Scanner scan = new Scanner(System.in)) {
 			System.out.print("開始時刻 = ");
-			startTime = scan.nextLine();
+			workStartIn = scan.nextLine();
 	
 			System.out.print("終了時刻 = ");
-			endTime = scan.nextLine();
+			workEndIn = scan.nextLine();
 		}
 		
-		Calculator.calculate(Commons.parseTimeString(startTime), Commons.parseTimeString(endTime), workShift);
-	}
-	
+		apricot.dom.Process.process(apricot.dom.FormatChange.parseTimeString(workStartIn), apricot.dom.FormatChange.parseTimeString(workEndIn));
+	}	
 }
