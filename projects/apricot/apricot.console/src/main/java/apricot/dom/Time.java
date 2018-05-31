@@ -1,11 +1,11 @@
 package apricot.dom;
 
 public class Time {
-	private TimePair actualTime;	// 出退勤時間
-	protected WorkShift workShift;	// 就業時間帯
+	private final TimePair actualTime;	// 出退勤時間
+	protected final WorkShift workShift;// 就業時間帯
 	
-	public Time(int timeStart, int timeEnd, WorkShift workShift) {
-		this.actualTime = new TimePair(timeStart, timeEnd);
+	public Time(int startTime, int endTime, WorkShift workShift) {
+		this.actualTime = new TimePair(startTime, endTime);
 		this.workShift = workShift;
 	}
 	
@@ -30,7 +30,7 @@ public class Time {
 		return duplicationTimes;
 	}
 	
-	//与えられた時間リストに対して重複範囲を除外する
+	// 与えられた時間リストに対して重複範囲を除外する
 	public TimePair getSubtractionTime(TimePair target, TimePair times) {
 		TimePair subtractionTime = new TimePair();
 		
@@ -49,6 +49,7 @@ public class Time {
 				if (subtraction.length == 4) {
 					subtractionTime.add(subtraction[2], subtraction[3]);
 				}
+				break;
 			} 
 		}
 		return subtractionTime;

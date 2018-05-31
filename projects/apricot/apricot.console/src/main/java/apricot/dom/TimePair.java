@@ -33,7 +33,7 @@ public class TimePair {
 	}
 	
 	public int[] getPair(int i) {
-		if (this.size() == 0) {
+		if (this.size() <= i) {
 			return new int[] { 0, 0 };
 		}
 		return new int[] { startTime.get(i), endTime.get(i) };

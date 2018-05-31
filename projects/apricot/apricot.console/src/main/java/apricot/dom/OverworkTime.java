@@ -2,8 +2,8 @@ package apricot.dom;
 
 public class OverworkTime extends BreakTime {
 
-	public OverworkTime(int timeStart, int timeEnd, WorkShift workShift) {
-		super(timeStart, timeEnd, workShift);
+	public OverworkTime(int startTime, int endTime, WorkShift workShift) {
+		super(startTime, endTime, workShift);
 	}
 	
 	// 休憩時間を除いた残業時間

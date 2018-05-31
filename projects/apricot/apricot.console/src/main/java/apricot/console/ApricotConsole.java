@@ -1,7 +1,6 @@
 package apricot.console;
 
 import java.util.Scanner;
-
 import apricot.dom.*;
 
 public class ApricotConsole {
