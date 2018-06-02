@@ -10,12 +10,13 @@ public class WorkShiftRepository {
 	public static WorkShift get() {
 		
 		WorkShift workShift = new WorkShift();
-		workShift.setWorkStart(new TimeOfDay(510));
-		workShift.setWorkEnd(new TimeOfDay(1050));
-		workShift.setOvertimeStarts(Arrays.asList(new TimeOfDay(1080), new TimeOfDay(1320)));
-		workShift.setOvertimeEnds(Arrays.asList(new TimeOfDay(1320), new TimeOfDay(1440)));
-		workShift.setBreakStarts(Arrays.asList(new TimeOfDay(720), new TimeOfDay(1080)));
-		workShift.setBreakEnds(Arrays.asList(new TimeOfDay(780), new TimeOfDay(1110)));
+		workShift.setWorkTime(new TimePeriod(new TimeOfDay(510), new TimeOfDay(1050)));
+		workShift.setOverworkTimes(Arrays.asList(
+				new TimePeriod(new TimeOfDay(1080), new TimeOfDay(1320)),
+				new TimePeriod(new TimeOfDay(1320), new TimeOfDay(1440))));
+		workShift.setBreakTimes(Arrays.asList(
+				new TimePeriod(new TimeOfDay(720), new TimeOfDay(780)),
+				new TimePeriod(new TimeOfDay(1080), new TimeOfDay(1110))));
 		
 		return workShift;
 	}

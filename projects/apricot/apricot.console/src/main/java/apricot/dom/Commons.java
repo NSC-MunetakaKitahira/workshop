@@ -1,5 +1,7 @@
 package apricot.dom;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Commons {
@@ -13,115 +15,114 @@ public class Commons {
 	}
 	
 	/**
-	 * start1/end1とstart2/end2の重複範囲を配列で返す。
-	 * 結果配列は、index:0が開始、index:1が終了。
-	 * 重複していない場合は、空の配列を返す。
+	 * start1/end1とstart2/end2の重複範囲を返す。
+	 * 重複していない場合は、nullを返す。
 	 * @param start1
 	 * @param end1
 	 * @param start2
 	 * @param end2
 	 * @return
 	 */
-	public static TimeOfDay[] getDuplication(TimeOfDay start1, TimeOfDay end1, TimeOfDay start2, TimeOfDay end2) {
+	public static TimePeriod getDuplication(TimePeriod period1, TimePeriod period2) {
 
 		// <--->
 		//       <--->
-		if (end1.value() < start2.value()) {
-			return new TimeOfDay[] {};
+		if (period1.getEnd().value() < period2.getStart().value()) {
+			return null;
 		}
 		
 		//       <--->
 		// <--->
-		if (end2.value() < start1.value()) {
-			return new TimeOfDay[] {};
+		if (period2.getEnd().value() < period1.getStart().value()) {
+			return null;
 		}
 		
 		// <--------->
 		//   <---->
-		if (start1.value() <= start2.value() && end2.value() <= end1.value()) {
-			return new TimeOfDay[] { start2, end2 };
+		if (period1.getStart().value() <= period2.getStart().value() && period2.getEnd().value() <= period1.getEnd().value()) {
+			return new TimePeriod(period2.getStart(), period2.getEnd());
 		}
 
 		//   <---->
 		// <--------->
-		if (start2.value() <= start1.value() && end1.value() <= end2.value()) {
-			return new TimeOfDay[] { start1, end1 };
+		if (period2.getStart().value() <= period1.getStart().value() && period1.getEnd().value() <= period2.getEnd().value()) {
+			return new TimePeriod(period1.getStart(), period1.getEnd());
 		}
 		
 		// <------>
 		//    <------>
-		if (start1.value() <= start2.value() && end1.value() <= end2.value()) {
-			return new TimeOfDay[] { start2, end1 };
+		if (period1.getStart().value() <= period2.getStart().value() && period1.getEnd().value() <= period2.getEnd().value()) {
+			return new TimePeriod(period2.getStart(), period1.getEnd());
 		}
 
 		//    <------>
 		// <------>
-		if (start2.value() <= start1.value() && end2.value() <= end1.value()) {
-			return new TimeOfDay[] { start1,  end2 };
+		if (period2.getStart().value() <= period1.getStart().value() && period2.getEnd().value() <= period1.getEnd().value()) {
+			return new TimePeriod(period1.getStart(),  period2.getEnd());
 		}
 		
 		throw new RuntimeException("たぶん他のケースは無い？");
 	}
 	
 	/**
-	 * start1/end1から、start2/end2の範囲を除外した範囲を配列で返す。
-	 * 結果配列は、index:0が開始、index:1が終了。
-	 * start1/end1の範囲が2つに分断される場合、index:2が2つ目の範囲の開始、index:3がその終了。
-	 * start1/end1の範囲が完全に除外される場合、空の配列を返す。
+	 * period1から、period2の範囲を除外した範囲をリストで返す。
+	 * start1/end1の範囲が完全に除外される場合、空のリストを返す。
 	 * @param start1
 	 * @param end1
 	 * @param start2
 	 * @param end2
 	 * @return
 	 */
-	public static TimeOfDay[] getSubtraction(TimeOfDay start1, TimeOfDay end1, TimeOfDay start2, TimeOfDay end2) {
+	public static List<TimePeriod> getSubtraction(TimePeriod period1, TimePeriod period2) {
 
 		// <--->
 		//       <--->
-		if (end1.value() < start2.value()) {
-			return new TimeOfDay[] { start1, end1 };
+		if (period1.getEnd().value() < period2.getStart().value()) {
+			return Arrays.asList(new TimePeriod(period1.getStart(), period1.getEnd()));
 		}
 		
 		//       <--->
 		// <--->
-		if (end2.value() < start1.value()) {
-			return new TimeOfDay[] { start1, end1 };
+		if (period2.getEnd().value() < period1.getStart().value()) {
+			return Arrays.asList(new TimePeriod(period1.getStart(), period1.getEnd()));
 		}
 		
 		// <--------->
 		// <---->
-		if (start1.value() == start2.value() && end2.value() < end1.value()) {
-			return new TimeOfDay[] { end2, end1};
+		if (period1.getStart().value() == period2.getStart().value() && period2.getEnd().value() < period1.getEnd().value()) {
+			return Arrays.asList(new TimePeriod(period2.getEnd(), period1.getEnd()));
 		}
 
 		// <--------->
 		//      <---->
-		if (start1.value() < start2.value() && end1 == end2) {
-			return new TimeOfDay[] { start1, start2 };
+		if (period1.getStart().value() < period2.getStart().value() && period1.getEnd().value() == period2.getEnd().value()) {
+			return Arrays.asList(new TimePeriod(period1.getStart(), period2.getStart()));
 		}
 		
 		// <--------->
 		//   <---->
-		if (start1.value() < start2.value() && end2.value() < end1.value()) {
-			return new TimeOfDay[] { start1, start2, end2, end1 };
+		if (period1.getStart().value() < period2.getStart().value() && period2.getEnd().value() < period1.getEnd().value()) {
+			return Arrays.asList(
+					new TimePeriod(period1.getStart(), period2.getStart()),
+					new TimePeriod(period2.getEnd(), period1.getEnd()));
 		}
 
 		//   <---->
 		// <--------->
-		if (start2.value() <= start1.value() && end1.value() <= end2.value()) {
-			return new TimeOfDay[] { };
+		if (period2.getStart().value() <= period1.getStart().value() && period1.getEnd().value() <= period2.getEnd().value()) {
+			return Collections.emptyList();
 		}
 		
 		// <------>
 		//    <------>
-		if (start1.value() <= start2.value() && end1.value() <= end2.value()) {
-			return new TimeOfDay[] { start1, start2 };
+		if (period1.getStart().value() <= period2.getStart().value() && period1.getEnd().value() <= period2.getEnd().value()) {
+			return Arrays.asList(new TimePeriod(period1.getStart(), period2.getStart()));
 		}
 
 		//    <------>
 		// <------>
-		if (start2.value() <= start1.value() && end2.value() <= end1.value()) {
-			return new TimeOfDay[] { end2,  end1 };
+		if (period2.getStart().value() <= period1.getStart().value() && period2.getEnd().value() <= period1.getEnd().value()) {
+			return Arrays.asList(new TimePeriod(period2.getEnd(),  period1.getEnd()));
 		}
 		
 		throw new RuntimeException("たぶん他のケースは無い？");

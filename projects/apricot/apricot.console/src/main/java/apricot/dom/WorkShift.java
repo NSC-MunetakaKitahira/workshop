@@ -8,81 +8,42 @@ import java.util.List;
 public class WorkShift {
 	
 	/**
-	 * 始業時刻
+	 * 定時の勤務時間帯
 	 */
-	private TimeOfDay workStart;
+	private TimePeriod workTime;
 	
 	/**
-	 * 終業時刻（定時）
+	 * 残業時間帯のリスト
 	 */
-	private TimeOfDay workEnd;
+	private List<TimePeriod> overworkTimes;
 	
 	/**
-	 * 残業の開始時刻のリスト
+	 * 残業時間帯のリスト
 	 */
-	private List<TimeOfDay> overtimeStarts;
-	
-	/**
-	 * 残業の終了時刻のリスト
-	 * 開始時刻と同じインデックスの要素がペア
-	 */
-	private List<TimeOfDay> overtimeEnds;
-	
-	/**
-	 * 休憩の開始時刻のリスト
-	 */
-	private List<TimeOfDay> breakStarts;
-	
-	/**
-	 * 休憩の終了時刻のリスト
-	 * 開始時刻と同じインデックスの要素がペア
-	 */
-	private List<TimeOfDay> breakEnds;
-	
-	public TimeOfDay getWorkStart() {
-		return workStart;
+	private List<TimePeriod> breakTimes;
+
+	public TimePeriod getWorkTime() {
+		return workTime;
+	}
+
+	public void setWorkTime(TimePeriod workTime) {
+		this.workTime = workTime;
+	}
+
+	public List<TimePeriod> getOverworkTimes() {
+		return overworkTimes;
+	}
+
+	public void setOverworkTimes(List<TimePeriod> overworkTimes) {
+		this.overworkTimes = overworkTimes;
+	}
+
+	public List<TimePeriod> getBreakTimes() {
+		return breakTimes;
+	}
+
+	public void setBreakTimes(List<TimePeriod> breakTimes) {
+		this.breakTimes = breakTimes;
 	}
 	
-	public void setWorkStart(TimeOfDay workStart) {
-		this.workStart = workStart;
-	}
-	
-	public TimeOfDay getWorkEnd() {
-		return workEnd;
-	}
-	
-	public void setWorkEnd(TimeOfDay workEnd) {
-		this.workEnd = workEnd;
-	}
-	
-	public List<TimeOfDay> getOvertimeStarts() {
-		return overtimeStarts;
-	}
-	
-	public void setOvertimeStarts(List<TimeOfDay> overtimeStarts) {
-		this.overtimeStarts = overtimeStarts;
-	}
-	
-	public List<TimeOfDay> getOvertimeEnds() {
-		return overtimeEnds;
-	}
-	
-	public void setOvertimeEnds(List<TimeOfDay> overtimeEnds) {
-		this.overtimeEnds = overtimeEnds;
-	}
-	
-	public List<TimeOfDay> getBreakStarts() {
-		return breakStarts;
-	}
-	
-	public void setBreakStarts(List<TimeOfDay> breakStarts) {
-		this.breakStarts = breakStarts;
-	}
-	public List<TimeOfDay> getBreakEnds() {
-		return breakEnds;
-	}
-	
-	public void setBreakEnds(List<TimeOfDay> breakEnds) {
-		this.breakEnds = breakEnds;
-	}
 }
