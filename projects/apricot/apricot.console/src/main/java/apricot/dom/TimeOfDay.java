@@ -33,4 +33,25 @@ public class TimeOfDay {
 	public int value() {
 		return this.minutesFromZero;
 	}
+	
+	/**
+	 * 時刻の「時」部分の値を返す
+	 * @return 時刻の「時」部分の値
+	 */
+	public int hourPart() {
+		return this.minutesFromZero / 60;
+	}
+	
+	/**
+	 * 時刻の「分」部分の値を返す
+	 * @return 時刻の「分」部分の値
+	 */
+	public int minutePart() {
+		return this.minutesFromZero % 60;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("%d:%02d", this.hourPart(), this.minutePart());  
+	}
 }
