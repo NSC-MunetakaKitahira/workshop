@@ -27,37 +27,37 @@ public class Commons {
 
 		// <--->
 		//       <--->
-		if (period1.getEnd().value() < period2.getStart().value()) {
+		if (period1.getEnd().lessThan(period2.getStart())) {
 			return null;
 		}
 		
 		//       <--->
 		// <--->
-		if (period2.getEnd().value() < period1.getStart().value()) {
+		if (period2.getEnd().lessThan(period1.getStart())){
 			return null;
 		}
 		
 		// <--------->
 		//   <---->
-		if (period1.getStart().value() <= period2.getStart().value() && period2.getEnd().value() <= period1.getEnd().value()) {
+		if (period1.getStart().lessThanEqual(period2.getStart()) && period2.getEnd().lessThanEqual(period1.getEnd())) {
 			return new TimePeriod(period2.getStart(), period2.getEnd());
 		}
 
 		//   <---->
 		// <--------->
-		if (period2.getStart().value() <= period1.getStart().value() && period1.getEnd().value() <= period2.getEnd().value()) {
+		if (period2.getStart().lessThanEqual(period1.getStart()) && period1.getEnd().lessThanEqual(period2.getEnd())) {
 			return new TimePeriod(period1.getStart(), period1.getEnd());
 		}
 		
 		// <------>
 		//    <------>
-		if (period1.getStart().value() <= period2.getStart().value() && period1.getEnd().value() <= period2.getEnd().value()) {
+		if (period1.getStart().lessThanEqual(period2.getStart()) && period1.getEnd().lessThanEqual(period2.getEnd())) {
 			return new TimePeriod(period2.getStart(), period1.getEnd());
 		}
 
 		//    <------>
 		// <------>
-		if (period2.getStart().value() <= period1.getStart().value() && period2.getEnd().value() <= period1.getEnd().value()) {
+		if (period2.getStart().lessThanEqual(period1.getStart()) && period2.getEnd().lessThanEqual(period1.getEnd())) {
 			return new TimePeriod(period1.getStart(),  period2.getEnd());
 		}
 		
@@ -77,31 +77,31 @@ public class Commons {
 
 		// <--->
 		//       <--->
-		if (period1.getEnd().value() < period2.getStart().value()) {
+		if (period1.getEnd().lessThan(period2.getStart())) {
 			return Arrays.asList(new TimePeriod(period1.getStart(), period1.getEnd()));
 		}
 		
 		//       <--->
 		// <--->
-		if (period2.getEnd().value() < period1.getStart().value()) {
+		if (period2.getEnd().lessThan(period1.getStart())) {
 			return Arrays.asList(new TimePeriod(period1.getStart(), period1.getEnd()));
 		}
 		
 		// <--------->
 		// <---->
-		if (period1.getStart().value() == period2.getStart().value() && period2.getEnd().value() < period1.getEnd().value()) {
+		if (period1.getStart().equals(period2.getStart()) && period2.getEnd().lessThan(period1.getEnd())) {
 			return Arrays.asList(new TimePeriod(period2.getEnd(), period1.getEnd()));
 		}
 
 		// <--------->
 		//      <---->
-		if (period1.getStart().value() < period2.getStart().value() && period1.getEnd().value() == period2.getEnd().value()) {
+		if (period1.getStart().lessThan(period2.getStart()) && period1.getEnd().lessThan(period2.getEnd())) {
 			return Arrays.asList(new TimePeriod(period1.getStart(), period2.getStart()));
 		}
 		
 		// <--------->
 		//   <---->
-		if (period1.getStart().value() < period2.getStart().value() && period2.getEnd().value() < period1.getEnd().value()) {
+		if (period1.getStart().lessThan(period2.getStart()) && period2.getEnd().lessThan(period1.getEnd())) {
 			return Arrays.asList(
 					new TimePeriod(period1.getStart(), period2.getStart()),
 					new TimePeriod(period2.getEnd(), period1.getEnd()));
@@ -109,19 +109,19 @@ public class Commons {
 
 		//   <---->
 		// <--------->
-		if (period2.getStart().value() <= period1.getStart().value() && period1.getEnd().value() <= period2.getEnd().value()) {
+		if (period2.getStart().lessThanEqual(period1.getStart()) && period1.getEnd().lessThanEqual(period2.getEnd())) {
 			return Collections.emptyList();
 		}
 		
 		// <------>
 		//    <------>
-		if (period1.getStart().value() <= period2.getStart().value() && period1.getEnd().value() <= period2.getEnd().value()) {
+		if (period1.getStart().lessThanEqual(period2.getStart()) && period1.getEnd().lessThanEqual(period2.getEnd())) {
 			return Arrays.asList(new TimePeriod(period1.getStart(), period2.getStart()));
 		}
 
 		//    <------>
 		// <------>
-		if (period2.getStart().value() <= period1.getStart().value() && period2.getEnd().value() <= period1.getEnd().value()) {
+		if (period2.getStart().lessThanEqual(period1.getStart()) && period2.getEnd().lessThanEqual(period1.getEnd())) {
 			return Arrays.asList(new TimePeriod(period2.getEnd(),  period1.getEnd()));
 		}
 		

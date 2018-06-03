@@ -34,6 +34,26 @@ public class TimeOfDay {
 		return this.minutesFromZero;
 	}
 	
+	public boolean equals(TimeOfDay target) {
+		return this.minutesFromZero == target.minutesFromZero;
+	}
+	
+	public boolean greaterThan(TimeOfDay target) {
+		return this.minutesFromZero > target.minutesFromZero;
+	}
+	
+	public boolean greatherThanEqual(TimeOfDay target) {
+		return this.minutesFromZero >= target.minutesFromZero;
+	}
+	
+	public boolean lessThan(TimeOfDay target) {
+		return this.minutesFromZero < target.minutesFromZero;
+	}
+	
+	public boolean lessThanEqual(TimeOfDay target) {
+		return this.minutesFromZero <= target.minutesFromZero;
+	}
+	
 	/**
 	 * 時刻の「時」部分の値を返す
 	 * @return 時刻の「時」部分の値
