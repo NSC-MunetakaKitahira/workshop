@@ -1,5 +1,7 @@
 package apricot.dom;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -7,82 +9,59 @@ import java.util.List;
  */
 public class WorkShift {
 	
-	/**
-	 * 始業時刻
-	 */
-	private int workStart;
+	TimePeriod workTime;
 	
-	/**
-	 * 終業時刻（定時）
-	 */
-	private int workEnd;
 	
-	/**
-	 * 残業の開始時刻のリスト
-	 */
-	private List<Integer> overtimeStarts;
-	
-	/**
-	 * 残業の終了時刻のリスト
-	 * 開始時刻と同じインデックスの要素がペア
-	 */
-	private List<Integer> overtimeEnds;
-	
-	/**
-	 * 休憩の開始時刻のリスト
-	 */
-	private List<Integer> breakStarts;
-	
-	/**
-	 * 休憩の終了時刻のリスト
-	 * 開始時刻と同じインデックスの要素がペア
-	 */
-	private List<Integer> breakEnds;
-	
-	public int getWorkStart() {
-		return workStart;
+	public void setWork(int startTime,int endTime) {
+		 workTime = new TimePeriod(startTime,endTime);
 	}
 	
-	public void setWorkStart(int workStart) {
-		this.workStart = workStart;
+	public void setWork(String startTimeString,String endTimeString) {
+		int startTime=Commons.parseTimeString(startTimeString);
+		int endTime=Commons.parseTimeString(endTimeString);
+		workTime = new TimePeriod(startTime,endTime);
 	}
 	
-	public int getWorkEnd() {
-		return workEnd;
+	
+	List<TimePeriod> overTime;
+	
+	public void setOvertime(List<List<Integer>> overtimes) {
+		TimePeriod overTime1 = new TimePeriod(overtimes.get(0).get(0),overtimes.get(0).get(1));
+		TimePeriod overTime2 = new TimePeriod(overtimes.get(1).get(0),overtimes.get(1).get(1));
+		overTime = new  ArrayList<TimePeriod>(Arrays.asList(overTime1, overTime2));
 	}
 	
-	public void setWorkEnd(int workEnd) {
-		this.workEnd = workEnd;
+	List<TimePeriod> breakTime;
+	public void setBreak(List<List<Integer>> breaktimes) {
+		TimePeriod breakTime1 = new TimePeriod(breaktimes.get(0).get(0),breaktimes.get(0).get(1));
+		TimePeriod breakTime2 = new TimePeriod(breaktimes.get(1).get(0),breaktimes.get(1).get(1));
+		breakTime = new  ArrayList<TimePeriod>(Arrays.asList(breakTime1, breakTime2));
 	}
 	
-	public List<Integer> getOvertimeStarts() {
-		return overtimeStarts;
+	
+	public TimePeriod getWorkTime(){
+		
+		return workTime;
+	}
+	public List<TimePeriod> getOverTime(){
+		
+		return overTime;
+	}
+
+	public TimePeriod getOverTime(int num){
+		
+		return overTime.get(num);
 	}
 	
-	public void setOvertimeStarts(List<Integer> overtimeStarts) {
-		this.overtimeStarts = overtimeStarts;
+	public List<TimePeriod> getBreakTime(){
+		
+		return breakTime;
 	}
 	
-	public List<Integer> getOvertimeEnds() {
-		return overtimeEnds;
+	public TimePeriod getBreakTime(int num){
+		
+		return breakTime.get(num);
 	}
 	
-	public void setOvertimeEnds(List<Integer> overtimeEnds) {
-		this.overtimeEnds = overtimeEnds;
-	}
 	
-	public List<Integer> getBreakStarts() {
-		return breakStarts;
-	}
-	
-	public void setBreakStarts(List<Integer> breakStarts) {
-		this.breakStarts = breakStarts;
-	}
-	public List<Integer> getBreakEnds() {
-		return breakEnds;
-	}
-	
-	public void setBreakEnds(List<Integer> breakEnds) {
-		this.breakEnds = breakEnds;
-	}
 }

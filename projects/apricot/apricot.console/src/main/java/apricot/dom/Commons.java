@@ -22,8 +22,19 @@ public class Commons {
 	 * @param end2
 	 * @return
 	 */
-	public static int[] getDuplication(int start1, int end1, int start2, int end2) {
+	
+	public static int[] getDuplication(TimePeriod actualTimes, TimePeriod workTime) {
+		
+		int start1=actualTimes.getStartTime();
+		int end1=actualTimes.getEndTime();
+		
+		int start2=workTime.getStartTime();
+		int end2=workTime.getEndTime();
 
+//		System.out.println(start1);
+//		System.out.println(end1);
+//		System.out.println(start2);
+//		System.out.println(end2);
 		// <--->
 		//       <--->
 		if (end1 < start2) {

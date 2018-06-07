@@ -1,9 +1,12 @@
 package apricot.console;
 
+import java.util.List;
 import java.util.Scanner;
 
 import apricot.dom.Calculator;
 import apricot.dom.Commons;
+import apricot.dom.Time;
+import apricot.dom.TimePeriod;
 import apricot.dom.WorkShift;
 import apricot.dom.WorkShiftRepository;
 
@@ -30,7 +33,13 @@ public class ApricotConsole {
 			endTime = scan.nextLine();
 		}
 		
-		Calculator.calculate(Commons.parseTimeString(startTime), Commons.parseTimeString(endTime), workShift);
+		TimePeriod actualTimes= new TimePeriod(startTime,endTime);
+		
+//		System.out.println("確認用:"+actualTimes.getStartTime()+""+actualTimes.getEndTime());
+	
+		Calculator cal=new Calculator(actualTimes, workShift);
+		
+		cal.calculate();
 	}
 	
 }
