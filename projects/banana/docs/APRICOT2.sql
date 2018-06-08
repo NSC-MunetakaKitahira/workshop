@@ -1,0 +1,1 @@
+INSERT INTO APRICOT values(1,'8:30','17:30',null,null,null,null,null,null,null,null,null);

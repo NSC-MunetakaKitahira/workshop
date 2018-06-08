@@ -1,3 +1,0 @@
-rootProject.name = 'Apricot'
-
-include 'apricot.console'

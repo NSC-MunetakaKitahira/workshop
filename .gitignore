@@ -1,9 +1,0 @@
-build/
-bin/
-.nb-gradle/
-.gradle/
-.classpath
-.project
-.settings/
-.metadata/
-*.class
