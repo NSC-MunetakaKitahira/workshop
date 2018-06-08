@@ -2,22 +2,34 @@ package banana.sample;
 
 public class SampleWriteParameter {
 
-	private String name;
-	private int value;
+//	private String name;
+//	private int value;
 	
-	public String getName() {
-		return name;
+	private int masterCode;
+	private String startTime;
+	private String endTime;
+	
+	public int getCode() {
+		return masterCode;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setMasterCode(int masterCode) {
+		this.masterCode = masterCode;
 	}
 	
-	public int getValue() {
-		return value;
+	public String getStartTime() {
+		return startTime;
 	}
 	
-	public void setValue(int value) {
-		this.value = value;
+	public void setStart(String startTime) {
+		this.startTime = startTime;
+	}
+	
+	public String getEnd() {
+		return endTime;
+	}
+	
+	public void setEnd(String endTime) {
+		this.endTime = endTime;
 	}
 }

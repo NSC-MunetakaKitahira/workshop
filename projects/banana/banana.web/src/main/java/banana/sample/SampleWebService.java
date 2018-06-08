@@ -23,10 +23,10 @@ public class SampleWebService {
 		this.tran.write(param);
 	}
 	
-	@Path("read/{name}")
+	@Path("read/{masterCode}")
 	@GET
-	public SampleReadResult read(@PathParam("name") String name) {
+	public SampleReadResult read(@PathParam("masterCode") int masterCode) {
 		
-		return this.tran.read(name);
+		return this.tran.read(masterCode);
 	}
 }
