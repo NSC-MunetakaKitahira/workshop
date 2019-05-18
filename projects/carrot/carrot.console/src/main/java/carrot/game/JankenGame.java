@@ -1,6 +1,9 @@
-package carrot.janken;
+package carrot.game;
 
 import java.util.function.Consumer;
+
+import carrot.judge.JankenHand;
+import carrot.player.JankenPlayer;
 
 /**
  * ゲーム進行をコントロールするクラス
@@ -22,9 +25,14 @@ public class JankenGame {
 		this.player2 = player2;
 	}
 	
-	public Result start(Consumer<JankenGameStatus> statusNotifier) {
+	/**
+	 * ゲームを開始
+	 * @param roundNotifier 1ラウンドごとにゲーム進行状況を受け取る関数
+	 * @return 結果
+	 */
+	public Result start(Consumer<JankenGameStatus> roundNotifier) {
 		
-		JankenGameStatus gameStatus = new JankenGameStatus(numberOfRounds);
+		JankenGameStatus gameStatus = JankenGameStatus.init(numberOfRounds);
 		
 		for (int i = 0; i < numberOfRounds; i++) {
 			NextHand nextP1Hand = NextHand.attempt(player1, gameStatus.forPlayer1());
@@ -34,17 +42,19 @@ public class JankenGame {
 				return Result.crashed(nextP1Hand.hasCrashed, nextP2Hand.hasCrashed);
 			}
 			
-			gameStatus.nextRound(nextP1Hand.nextHand, nextP2Hand.nextHand);
-			
-			statusNotifier.accept(gameStatus);
+			gameStatus = gameStatus.processRound(nextP1Hand.nextHand, nextP2Hand.nextHand);
+			roundNotifier.accept(gameStatus);
 		}
 		
-		return Result.finished(gameStatus.getPlayer1Score(), gameStatus.getPlayer2Score());
+		return Result.finished(gameStatus.player1Score, gameStatus.player2Score);
 	}
 	
 	private static class NextHand {
 		
+		/** 次の手 */
 		public final JankenHand nextHand;
+		
+		/** 次の手が取得できずにクラッシュした場合はtrue */
 		public final boolean hasCrashed;
 		
 		private NextHand(JankenHand nextHand, boolean hasCrashed) {
@@ -52,6 +62,12 @@ public class JankenGame {
 			this.hasCrashed = hasCrashed;
 		}
 
+		/**
+		 * プログラム全体がクラッシュしないように安全にJankenPlayerからnextHandを取得する
+		 * @param player
+		 * @param gameStatus
+		 * @return
+		 */
 		public static NextHand attempt(JankenPlayer player, JankenGameStatus.Subjective gameStatus) {
 			try {
 				return new NextHand(player.nextHand(gameStatus), false);

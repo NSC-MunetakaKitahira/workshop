@@ -1,25 +1,28 @@
-package carrot.game;
+package carrot.game.roundrobin;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import carrot.janken.JankenGame;
+import carrot.game.JankenGame;
 
-public class WinPoints<P> {
+/**
+ * 総当たり戦の勝ち点を管理する
+ */
+public class WinPoints {
 	
 	private static final int GAIN_WIN = 2;
 	private static final int GAIN_DRAW = 1;
 
-	private final Map<P, Item<P>> map;
+	private final Map<Class<?>, Item> map;
 	
-	public WinPoints(Collection<P> players) {
+	public WinPoints(Collection<Class<?>> players) {
 		map = players.stream()
 				.collect(Collectors.toMap(p -> p, p -> Item.init(p)));
 	}
 	
-	public void process(JankenGame.Result result, P player1, P player2) {
+	public void process(JankenGame.Result result, Class<?> player1, Class<?> player2) {
 
 		switch (result.resultClass()) {
 		case PLAYER1_WIN:
@@ -34,7 +37,7 @@ public class WinPoints<P> {
 		}
 	}
 	
-	public List<Item<P>> sortedList() {
+	public List<Item> sortedList() {
 		return map.entrySet().stream()
 				.map(es -> es.getValue())
 				.sorted((a, b) -> b.compareTo(a))
@@ -42,43 +45,43 @@ public class WinPoints<P> {
 	}
 	
 	
-	private void win(P player, int subPoints) {
+	private void win(Class<?> player, int subPoints) {
 		addGain(player, GAIN_WIN, subPoints);
 	}
 	
-	private void draw(P player1, P player2) {
+	private void draw(Class<?> player1, Class<?> player2) {
 		addGain(player1, GAIN_DRAW, 0);
 		addGain(player2, GAIN_DRAW, 0);
 	}
 	
-	private void addGain(P player, int gainPoints, int gainSubPoints) {
+	private void addGain(Class<?> player, int gainPoints, int gainSubPoints) {
 		map.compute(player, (p, winPoint) -> winPoint.add(gainPoints, gainSubPoints));
 	}
 	
-	public static class Item<P> implements Comparable<Item<P>> {
-		public final P player;
+	public static class Item implements Comparable<Item> {
+		public final Class<?> player;
 		public final int points;
 		public final int subPoints;
 		
-		private Item(P player, int points, int subPoints) {
+		private Item(Class<?> player, int points, int subPoints) {
 			this.player = player;
 			this.points = points;
 			this.subPoints = subPoints;
 		}
 		
-		public static <P> Item<P> init(P player) {
-			return new Item<>(player, 0, 0);
+		public static  Item init(Class<?> player) {
+			return new Item(player, 0, 0);
 		}
 		
-		public Item<P> add(int pointsToAdd, int subPointsToAdd) {
-			return new Item<>(
+		public Item add(int pointsToAdd, int subPointsToAdd) {
+			return new Item(
 					player,
 					points + pointsToAdd,
 					subPoints + subPointsToAdd);
 		}
 
 		@Override
-		public int compareTo(Item<P> o) {
+		public int compareTo(Item o) {
 			if (points == o.points) {
 				return subPoints - o.subPoints;
 			}

@@ -1,4 +1,4 @@
-package carrot.janken;
+package carrot.judge;
 
 /**
  * ジャンケンの判定結果

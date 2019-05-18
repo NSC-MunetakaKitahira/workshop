@@ -1,8 +1,8 @@
-package carrot.janken.player.kitahira;
+package carrot.player.kitahira;
 
-import carrot.janken.JankenHand;
-import carrot.janken.JankenPlayer;
-import carrot.janken.JankenGameStatus.Subjective;
+import carrot.game.JankenGameStatus.Subjective;
+import carrot.judge.JankenHand;
+import carrot.player.JankenPlayer;
 
 public class PreviousHandPlayer implements JankenPlayer {
 
@@ -10,7 +10,7 @@ public class PreviousHandPlayer implements JankenPlayer {
 	public JankenHand nextHand(Subjective currentGameStatus) {
 		
 		if (currentGameStatus.isFirstRound()) {
-			return JankenHand.PA;
+			return JankenHand.CHOKI;
 		}
 		
 		return currentGameStatus.previousOpponentHand.handToWin();

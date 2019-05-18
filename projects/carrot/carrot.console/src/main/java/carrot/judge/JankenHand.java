@@ -1,4 +1,4 @@
-package carrot.janken;
+package carrot.judge;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -9,8 +9,8 @@ import java.util.Set;
  */
 public enum JankenHand {
 
-	/** グー:3点 */
-	GU(0, 3),
+	/** グー:2点 */
+	GU(0, 2),
 	
 	/** チョキ:4点 */
 	CHOKI(1, 4),

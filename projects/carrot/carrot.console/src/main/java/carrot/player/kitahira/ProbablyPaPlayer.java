@@ -1,8 +1,8 @@
-package carrot.janken.player.kitahira;
+package carrot.player.kitahira;
 
-import carrot.janken.JankenGameStatus.Subjective;
-import carrot.janken.JankenHand;
-import carrot.janken.JankenPlayer;
+import carrot.game.JankenGameStatus.Subjective;
+import carrot.judge.JankenHand;
+import carrot.player.JankenPlayer;
 
 public class ProbablyPaPlayer implements JankenPlayer {
 

@@ -1,13 +1,13 @@
-package carrot.janken.player.kitahira;
+package carrot.player.kitahira;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import carrot.janken.JankenGameStatus.Subjective;
-import carrot.janken.JankenHand;
-import carrot.janken.JankenPlayer;
+import carrot.game.JankenGameStatus.Subjective;
+import carrot.judge.JankenHand;
+import carrot.player.JankenPlayer;
 
 public class IncrementalPlayer implements JankenPlayer {
 

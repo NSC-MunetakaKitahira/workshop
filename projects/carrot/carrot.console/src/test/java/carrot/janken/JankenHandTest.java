@@ -1,8 +1,9 @@
 package carrot.janken;
 
 import static org.junit.Assert.*;
+import static carrot.judge.JankenHand.*;
 import static org.hamcrest.CoreMatchers.*;
-import static carrot.janken.JankenHand.*;
+
 import org.junit.jupiter.api.Test;
 
 class JankenHandTest {

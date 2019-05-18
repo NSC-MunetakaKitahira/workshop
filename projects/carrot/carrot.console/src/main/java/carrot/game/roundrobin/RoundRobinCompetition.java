@@ -1,11 +1,12 @@
-package carrot.game;
+package carrot.game.roundrobin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import carrot.janken.JankenGame;
-import carrot.janken.JankenPlayer;
+import carrot.game.JankenGame;
+import carrot.player.JankenPlayer;
 
 /**
  * 総当たり戦のコントロール
@@ -20,27 +21,25 @@ public class RoundRobinCompetition {
 		this.players = players;
 	}
 	
-	public void start() {
+	public void start(
+			Consumer<JankenGame> gameNotifier,
+			Consumer<JankenGame.Result> gameResultNotifier,
+			Consumer<WinPoints> competitionResultNotifier
+			) {
 		
-		WinPoints<Class<?>> winPoints = new WinPoints<>(playerClasses());
+		WinPoints winPoints = new WinPoints(playerClasses());
 		
 		for (JankenGame game : createRoundRobin()) {
 			
-			System.out.println(
-					"P1:" + game.player1.getClass().getSimpleName() 
-					+ " vs P2:" + game.player2.getClass().getSimpleName());
+			gameNotifier.accept(game);
 			
-			JankenGame.Result result = game.start(s -> { });
+			JankenGame.Result result = game.start(s -> {});
 			winPoints.process(result, game.player1.getClass(), game.player2.getClass());
 
-			System.out.println(result.format());
+			gameResultNotifier.accept(result);
 		}
-		
-		System.out.println("---------------------------------");
-		
-		winPoints.sortedList().forEach(x -> {
-			System.out.println(x.player.getSimpleName() + ": " + x.points + " (" + x.subPoints + ")");
-		});
+
+		competitionResultNotifier.accept(winPoints);
 	}
 	
 	private List<Class<?>> playerClasses() {
