@@ -8,6 +8,8 @@ public class AlwaysPaPlayer implements JankenPlayer {
 
 	@Override
 	public JankenHand nextHand(Subjective currentGameStatus) {
+		
+		// 常にパー
 		return JankenHand.PA;
 	}
 

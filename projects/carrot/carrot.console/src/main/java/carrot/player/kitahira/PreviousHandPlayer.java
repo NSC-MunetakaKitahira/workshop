@@ -9,10 +9,12 @@ public class PreviousHandPlayer implements JankenPlayer {
 	@Override
 	public JankenHand nextHand(Subjective currentGameStatus) {
 		
+		// 最初のラウンドは固定でチョキ
 		if (currentGameStatus.isFirstRound()) {
 			return JankenHand.CHOKI;
 		}
 		
+		// 直前のラウンドで相手が出した手に勝てる手を出す
 		return currentGameStatus.previousOpponentHand.handToWin();
 	}
 
