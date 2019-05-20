@@ -8,10 +8,7 @@ import carrot.game.JankenGame.Result;
 import carrot.game.roundrobin.RoundRobinCompetition;
 import carrot.game.roundrobin.WinPoints;
 import carrot.player.kitahira.AlwaysPaPlayer;
-import carrot.player.kitahira.IncrementalPlayer;
 import carrot.player.kitahira.PreviousHandPlayer;
-import carrot.player.kitahira.ProbablyPaPlayer;
-import carrot.player.kitahira.RotationPlayer;
 
 /**
  * 総当たり戦をコンソールに出力
@@ -22,10 +19,7 @@ public class ConsoleRoundRobin {
 		
 		RoundRobinCompetition compet = new RoundRobinCompetition(numberOfRounds, Arrays.asList(
 				new AlwaysPaPlayer(),
-				new IncrementalPlayer(),
-				new PreviousHandPlayer(),
-				new ProbablyPaPlayer(),
-				new RotationPlayer()
+				new PreviousHandPlayer()
 				));
 		
 		compet.start(
