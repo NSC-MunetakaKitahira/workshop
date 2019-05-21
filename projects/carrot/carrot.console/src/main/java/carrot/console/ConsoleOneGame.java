@@ -5,6 +5,7 @@ import carrot.game.JankenGameStatus;
 import carrot.judge.JankenHand;
 import carrot.player.JankenPlayer;
 import carrot.player.kitahira.AlwaysPaPlayer;
+import carrot.player.kitahira.CountingPlayer;
 import carrot.player.kitahira.PreviousHandPlayer;
 
 /**
@@ -15,7 +16,7 @@ public class ConsoleOneGame {
 	public static void start(int numberOfRounds) {
 		
 		JankenPlayer player1 = new PreviousHandPlayer();
-		JankenPlayer player2 = new AlwaysPaPlayer();
+		JankenPlayer player2 = new CountingPlayer();
 		
 		System.out.println(
 				"P1:" + player1.getClass().getSimpleName() 
