@@ -70,8 +70,15 @@ public class JankenGame {
 		 */
 		public static NextHand attempt(JankenPlayer player, JankenGameStatus.Subjective gameStatus) {
 			try {
-				return new NextHand(player.nextHand(gameStatus), false);
+				JankenHand hand = player.nextHand(gameStatus);
+				if (JankenHand.isValid(hand)) {
+					return new NextHand(player.nextHand(gameStatus), false);
+				}
+				
+				System.out.println(player.getClass().getSimpleName() + " returns invalid hand: " + hand);
+				return new NextHand(null, true);
 			} catch (Exception ex) {
+				ex.printStackTrace();
 				return new NextHand(null, true);
 			}
 		}

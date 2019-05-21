@@ -53,6 +53,10 @@ public enum JankenHand {
 				.get().winnerGain;
 	}
 	
+	public static boolean isValid(JankenHand hand) {
+		return ALL_HANDS.contains(hand);
+	}
+	
 	/**
 	 * 与えられた手役との対戦結果を返す
 	 * @param opponentHand 相手の手役
