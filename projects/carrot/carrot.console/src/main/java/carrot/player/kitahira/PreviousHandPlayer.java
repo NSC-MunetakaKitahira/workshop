@@ -7,6 +7,11 @@ import carrot.player.JankenPlayer;
 public class PreviousHandPlayer implements JankenPlayer {
 
 	@Override
+	public void newGame() {
+		// 何もしない
+	}
+	
+	@Override
 	public JankenHand nextHand(Subjective currentGameStatus) {
 		
 		// 最初のラウンドは固定でチョキ

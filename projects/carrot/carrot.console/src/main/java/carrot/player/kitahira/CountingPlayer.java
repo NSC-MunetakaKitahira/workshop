@@ -9,9 +9,15 @@ import carrot.player.JankenPlayer;
  */
 public class CountingPlayer implements JankenPlayer {
 
-	private int gu = 0;
-	private int choki = 0;
-	private int pa = 0;
+	private int gu;
+	private int choki;
+	private int pa;
+	
+	@Override
+	public void newGame() {
+		// カウントをリセット
+		gu = choki = pa = 0;
+	}
 	
 	@Override
 	public JankenHand nextHand(Subjective currentGameStatus) {

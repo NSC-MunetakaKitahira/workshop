@@ -32,6 +32,9 @@ public class JankenGame {
 	 */
 	public Result start(Consumer<JankenGameStatus> roundNotifier) {
 		
+		player1.newGame();
+		player2.newGame();
+		
 		JankenGameStatus gameStatus = JankenGameStatus.init(numberOfRounds);
 		
 		for (int i = 0; i < numberOfRounds; i++) {
@@ -72,7 +75,7 @@ public class JankenGame {
 			try {
 				JankenHand hand = player.nextHand(gameStatus);
 				if (JankenHand.isValid(hand)) {
-					return new NextHand(hand, false);
+					return new NextHand(player.nextHand(gameStatus), false);
 				}
 				
 				System.out.println(player.getClass().getSimpleName() + " returns invalid hand: " + hand);

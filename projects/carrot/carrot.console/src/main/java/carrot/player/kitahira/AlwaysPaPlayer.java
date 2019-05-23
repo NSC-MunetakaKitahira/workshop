@@ -6,6 +6,11 @@ import carrot.player.JankenPlayer;
 
 public class AlwaysPaPlayer implements JankenPlayer {
 	@Override
+	public void newGame() {
+		// 何もしない
+	}
+
+	@Override
 	public JankenHand nextHand(Subjective currentGameStatus) {
 		
 		// 常にパー
