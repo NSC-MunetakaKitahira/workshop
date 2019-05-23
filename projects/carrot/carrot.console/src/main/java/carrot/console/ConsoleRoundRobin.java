@@ -1,6 +1,5 @@
 package carrot.console;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import carrot.game.JankenGame;
@@ -39,13 +38,11 @@ public class ConsoleRoundRobin {
 		// ゲーム結果
 		System.out.println(gameResult.format());
 		System.out.println("---------------------------------");
-		try {
-			// 入力待ちにして一時停止
-			System.in.read();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		
+		// 入力待ちにして一時停止
+		ConsoleInput.waitEnter();
 	}
+	
 
 	private static void competitionFinished(WinPoints winPoints) {
 		// 総当たり結果
