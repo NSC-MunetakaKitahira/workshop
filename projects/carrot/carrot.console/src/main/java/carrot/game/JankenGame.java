@@ -75,7 +75,7 @@ public class JankenGame {
 			try {
 				JankenHand hand = player.nextHand(gameStatus);
 				if (JankenHand.isValid(hand)) {
-					return new NextHand(player.nextHand(gameStatus), false);
+					return new NextHand(hand, false);
 				}
 				
 				System.out.println(player.getClass().getSimpleName() + " returns invalid hand: " + hand);
