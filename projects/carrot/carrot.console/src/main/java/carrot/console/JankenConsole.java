@@ -13,10 +13,10 @@ public class JankenConsole {
 		int numberOfRounds = 300;
 		
 		// 一対一の１ゲーム限り
-		ConsoleOneGame.start(numberOfRounds);
+		//ConsoleOneGame.start(numberOfRounds);
 		
 		// 総当たり戦
-		//ConsoleRoundRobin.start(numberOfRounds);
+		ConsoleRoundRobin.start(numberOfRounds);
 		
 	}
 }

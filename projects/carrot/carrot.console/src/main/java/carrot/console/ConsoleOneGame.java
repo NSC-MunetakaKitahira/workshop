@@ -4,8 +4,16 @@ import carrot.game.JankenGame;
 import carrot.game.JankenGameStatus;
 import carrot.judge.JankenHand;
 import carrot.player.JankenPlayer;
-import carrot.player.kitahira.AlwaysPaPlayer;
-import carrot.player.kitahira.PreviousHandPlayer;
+//import carrot.player.kitahira.AlwaysPaPlayer;
+//import carrot.player.kitahira.PreviousHandPlayer;
+//import carrot.player.kitahira.CountingPlayer;
+import carrot.player.takakuwa.NewPlayer1;
+//import carrot.player.takakuwa.NewPlayer2;
+//import carrot.player.takakuwa.NewPlayer3;
+//import carrot.player.takakuwa.NewPlayer4;
+//import carrot.player.takakuwa.NewPlayer5;
+//import carrot.player.takakuwa.TakakuwaPlayer3;
+import carrot.player.takakuwa.NewPlayer7;
 
 /**
  * 一対一の１ゲームをコンソールに出力
@@ -14,8 +22,10 @@ public class ConsoleOneGame {
 
 	public static void start(int numberOfRounds) {
 		
-		JankenPlayer player1 = new PreviousHandPlayer();
-		JankenPlayer player2 = new AlwaysPaPlayer();
+		//JankenPlayer player1 = new PreviousHandPlayer();
+		JankenPlayer player1 = new NewPlayer1();
+		//JankenPlayer player2 = new AlwaysPaPlayer();
+		JankenPlayer player2 = new NewPlayer7();
 		
 		System.out.println(
 				"P1:" + player1.getClass().getSimpleName() 

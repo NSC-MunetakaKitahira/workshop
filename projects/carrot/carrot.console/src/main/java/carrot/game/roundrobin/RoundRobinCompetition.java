@@ -29,7 +29,9 @@ public class RoundRobinCompetition {
 		
 		WinPoints winPoints = new WinPoints(playerClasses());
 		
-		for (JankenGame game : createRoundRobin()) {
+		List<JankenGame> games = createRoundRobin();
+		
+		for (JankenGame game : games) {
 			
 			gameNotifier.accept(game);
 			
