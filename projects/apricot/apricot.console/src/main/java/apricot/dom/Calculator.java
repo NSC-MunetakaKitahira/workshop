@@ -5,19 +5,15 @@ import java.util.List;
 
 public class Calculator {
 
-	public static void calculate(int timeStampStart, int timeStampEnd, WorkShift workShift) {
-		
+	public static void calculate(TimePeriod timeStamp, WorkShift workShift) {
 		// 実就業時間: 出勤～退勤と、始業～終業との重複範囲
-		int[] actualWorkTime = Commons.getDuplication(timeStampStart, timeStampEnd, workShift.getWorkStart(), workShift.getWorkEnd());
+		int[] actualWorkTime = timeStamp.Duplicate(workShift.getWorkTimes());
+		
 		
 		// 実残業時間帯: 出勤～退勤と、各残業時間帯との重複
 		List<Integer[]> actualOverworkTimes = new ArrayList<>();
-		for (int i = 0; i < workShift.getOvertimeStarts().size(); i++) {
-			int[] duplication = Commons.getDuplication(
-					timeStampStart,
-					timeStampEnd,
-					workShift.getOvertimeStarts().get(i),
-					workShift.getOvertimeEnds().get(i));
+		for (int i = 0; i < workShift.getOverTimes().size(); i++) {
+			int[] duplication = timeStamp.Duplicate(workShift.getOverTimes().get(i));
 			
 			if (duplication.length != 2) continue;
 
@@ -27,13 +23,8 @@ public class Calculator {
 		
 		// 実休憩時間帯: 出勤～退勤と、各休憩時間帯との重複
 		List<Integer[]> actualBreakTimes = new ArrayList<>();
-		for (int i = 0; i < workShift.getBreakStarts().size(); i++) {
-			int[] duplication = Commons.getDuplication(
-					timeStampStart,
-					timeStampEnd,
-					workShift.getBreakStarts().get(i),
-					workShift.getBreakEnds().get(i));
-			
+		for (int i = 0; i < workShift.getBreakTimes().size(); i++) {
+			int[] duplication = timeStamp.Duplicate(workShift.getBreakTimes().get(i));
 			if (duplication.length != 2) continue;
 
 			// int配列をList<Integer[]>に追加できないので、Integer配列に変換
@@ -43,12 +34,11 @@ public class Calculator {
 		// 実就業時間帯から実休憩時間帯に重複している部分を除外
 		List<Integer[]> actualWorkTimesWithoutBreak = new ArrayList<>();
 		for (int i = 0; i < actualBreakTimes.size(); i++) {
-			int workStart = actualWorkTime[0];
-			int workEnd = actualWorkTime[1];
-			int breakStart = actualBreakTimes.get(i)[0];
-			int breakEnd = actualBreakTimes.get(i)[1];
+		
+			TimePeriod actualWorkTimePeriod = new TimePeriod(actualWorkTime[0], actualWorkTime[1]);
+			TimePeriod actualBreakTimesPeriod = new TimePeriod(actualBreakTimes.get(i)[0], actualBreakTimes.get(i)[1]);
 			
-			int[] subtraction = Commons.getSubtraction(workStart, workEnd, breakStart, breakEnd);
+			int[] subtraction = actualWorkTimePeriod.Subtract(actualBreakTimesPeriod);
 			
 			if (subtraction.length == 2) {
 				actualWorkTimesWithoutBreak.add(new Integer[] { subtraction[0], subtraction[1] });
@@ -64,13 +54,12 @@ public class Calculator {
 		List<Integer[]> actualOverworkTimesWithoutBreak = new ArrayList<>();
 		for (int i = 0; i < actualOverworkTimes.size(); i++) {
 			for (int j = 0; j < actualBreakTimes.size(); j++) {
-				int overworkStart = actualOverworkTimes.get(i)[0];
-				int overworkEnd = actualOverworkTimes.get(i)[1];
-				int breakStart = actualBreakTimes.get(j)[0];
-				int breakEnd = actualBreakTimes.get(j)[1];
 				
-				int[] subtraction = Commons.getSubtraction(overworkStart, overworkEnd, breakStart, breakEnd);
-
+				TimePeriod actualOverworkTimesPeriod = new TimePeriod(actualOverworkTimes.get(i)[0], actualOverworkTimes.get(i)[1]);
+				TimePeriod actualBreakTimesPeriod = new TimePeriod(actualBreakTimes.get(j)[0], actualBreakTimes.get(j)[1]);
+				
+				int[] subtraction = actualOverworkTimesPeriod.Subtract(actualBreakTimesPeriod);
+				
 				if (subtraction.length == 2) {
 					actualOverworkTimesWithoutBreak.add(new Integer[] { subtraction[0], subtraction[1] });
 					break;
@@ -83,33 +72,11 @@ public class Calculator {
 		}
 		
 		System.out.println("就業時間");
-		int sumWorkTime = 0;
-		for (int i = 0; i < actualWorkTimesWithoutBreak.size(); i++) {
-			int start = actualWorkTimesWithoutBreak.get(i)[0];
-			int end = actualWorkTimesWithoutBreak.get(i)[1];
-			System.out.println(Commons.formatTime(start) + "～" + Commons.formatTime(end));
-			sumWorkTime += end - start;
-		}
-		System.out.println("合計: " + Commons.formatTime(sumWorkTime));
-		
+		Commons.actualTimesPrint(actualWorkTimesWithoutBreak);
 		System.out.println("残業時間");
-		int sumOverworkTime = 0;
-		for (int i = 0; i < actualOverworkTimesWithoutBreak.size(); i++) {
-			int start = actualOverworkTimesWithoutBreak.get(i)[0];
-			int end = actualOverworkTimesWithoutBreak.get(i)[1];
-			System.out.println(Commons.formatTime(start) + "～" + Commons.formatTime(end));
-			sumOverworkTime += end - start;
-		}
-		System.out.println("合計: " + Commons.formatTime(sumOverworkTime));
-		
+		Commons.actualTimesPrint(actualOverworkTimesWithoutBreak);
 		System.out.println("休憩時間");
-		int sumBreakTime = 0;
-		for (int i = 0; i < actualBreakTimes.size(); i++) {
-			int start = actualBreakTimes.get(i)[0];
-			int end = actualBreakTimes.get(i)[1];
-			System.out.println(Commons.formatTime(start) + "～" + Commons.formatTime(end));
-			sumBreakTime += end - start;
-		}
-		System.out.println("合計: " + Commons.formatTime(sumBreakTime));
+		Commons.actualTimesPrint(actualBreakTimes);
+		
 	}
 }

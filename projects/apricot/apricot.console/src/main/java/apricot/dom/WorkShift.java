@@ -1,88 +1,40 @@
 package apricot.dom;
 
 import java.util.List;
+import apricot.dom.TimePeriod;
 
 /**
  * 就業時間帯
  */
 public class WorkShift {
 	
-	/**
-	 * 始業時刻
-	 */
-	private int workStart;
+	//始業・就業(定時)時刻
+	private TimePeriod workTimes;
+	//残業の始業・就業時刻リスト
+	private List<TimePeriod> overTimes;
+	//休憩の始業・就業時刻リスト
+	private List<TimePeriod> brekTimes;
 	
-	/**
-	 * 終業時刻（定時）
-	 */
-	private int workEnd;
-	
-	/**
-	 * 残業の開始時刻のリスト
-	 */
-	private List<Integer> overtimeStarts;
-	
-	/**
-	 * 残業の終了時刻のリスト
-	 * 開始時刻と同じインデックスの要素がペア
-	 */
-	private List<Integer> overtimeEnds;
-	
-	/**
-	 * 休憩の開始時刻のリスト
-	 */
-	private List<Integer> breakStarts;
-	
-	/**
-	 * 休憩の終了時刻のリスト
-	 * 開始時刻と同じインデックスの要素がペア
-	 */
-	private List<Integer> breakEnds;
-	
-	public int getWorkStart() {
-		return workStart;
+
+	public TimePeriod getWorkTimes(){
+		return workTimes;
 	}
 	
-	public void setWorkStart(int workStart) {
-		this.workStart = workStart;
+	public void setWorkTimes(TimePeriod workTimes){
+		this.workTimes = workTimes;
 	}
 	
-	public int getWorkEnd() {
-		return workEnd;
+	public List<TimePeriod> getOverTimes(){
+		return overTimes;
+	}
+	public void setOverTimes(List<TimePeriod> overTimes){
+		this.overTimes = overTimes;
 	}
 	
-	public void setWorkEnd(int workEnd) {
-		this.workEnd = workEnd;
+	public List<TimePeriod> getBreakTimes(){
+		return brekTimes;
 	}
-	
-	public List<Integer> getOvertimeStarts() {
-		return overtimeStarts;
-	}
-	
-	public void setOvertimeStarts(List<Integer> overtimeStarts) {
-		this.overtimeStarts = overtimeStarts;
-	}
-	
-	public List<Integer> getOvertimeEnds() {
-		return overtimeEnds;
-	}
-	
-	public void setOvertimeEnds(List<Integer> overtimeEnds) {
-		this.overtimeEnds = overtimeEnds;
-	}
-	
-	public List<Integer> getBreakStarts() {
-		return breakStarts;
-	}
-	
-	public void setBreakStarts(List<Integer> breakStarts) {
-		this.breakStarts = breakStarts;
-	}
-	public List<Integer> getBreakEnds() {
-		return breakEnds;
-	}
-	
-	public void setBreakEnds(List<Integer> breakEnds) {
-		this.breakEnds = breakEnds;
+	public void setBreakTimes(List<TimePeriod> brekTimes){
+		this.brekTimes = brekTimes;
 	}
 }
