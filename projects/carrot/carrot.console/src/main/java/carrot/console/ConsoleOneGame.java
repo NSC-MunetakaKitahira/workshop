@@ -4,7 +4,12 @@ import carrot.game.JankenGame;
 import carrot.game.JankenGameStatus;
 import carrot.judge.JankenHand;
 import carrot.player.JankenPlayer;
+import carrot.player.oozono1;
+import carrot.player.oozono2;
+import carrot.player.oozono3;
+import carrot.player.oozono4;
 import carrot.player.kitahira.AlwaysPaPlayer;
+import carrot.player.kitahira.CountingPlayer;
 import carrot.player.kitahira.PreviousHandPlayer;
 
 /**
@@ -14,8 +19,8 @@ public class ConsoleOneGame {
 
 	public static void start(int numberOfRounds) {
 		
-		JankenPlayer player1 = new PreviousHandPlayer();
-		JankenPlayer player2 = new AlwaysPaPlayer();
+		JankenPlayer player1 = new oozono4();
+		JankenPlayer player2 = new oozono3();
 		
 		System.out.println(
 				"P1:" + player1.getClass().getSimpleName() 

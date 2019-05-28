@@ -22,6 +22,8 @@ public enum JankenHand {
 	
 	/** 全ての手役の集合 */
 	private static final Set<JankenHand> ALL_HANDS = new HashSet<>(Arrays.asList(JankenHand.values()));
+
+	public static int pa;
 	
 	/** 判定ロジック用の値 */
 	private final int valueForJudge;
