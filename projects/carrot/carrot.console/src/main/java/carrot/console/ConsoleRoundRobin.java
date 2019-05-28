@@ -9,7 +9,9 @@ import carrot.game.roundrobin.RoundRobinCompetition;
 import carrot.game.roundrobin.WinPoints;
 import carrot.player.kitahira.AlwaysPaPlayer;
 import carrot.player.kitahira.PreviousHandPlayer;
-
+import carrot.player.umemura.UmemuraRandomPlayer;
+import carrot.player.umemura.UmemuraHighPointPlayer;
+import carrot.player.umemura.UmemuraChokiPaPlayer;
 /**
  * 総当たり戦をコンソールに出力
  */
@@ -19,7 +21,10 @@ public class ConsoleRoundRobin {
 		
 		RoundRobinCompetition compet = new RoundRobinCompetition(numberOfRounds, Arrays.asList(
 				new AlwaysPaPlayer(),
-				new PreviousHandPlayer()
+				new PreviousHandPlayer(),
+				new UmemuraRandomPlayer(),
+				new UmemuraHighPointPlayer(),
+				new UmemuraChokiPaPlayer()
 				));
 		
 		compet.start(

@@ -6,6 +6,9 @@ import carrot.judge.JankenHand;
 import carrot.player.JankenPlayer;
 import carrot.player.kitahira.AlwaysPaPlayer;
 import carrot.player.kitahira.PreviousHandPlayer;
+import carrot.player.umemura.UmemuraRandomPlayer;
+import carrot.player.umemura.UmemuraHighPointPlayer;
+import carrot.player.umemura.UmemuraChokiPaPlayer;
 
 /**
  * 一対一の１ゲームをコンソールに出力
@@ -14,9 +17,12 @@ public class ConsoleOneGame {
 
 	public static void start(int numberOfRounds) {
 		
-		JankenPlayer player1 = new PreviousHandPlayer();
-		JankenPlayer player2 = new AlwaysPaPlayer();
-		
+		//JankenPlayer player1 = new PreviousHandPlayer();
+		JankenPlayer player1 = new UmemuraHighPointPlayer();
+		//JankenPlayer player1 = new ChokiPaPlayer();
+		JankenPlayer player2 = new UmemuraRandomPlayer();
+		//JankenPlayer player2 = new AlwaysPaPlayer();
+
 		System.out.println(
 				"P1:" + player1.getClass().getSimpleName() 
 				+ " vs P2:" + player2.getClass().getSimpleName());
