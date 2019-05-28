@@ -27,8 +27,6 @@ allprojects {
 	sourceCompatibility = "$javaVersion"
 	targetCompatibility = "$javaVersion"
 
-	task cleanandbuildallproject (dependsOn: ['clean', 'build'])<< {
-	}
 }
 
 subprojects {
