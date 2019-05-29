@@ -9,14 +9,14 @@ public class WorkShiftRepository {
 
 	public static WorkShift get() {
 		
-		WorkShift workShift = new WorkShift();
-		workShift.setWorkTime(new TimePeriod(new TimeOfDay(510), new TimeOfDay(1050)));
-		workShift.setOverworkTimes(Arrays.asList(
-				new TimePeriod(new TimeOfDay(1080), new TimeOfDay(1320)),
-				new TimePeriod(new TimeOfDay(1320), new TimeOfDay(1440))));
-		workShift.setBreakTimes(Arrays.asList(
-				new TimePeriod(new TimeOfDay(720), new TimeOfDay(780)),
-				new TimePeriod(new TimeOfDay(1080), new TimeOfDay(1110))));
+		WorkShift workShift = new WorkShift(
+				new TimePeriod(new TimeOfDay(8, 30), new TimeOfDay(17, 30)),
+				Arrays.asList(
+						new TimePeriod(new TimeOfDay(18, 0), new TimeOfDay(22, 0)),
+						new TimePeriod(new TimeOfDay(22, 0), new TimeOfDay(24, 0))),
+				Arrays.asList(
+						new TimePeriod(new TimeOfDay(12, 0), new TimeOfDay(13, 0)),
+						new TimePeriod(new TimeOfDay(17, 30), new TimeOfDay(18, 0))));
 		
 		return workShift;
 	}
