@@ -43,29 +43,45 @@ public class WorkShift {
 		List<TimePeriod> actualBreakTimes = getDuplications(actualWorkTime, breakTimes);
 		
 		// 実就業時間帯から実休憩時間帯に重複している部分を除外
-		List<TimePeriod> actualWorkTimesWithoutBreak;
-		if (actualBreakTimes.isEmpty()) {
-			actualWorkTimesWithoutBreak = Arrays.asList(actualWorkTime);
-		} else {
-			actualWorkTimesWithoutBreak = getSubtractions(actualWorkTime, actualBreakTimes);
-		}
+		List<TimePeriod> actualWorkTimesWithoutBreak = excludeBreakTimes(
+				actualWorkTime, actualBreakTimes);
 		
 		// 実残業時間帯から実休憩時間帯に重複している部分を除外
-		List<TimePeriod> actualOverworkTimesWithoutBreak;
-		if (actualBreakTimes.isEmpty()) {
-			actualOverworkTimesWithoutBreak = actualOverworkTimes;
-		} else {
-			actualOverworkTimesWithoutBreak = new ArrayList<>();
-			for (TimePeriod overworkTime : actualOverworkTimes) {
-				actualOverworkTimesWithoutBreak.addAll(
-						getSubtractions(overworkTime, actualBreakTimes));
-			}
-		}
+		List<TimePeriod> actualOverworkTimesWithoutBreak = excludeBreakTimesFromOverworkTimes(
+				actualOverworkTimes, actualBreakTimes);
 		
 		return new CalculateResult(
 				actualWorkTimesWithoutBreak,
 				actualOverworkTimesWithoutBreak,
 				actualBreakTimes);
+	}
+
+	private static List<TimePeriod> excludeBreakTimes(
+			TimePeriod actualWorkTime,
+			List<TimePeriod> actualBreakTimes) {
+		
+		if (actualBreakTimes.isEmpty()) {
+			return Arrays.asList(actualWorkTime);
+		}
+		
+		return getSubtractions(actualWorkTime, actualBreakTimes);
+	}
+
+	private static List<TimePeriod> excludeBreakTimesFromOverworkTimes(
+			List<TimePeriod> actualOverworkTimes,
+			List<TimePeriod> actualBreakTimes) {
+		
+		if (actualBreakTimes.isEmpty()) {
+			return actualOverworkTimes;
+		}
+		
+		List<TimePeriod> actualOverworkTimesWithoutBreak = new ArrayList<>();
+		for (TimePeriod overworkTime : actualOverworkTimes) {
+			actualOverworkTimesWithoutBreak.addAll(
+					getSubtractions(overworkTime, actualBreakTimes));
+		}
+		
+		return actualOverworkTimesWithoutBreak;
 	}
 	
 	private static List<TimePeriod> getDuplications(TimePeriod base, List<TimePeriod> list) {
