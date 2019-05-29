@@ -59,10 +59,6 @@ public class TimeOfDay {
 		return this.minutesFromZero - other.minutesFromZero;
 	}
 
-	public String format() {
-		return String.format("%d:%02d", this.hourPart(), this.minutePart());
-	}
-
 	/**
 	 * 時刻の「時」部分の値を返す
 	 * 
@@ -79,6 +75,10 @@ public class TimeOfDay {
 	 */
 	private int minutePart() {
 		return this.minutesFromZero % 60;
+	}
+
+	public String format() {
+		return String.format("%d:%02d", this.hourPart(), this.minutePart());
 	}
 	
 	@Override
