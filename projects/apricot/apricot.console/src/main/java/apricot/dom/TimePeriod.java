@@ -5,8 +5,18 @@ public class TimePeriod {
 	private int end;
 	
 	public TimePeriod(int start, int end){
-		this.start = start;
-		this.end = end;
+		
+		try {
+			if(end < start) {
+				throw new Exception("開始時間と終了時間がおかしくなっています");
+			}
+			this.start = start;
+			this.end = end;
+		}catch (Exception e) {
+			System.out.println("TimePeriodの生成に失敗しました");
+			System.out.println(e);
+		}
+
 	}
 	
 //	 * 重複範囲を配列で返す。

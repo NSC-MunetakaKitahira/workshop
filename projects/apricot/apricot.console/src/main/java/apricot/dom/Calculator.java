@@ -50,6 +50,11 @@ public class Calculator {
 			}
 		}
 		
+		//休憩なしで業務が終了
+		if(actualBreakTimes.size() <= 0 && actualWorkTimesWithoutBreak.size() <=0) {
+			actualWorkTimesWithoutBreak.add(new Integer[] { actualWorkTime[0], actualWorkTime[1] });
+		}
+		
 		// 実残業時間帯から実休憩時間帯に重複している部分を除外
 		List<Integer[]> actualOverworkTimesWithoutBreak = new ArrayList<>();
 		for (int i = 0; i < actualOverworkTimes.size(); i++) {

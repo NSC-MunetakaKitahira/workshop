@@ -13,7 +13,7 @@ public class WorkShift {
 	//残業の始業・就業時刻リスト
 	private List<TimePeriod> overTimes;
 	//休憩の始業・就業時刻リスト
-	private List<TimePeriod> brekTimes;
+	private List<TimePeriod> breakTimes;
 	
 
 	public TimePeriod getWorkTimes(){
@@ -32,9 +32,9 @@ public class WorkShift {
 	}
 	
 	public List<TimePeriod> getBreakTimes(){
-		return brekTimes;
+		return breakTimes;
 	}
-	public void setBreakTimes(List<TimePeriod> brekTimes){
-		this.brekTimes = brekTimes;
+	public void setBreakTimes(List<TimePeriod> breakTimes){
+		this.breakTimes = breakTimes;
 	}
 }
