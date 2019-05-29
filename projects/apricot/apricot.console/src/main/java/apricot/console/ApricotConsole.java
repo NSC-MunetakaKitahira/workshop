@@ -19,6 +19,14 @@ public class ApricotConsole {
 	public static void main(String[] args) {
 		
 		WorkShift workShift = WorkShiftRepository.get();
+		TimePeriod timeStamp = readTimeStamp();
+		
+		Calculator.Result result = Calculator.calculate(timeStamp, workShift);
+
+		printResult(result);
+	}
+
+	private static TimePeriod readTimeStamp() {
 		String startTime;
 		String endTime;
 
@@ -32,8 +40,27 @@ public class ApricotConsole {
 			endTime = scan.nextLine();
 		}
 		
-		TimePeriod timeStamp = new TimePeriod(new TimeOfDay(startTime), new TimeOfDay(endTime));
-		Calculator.calculate(timeStamp, workShift);
+		return new TimePeriod(new TimeOfDay(startTime), new TimeOfDay(endTime));
+	}
+
+	private static void printResult(Calculator.Result result) {
+		System.out.println("就業時間");
+		for (TimePeriod period : result.workTimes) {
+			System.out.println(period.format());
+		}
+		System.out.println("合計: " + Commons.formatTime(result.sumWorkTime()));
+		
+		System.out.println("残業時間");
+		for (TimePeriod period : result.overworkTimes) {
+			System.out.println(period.format());
+		}
+		System.out.println("合計: " + Commons.formatTime(result.sumOverworkTime()));
+		
+		System.out.println("休憩時間");
+		for (TimePeriod period : result.breakTimes) {
+			System.out.println(period.format());
+		}
+		System.out.println("合計: " + Commons.formatTime(result.sumBreakTime()));
 	}
 	
 }

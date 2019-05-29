@@ -3,10 +3,11 @@ package apricot.dom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Calculator {
 
-	public static void calculate(TimePeriod timeStamp, WorkShift workShift) {
+	public static Result calculate(TimePeriod timeStamp, WorkShift workShift) {
 
 		// 実就業時間: 出勤～退勤と、始業～終業との重複範囲
 		TimePeriod actualWorkTime = timeStamp.getDuplicationWith(workShift.getWorkTime());
@@ -62,28 +63,41 @@ public class Calculator {
 			}
 		}
 		
-		System.out.println("就業時間");
-		int sumWorkTime = 0;
-		for (TimePeriod period : actualWorkTimesWithoutBreak) {
-			System.out.println(period.format());
-			sumWorkTime += period.minutesOfLength();
-		}
-		System.out.println("合計: " + Commons.formatTime(sumWorkTime));
+		return new Result(
+				actualWorkTimesWithoutBreak,
+				actualOverworkTimesWithoutBreak,
+				actualBreakTimes);
 		
-		System.out.println("残業時間");
-		int sumOverworkTime = 0;
-		for (TimePeriod period : actualOverworkTimesWithoutBreak) {
-			System.out.println(period.format());
-			sumOverworkTime += period.minutesOfLength();
-		}
-		System.out.println("合計: " + Commons.formatTime(sumOverworkTime));
+	}
+	
+	public static class Result {
+		public final List<TimePeriod> workTimes;
+		public final List<TimePeriod> overworkTimes;
+		public final List<TimePeriod> breakTimes;
 		
-		System.out.println("休憩時間");
-		int sumBreakTime = 0;
-		for (TimePeriod period : actualBreakTimes) {
-			System.out.println(period.format());
-			sumBreakTime += period.minutesOfLength();
+		public Result(
+				List<TimePeriod> workTimes,
+				List<TimePeriod> overworkTimes,
+				List<TimePeriod> breakTimes) {
+			
+			this.workTimes = workTimes;
+			this.overworkTimes = overworkTimes;
+			this.breakTimes = breakTimes;
 		}
-		System.out.println("合計: " + Commons.formatTime(sumBreakTime));
+		
+		public int sumWorkTime() {
+			return workTimes.stream()
+					.collect(Collectors.summingInt(p -> p.minutesOfLength()));
+		}
+		
+		public int sumOverworkTime() {
+			return overworkTimes.stream()
+					.collect(Collectors.summingInt(p -> p.minutesOfLength()));
+		}
+		
+		public int sumBreakTime() {
+			return breakTimes.stream()
+					.collect(Collectors.summingInt(p -> p.minutesOfLength()));
+		}
 	}
 }
