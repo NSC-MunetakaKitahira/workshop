@@ -37,37 +37,17 @@ public class WorkShift {
 		TimePeriod actualWorkTime = timeStamp.getDuplicationWith(workTime);
 		
 		// 実残業時間帯: 出勤～退勤と、各残業時間帯との重複
-		List<TimePeriod> actualOverworkTimes = new ArrayList<>();
-		for (TimePeriod overworkTime : overworkTimes) {
-			TimePeriod duplication = timeStamp.getDuplicationWith(overworkTime);
-			
-			if (duplication == null) continue;
-			
-			actualOverworkTimes.add(duplication);
-		}
+		List<TimePeriod> actualOverworkTimes = getDuplications(actualWorkTime, overworkTimes);
 		
 		// 実休憩時間帯: 出勤～退勤と、各休憩時間帯との重複
-		List<TimePeriod> actualBreakTimes = new ArrayList<>();
-		for (TimePeriod breakTime : breakTimes) {
-			TimePeriod duplication = timeStamp.getDuplicationWith(breakTime);
-			
-			if (duplication == null) continue;
-			
-			actualBreakTimes.add(duplication);
-		}
+		List<TimePeriod> actualBreakTimes = getDuplications(actualWorkTime, breakTimes);
 		
 		// 実就業時間帯から実休憩時間帯に重複している部分を除外
 		List<TimePeriod> actualWorkTimesWithoutBreak;
 		if (actualBreakTimes.isEmpty()) {
 			actualWorkTimesWithoutBreak = Arrays.asList(actualWorkTime);
 		} else {
-			actualWorkTimesWithoutBreak = new ArrayList<>();
-			for (TimePeriod actualBreakTime : actualBreakTimes) {
-				List<TimePeriod> subtraction = actualWorkTime.subtract(actualBreakTime);
-				actualWorkTimesWithoutBreak.addAll(subtraction);
-				
-				if (!subtraction.isEmpty()) break;
-			}
+			actualWorkTimesWithoutBreak = getSubtractions(actualWorkTime, actualBreakTimes);
 		}
 		
 		// 実残業時間帯から実休憩時間帯に重複している部分を除外
@@ -76,14 +56,9 @@ public class WorkShift {
 			actualOverworkTimesWithoutBreak = actualOverworkTimes;
 		} else {
 			actualOverworkTimesWithoutBreak = new ArrayList<>();
-			
 			for (TimePeriod overworkTime : actualOverworkTimes) {
-				for (TimePeriod breakTime : actualBreakTimes) {
-					List<TimePeriod> subtraction = overworkTime.subtract(breakTime);
-					actualOverworkTimesWithoutBreak.addAll(subtraction);
-					
-					if (!subtraction.isEmpty()) break;
-				}
+				actualOverworkTimesWithoutBreak.addAll(
+						getSubtractions(overworkTime, actualBreakTimes));
 			}
 		}
 		
@@ -91,7 +66,19 @@ public class WorkShift {
 				actualWorkTimesWithoutBreak,
 				actualOverworkTimesWithoutBreak,
 				actualBreakTimes);
-		
+	}
+	
+	private static List<TimePeriod> getDuplications(TimePeriod base, List<TimePeriod> list) {
+		return list.stream()
+				.map(p -> p.getDuplicationWith(base))
+				.filter(dup -> dup != null)
+				.collect(Collectors.toList());
+	}
+	
+	private static List<TimePeriod> getSubtractions(TimePeriod base, List<TimePeriod> subtractors) {
+		return subtractors.stream()
+				.flatMap(sub -> base.subtract(sub).stream())
+				.collect(Collectors.toList());
 	}
 	
 	public static class CalculateResult {
