@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import apricot.dom.Calculator;
 import apricot.dom.Commons;
+import apricot.dom.TimeOfDay;
 import apricot.dom.TimePeriod;
 import apricot.dom.WorkShift;
 import apricot.dom.WorkShiftRepository;
@@ -31,7 +32,7 @@ public class ApricotConsole {
 			endTime = scan.nextLine();
 		}
 		
-		TimePeriod timeStamp = new TimePeriod(Commons.parseTimeString(startTime), Commons.parseTimeString(endTime));
+		TimePeriod timeStamp = new TimePeriod(new TimeOfDay(startTime), new TimeOfDay(endTime));
 		Calculator.calculate(timeStamp, workShift);
 	}
 	
