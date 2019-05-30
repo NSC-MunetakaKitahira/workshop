@@ -1,7 +1,5 @@
 package apricot.dom;
 
-import java.util.List;
-
 public class Commons {
 
 	public static int parseTimeString(String timeString) {
@@ -22,42 +20,42 @@ public class Commons {
 	 * @param end2
 	 * @return
 	 */
-	public static int[] getDuplication(int start1, int end1, int start2, int end2) {
+	public static TimePeriod getDuplication(TimePeriod Period1, TimePeriod Period2) {
 
 		// <--->
 		//       <--->
-		if (end1 < start2) {
-			return new int[] {};
+		if (Period1.end < Period2.start) {
+			return null;
 		}
 		
 		//       <--->
 		// <--->
-		if (end2 < start1) {
-			return new int[] {};
+		if (Period2.end < Period1.start) {
+			return null;
 		}
 		
 		// <--------->
 		//   <---->
-		if (start1 <= start2 && end2 <= end1) {
-			return new int[] { start2, end2 };
+		if (Period1.start <= Period2.start && Period2.end <= Period1.end) {
+			return Period2;
 		}
 
 		//   <---->
 		// <--------->
-		if (start2 <= start1 && end1 <= end2) {
-			return new int[] { start1, end1 };
+		if (Period2.start <= Period1.start && Period1.end <= Period2.end) {
+			return Period1;
 		}
 		
 		// <------>
 		//    <------>
-		if (start1 <= start2 && end1 <= end2) {
-			return new int[] { start2, end1 };
+		if (Period1.start <= Period2.start && Period1.end <= Period2.end) {
+			return new TimePeriod(Period2.start,Period1.end);
 		}
 
 		//    <------>
 		// <------>
-		if (start2 <= start1 && end2 <= end1) {
-			return new int[] { start1,  end2 };
+		if (Period2.start <= Period1.start && Period2.end <= Period1.end) {
+			return new TimePeriod(Period1.start,Period2.end);
 		}
 		
 		throw new RuntimeException("たぶん他のケースは無い？");
@@ -74,54 +72,54 @@ public class Commons {
 	 * @param end2
 	 * @return
 	 */
-	public static int[] getSubtraction(int start1, int end1, int start2, int end2) {
+	public static TimePeriod[] getSubtraction(TimePeriod Period1, TimePeriod Period2) {
 
 		// <--->
 		//       <--->
-		if (end1 < start2) {
-			return new int[] { start1, end1 };
+		if (Period1.end < Period2.start) {
+			return null;
 		}
 		
 		//       <--->
 		// <--->
-		if (end2 < start1) {
-			return new int[] { start1, end1 };
+		if (Period2.end < Period1.start) {
+			return null;
 		}
 		
 		// <--------->
 		// <---->
-		if (start1 == start2 && end2 < end1) {
-			return new int[] { end2, end1};
+		if (Period1.start == Period2.start && Period2.end < Period1.end) {
+			return new TimePeriod[] {new TimePeriod(Period2.end,Period1.end)};
 		}
 
 		// <--------->
 		//      <---->
-		if (start1 < start2 && end1 == end2) {
-			return new int[] { start1, start2 };
+		if (Period1.start < Period2.start && Period1.end == Period2.end) {
+			return new TimePeriod[] {new TimePeriod(Period1.start,Period2.start)};
 		}
 		
 		// <--------->
 		//   <---->
-		if (start1 < start2 && end2 < end1) {
-			return new int[] { start1, start2, end2, end1 };
+		if (Period1.start < Period2.start && Period2.end < Period1.end) {
+			return new TimePeriod[] {new TimePeriod(Period1.start, Period2.start),new TimePeriod(Period2.end,Period1.end)};
 		}
 
 		//   <---->
 		// <--------->
-		if (start2 <= start1 && end1 <= end2) {
-			return new int[] { };
+		if (Period2.start <= Period1.start && Period1.end <= Period2.end) {
+			return null;
 		}
 		
 		// <------>
 		//    <------>
-		if (start1 <= start2 && end1 <= end2) {
-			return new int[] { start1, start2 };
+		if (Period1.start <= Period2.start && Period1.end <= Period2.end) {
+			return new TimePeriod[] {new TimePeriod(Period1.start,Period2.start)};
 		}
 
 		//    <------>
 		// <------>
-		if (start2 <= start1 && end2 <= end1) {
-			return new int[] { end2,  end1 };
+		if (Period2.start <= Period1.start && Period2.end <= Period1.end) {
+			return new TimePeriod[] {new TimePeriod(Period2.end,Period1.end)};
 		}
 		
 		throw new RuntimeException("たぶん他のケースは無い？");
