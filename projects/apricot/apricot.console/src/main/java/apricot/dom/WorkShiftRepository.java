@@ -8,15 +8,15 @@ import java.util.Arrays;
 public class WorkShiftRepository {
 
 	public static WorkShift get() {
-		
+
 		WorkShift workShift = new WorkShift();
-		workShift.setWorkStart(510);
-		workShift.setWorkEnd(1050);
-		workShift.setOvertimeStarts(Arrays.asList(1080, 1320));
-		workShift.setOvertimeEnds(Arrays.asList(1320, 1440));
-		workShift.setBreakStarts(Arrays.asList(720, 1080));
-		workShift.setBreakEnds(Arrays.asList(780, 1110));
-		
+		workShift.setWork(new TimePeriod(510, 1050));
+		// workShift.setWorkEnd(1050);
+		workShift.setOvertime(Arrays.asList(new TimePeriod(1080, 1320), new TimePeriod(1320, 1440)));
+		// workShift.setOvertimeE(Arrays.asList(1320, 1440));
+		workShift.setBreak(Arrays.asList(new TimePeriod(720, 780), new TimePeriod(1080, 1110)));
+		// workShift.setBreakA(Arrays.asList(new TimePeriod(1080, 1110)));
+
 		return workShift;
 	}
 }
