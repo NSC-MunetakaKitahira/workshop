@@ -18,12 +18,12 @@ public class Commons {
 		return String.format("%d:%02d", hours, minutes);
 	}
 	
-	public static void actualTimesPrint(List<Integer[]> actualTimes) {
+	public static void actualTimesPrint(List<TimePeriod> actualTimes) {
 		
 		int sumTime = 0;
-		for (int i = 0; i < actualTimes.size(); i++) {
-			int start = actualTimes.get(i)[0];
-			int end = actualTimes.get(i)[1];
+		for (TimePeriod actualTime : actualTimes) {
+			int start = actualTime.getStart();
+			int end = actualTime.getEnd();
 			System.out.println(formatTime(start) + "～" + Commons.formatTime(end));
 			sumTime += end - start;
 		}
