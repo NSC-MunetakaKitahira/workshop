@@ -10,6 +10,8 @@ public class WorkShift {
 	/**
 	 * 始業時刻
 	 */
+	
+	
 	private int workStart;
 	
 	/**
@@ -20,25 +22,42 @@ public class WorkShift {
 	/**
 	 * 残業の開始時刻のリスト
 	 */
-	private List<Integer> overtimeStarts;
+    public TimePeriod  Period;
+	
+	private List<TimePeriod> overtimePeriod;
+	public void setovertimePeriod(List<TimePeriod>  overtimePeriod) {
+		this.overtimePeriod = overtimePeriod;
+	}
+	
+	public List<TimePeriod> getovertimePeriod() {
+		return overtimePeriod;
+	}
 	
 	/**
 	 * 残業の終了時刻のリスト
 	 * 開始時刻と同じインデックスの要素がペア
 	 */
-	private List<Integer> overtimeEnds;
 	
 	/**
 	 * 休憩の開始時刻のリスト
 	 */
-	private List<Integer> breakStarts;
+	public  TimePeriod Break;
+	
+	private List<TimePeriod>  breakTimePeriod;
+	public void setbreaktimePeriod(List<TimePeriod>  breaktimePeriod) {
+		this.breakTimePeriod = breaktimePeriod;
+	}
+	
+	public List<TimePeriod> getbreaktimePeriod() {
+		return breakTimePeriod;
+	
+	}
 	
 	/**
 	 * 休憩の終了時刻のリスト
 	 * 開始時刻と同じインデックスの要素がペア
 	 */
-	private List<Integer> breakEnds;
-	
+
 	public int getWorkStart() {
 		return workStart;
 	}
@@ -54,35 +73,6 @@ public class WorkShift {
 	public void setWorkEnd(int workEnd) {
 		this.workEnd = workEnd;
 	}
-	
-	public List<Integer> getOvertimeStarts() {
-		return overtimeStarts;
-	}
-	
-	public void setOvertimeStarts(List<Integer> overtimeStarts) {
-		this.overtimeStarts = overtimeStarts;
-	}
-	
-	public List<Integer> getOvertimeEnds() {
-		return overtimeEnds;
-	}
-	
-	public void setOvertimeEnds(List<Integer> overtimeEnds) {
-		this.overtimeEnds = overtimeEnds;
-	}
-	
-	public List<Integer> getBreakStarts() {
-		return breakStarts;
-	}
-	
-	public void setBreakStarts(List<Integer> breakStarts) {
-		this.breakStarts = breakStarts;
-	}
-	public List<Integer> getBreakEnds() {
-		return breakEnds;
-	}
-	
-	public void setBreakEnds(List<Integer> breakEnds) {
-		this.breakEnds = breakEnds;
-	}
 }
+	
+	
