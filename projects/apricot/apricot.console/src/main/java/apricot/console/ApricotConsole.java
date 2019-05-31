@@ -29,7 +29,6 @@ public class ApricotConsole {
 			System.out.print("終了時刻 = ");
 			endTime = scan.nextLine();
 		}
-		
 		Calculator.calculate(Commons.parseTimeString(startTime), Commons.parseTimeString(endTime), workShift);
 	}
 	

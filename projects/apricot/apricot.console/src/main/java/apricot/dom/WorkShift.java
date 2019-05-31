@@ -12,37 +12,28 @@ public class WorkShift {
 	/* 始業時刻＆終業時刻（定時）*/
 	private TimePeriod workTimePeriod;
 	
-
-	
 	/* 残業の開始・終了時刻のリスト*/
 	private List<TimePeriod> overTimePeriod;
-	
 
 	/*休憩の開始・終了時刻のリスト*/
 	private List<TimePeriod> breakTimePeriod;
-
 	
-	public TimePeriod getWorkTimePeriod(){
+	public TimePeriod getWorktimePeriod(){
 		return workTimePeriod;
 	}
-
-	public void setWorkTimePeriod(TimePeriod workTimePeriod) {
+	public void setWorktimePeriod(TimePeriod workTimePeriod) {
 		this.workTimePeriod = workTimePeriod;
 	}
-
-	public List<TimePeriod> getOverTimePeriod(){
+	public List<TimePeriod> getOvertimePeriod(){
 		return overTimePeriod;
 	}
-		
-	public void setOverTimePeriod(List<TimePeriod> overTimePeriod) {
+	public void setOvertimePeriod(List<TimePeriod> overTimePeriod) {
 		this.overTimePeriod = overTimePeriod;
 	}
-
-	public List<TimePeriod> getBreakTimePeriod(){
+	public List<TimePeriod> getBreaktimePeriod(){
 		return breakTimePeriod;
 	}
-
-	public void setBreakTimePeriod(List<TimePeriod> breakTimePeriod) {
+	public void setBreaktimePeriod(List<TimePeriod> breakTimePeriod) {
 		this.breakTimePeriod = breakTimePeriod;
 	}
 }	
