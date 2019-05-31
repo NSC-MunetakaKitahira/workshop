@@ -8,25 +8,24 @@ public class Calculator {
 	public static void calculate(TimePeriod timeStamp, WorkShift workShift) {
 		
 		// 実就業時間: 出勤～退勤と、始業～終業との重複範囲
-		TimePeriod actualWorkTime = Commons.getDuplication(timeStamp, workShift.getWorkTimePeriod());
+		TimePeriod actualWorkTime = TimePeriod.getDuplication(timeStamp, workShift.getWorkTimePeriod());
 		
 		// 実残業時間帯: 出勤～退勤と、各残業時間帯との重複
 		List<TimePeriod> actualOverworkTimes = new ArrayList<>();
 		for (int i = 0; i < workShift.getOverTimePeriod().size(); i++) {
-			TimePeriod duplication = Commons.getDuplication(
+			TimePeriod duplication = TimePeriod.getDuplication(
 					timeStamp,
 					workShift.getOverTimePeriod().get(i));
 			
-			if (duplication.length() == 2) {
-		
-		
+			if (duplication.length() == 2) {	
 			// int配列をList<Integer[]>に追加できないので、Integer配列に変換
 			actualOverworkTimes.add(new TimePeriod { duplication[0], duplication[1] });	
 			}
+			
 		// 実休憩時間帯: 出勤～退勤と、各休憩時間帯との重複
 		List<TimePeriod> actualBreakTimes = new ArrayList<>();
 		for (int i = 0; i < workShift.getBreakTimePeriod().size(); i++) {
-			TimePeriod duplication = Commons.getDuplication(
+			TimePeriod duplication = TimePeriod.getDuplication(
 					timeStamp,
 					workShift.getBreakTimePeriod().get(i));
 			
@@ -46,7 +45,7 @@ public class Calculator {
 			TimePeriod workTimePeriod = actualWorkTime;
 			TimePeriod breakTimePeriod = actualBreakTimes.get(i);			
 			
-			TimePeriod subtraction = Commons.getSubtraction(actualWorkTime, actualBreakTimes);
+			TimePeriod subtraction = TimePeriod.getSubtraction(actualWorkTime, actualBreakTimes);
 			
 			if (subtraction.length == 2) {
 				actualWorkTimesWithoutBreak.add(new TimePeriod[] { subtraction[0], subtraction[1] });
@@ -62,12 +61,10 @@ public class Calculator {
 		List<TimePeriod> actualOverworkTimesWithoutBreak = new ArrayList<>();
 		for (int i = 0; i < actualOverworkTimes.size(); i++) {
 			for (int j = 0; j < actualBreakTimes.size(); j++) {
-				int overworkStart = actualOverworkTimes.get(i)[0];
-				int overworkEnd = actualOverworkTimes.get(i)[1];
-				int breakStart = actualBreakTimes.get(j)[0];
-				int breakEnd = actualBreakTimes.get(j)[1];
+				TimePeriod overworkTimePeriod = actualOverworkTimes.get(i);
+				TimePeriod breakTimePeriod = actualBreakTimes.get(j);
 				
-				TimePeriod[] subtraction = Commons.getSubtraction(overworkStart, overworkEnd, breakStart, breakEnd);
+				TimePeriod[] subtraction = TimePeriod.getSubtraction(overworkTimePeriod, breakTimePeriod);
 
 				if (subtraction.length == 2) {
 					actualOverworkTimesWithoutBreak.add(new TimePeriod[] { subtraction[0], subtraction[1] });

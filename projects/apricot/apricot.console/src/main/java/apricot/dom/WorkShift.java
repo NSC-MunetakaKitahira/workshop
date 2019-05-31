@@ -8,33 +8,17 @@ import java.util.List;
  */
 public class WorkShift {
 	
-	/**
-	 * 始業時刻
-	 * 終業時刻（定時）
-	private int workStart;
-	private int workEnd;
-	*/	
 
+	/* 始業時刻＆終業時刻（定時）*/
 	private TimePeriod workTimePeriod;
 	
-	/**
-	 * 残業の開始時刻のリスト	/**
-	 * 残業の終了時刻のリスト
-	 * 開始時刻と同じインデックスの要素がペア
-	private List<Integer> overtimeStarts;
-	private List<Integer> overtimeEnds;
-	 */
-	 
+
+	
+	/* 残業の開始・終了時刻のリスト*/
 	private List<TimePeriod> overTimePeriod;
+	
 
-	/**
-	 * 休憩の開始時刻のリスト
-	 * 休憩の終了時刻のリスト
-	 * 開始時刻と同じインデックスの要素がペア
-	private List<Integer> breakStarts;
-	private List<Integer> breakEnds;
-	*/
-
+	/*休憩の開始・終了時刻のリスト*/
 	private List<TimePeriod> breakTimePeriod;
 
 	
@@ -63,7 +47,30 @@ public class WorkShift {
 	}
 }	
 
-	
+
+	/**
+	 * 始業時刻
+	 * 終業時刻（定時）
+	private int workStart;
+	private int workEnd;
+	*/	
+
+	/**
+	 * 残業の開始時刻のリスト	/**
+	 * 残業の終了時刻のリスト
+	 * 開始時刻と同じインデックスの要素がペア
+	private List<Integer> overtimeStarts;
+	private List<Integer> overtimeEnds;
+	 */
+
+	/**
+	 * 休憩の開始時刻のリスト
+	 * 休憩の終了時刻のリスト
+	 * 開始時刻と同じインデックスの要素がペア
+	private List<Integer> breakStarts;
+	private List<Integer> breakEnds;
+	*/
+
 	/*
 	public int getWorkStart() {
 		return workStart;
