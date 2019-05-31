@@ -25,7 +25,7 @@ public class Commons {
 		// <--->
 		//       <--->
 		if (Period1.end < Period2.start) {
-			return null;
+			return null ;
 		}
 		
 		//       <--->
@@ -77,13 +77,13 @@ public class Commons {
 		// <--->
 		//       <--->
 		if (Period1.end < Period2.start) {
-			return null;
+			return new TimePeriod[] {};
 		}
 		
 		//       <--->
 		// <--->
 		if (Period2.end < Period1.start) {
-			return null;
+			return new TimePeriod[] {};
 		}
 		
 		// <--------->

@@ -17,12 +17,12 @@ public class Calculator {
 					timeStamp,
 					workShift.getOverTimePeriod().get(i));
 			
-			if (duplication.length() == 0 || duplication.length() == 1) continue;
-		}
+			if (duplication.length() == 2) {
+		
 		
 			// int配列をList<Integer[]>に追加できないので、Integer配列に変換
-//			actualOverworkTimes.add(new Integer[] { duplication[0], duplication[1] });	
-		
+			actualOverworkTimes.add(new TimePeriod { duplication[0], duplication[1] });	
+			}
 		// 実休憩時間帯: 出勤～退勤と、各休憩時間帯との重複
 		List<TimePeriod> actualBreakTimes = new ArrayList<>();
 		for (int i = 0; i < workShift.getBreakTimePeriod().size(); i++) {
@@ -34,7 +34,7 @@ public class Calculator {
 		}
 		
 			// int配列をList<Integer[]>に追加できないので、Integer配列に変換
-//		 	actualBreakTimes.add(new Integer[] { duplication[0], duplication[1] });
+		 	actualBreakTimes.add(new Integer[] { duplication[0], duplication[1] });
 	     	
 		// 実就業時間帯から実休憩時間帯に重複している部分を除外
 		List<TimePeriod> actualWorkTimesWithoutBreak = new ArrayList<>();
@@ -43,7 +43,7 @@ public class Calculator {
 //			int workEnd = actualWorkTime[1];
 //			int breakStart = actualBreakTimes.get(i)[0];
 //			int breakEnd = actualBreakTimes.get(i)[1];
-			TimePeriod[] workTimePeriod = new TimePeriod
+			TimePeriod workTimePeriod = actualWorkTime;
 			TimePeriod breakTimePeriod = actualBreakTimes.get(i);			
 			
 			TimePeriod subtraction = Commons.getSubtraction(actualWorkTime, actualBreakTimes);
