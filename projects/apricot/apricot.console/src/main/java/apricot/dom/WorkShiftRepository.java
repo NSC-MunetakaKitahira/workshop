@@ -12,7 +12,7 @@ public class WorkShiftRepository {
 		WorkShift workShift = new WorkShift();
 		workShift.setWorktimePeriod(new TimePeriod(510, 1050));;
 		workShift.setOvertimePeriod(Arrays.asList(new TimePeriod(1080, 1320), new TimePeriod(1320, 1440)));
-		workShift.setBreaktimePeriod(Arrays.asList(new TimePeriod(720, 1080), new TimePeriod(780, 1110)));
+		workShift.setBreaktimePeriod(Arrays.asList(new TimePeriod(720, 780), new TimePeriod(1080, 1110)));
 
 		return workShift;
 	}

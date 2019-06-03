@@ -6,29 +6,33 @@ import java.util.List;
 public class Calculator {
 
 	public static void calculate(int timeStampStart, int timeStampEnd, WorkShift workShift) {
+
+		// 実在時間を登録
+		TimePeriod stampTime = new TimePeriod(timeStampStart, timeStampEnd);
+		
 		
 		// 実就業時間: 出勤～退勤と、始業～終業との重複範囲
-		TimePeriod actualWorkTimes = new TimePeriod(timeStampStart, timeStampEnd);
+		TimePeriod actualWorkTimes = TimePeriod.getDuplication(stampTime, workShift.getWorktimePeriod());
 		
 		// 実残業時間帯: 出勤～退勤と、各残業時間帯との重複
 		List<TimePeriod> actualOverworkTimes = new ArrayList<>();
 		for (int i = 0; i < workShift.getOvertimePeriod().size(); i++) {
-			TimePeriod duplication = TimePeriod.getDuplication(actualWorkTimes,workShift.getOvertimePeriod().get(i));
-			if (duplication == null) continue;
-			actualOverworkTimes.add(duplication);	
+			TimePeriod duplication = TimePeriod.getDuplication(stampTime,workShift.getOvertimePeriod().get(i));
+			if (duplication == null) {continue;}
+			actualOverworkTimes.add(duplication);
+			
 		}
 		// 実休憩時間帯: 出勤～退勤と、各休憩時間帯との重複
 		List<TimePeriod> actualBreakTimes = new ArrayList<>();
 		for (int i = 0; i < workShift.getBreaktimePeriod().size(); i++) {
-			TimePeriod duplication = TimePeriod.getDuplication(actualWorkTimes,workShift.getBreaktimePeriod().get(i));
-			if (duplication == null) continue;
+			TimePeriod duplication = TimePeriod.getDuplication(stampTime,workShift.getBreaktimePeriod().get(i));
+			if (duplication == null) {continue;}
 			actualBreakTimes.add(duplication);
 		}	     	
 		// 実就業時間帯から実休憩時間帯に重複している部分を除外
 		List<TimePeriod> actualWorkTimesWithoutBreak = new ArrayList<>();
 		for (int i = 0; i < actualBreakTimes.size(); i++) {
 			TimePeriod[] subtraction = TimePeriod.getSubtraction(actualWorkTimes, actualBreakTimes.get(i));
-			System.out.println(subtraction);
 			if (subtraction.length == 1) {
 					actualWorkTimesWithoutBreak.add(subtraction[0]);
 					break;

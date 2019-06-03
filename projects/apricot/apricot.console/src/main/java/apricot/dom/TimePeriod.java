@@ -2,16 +2,16 @@ package apricot.dom;
 
 public class TimePeriod {
 	
-	public int start;
-	public int end;
+	public final int start;
+	public final int end;
 	
 	/**startとendのひとまとめ*/
 	public TimePeriod(int start,  int end) {
 		if(end < start) {
-			this.start = start;
-			this.end = end;
 			throw new RuntimeException();
-		}
+		}			
+		this.start = start;
+		this.end = end;
 	}
 	public int length() {
 		return end - start;
@@ -37,13 +37,13 @@ public class TimePeriod {
 		// <--------->
 		//   <---->
 		if (period1.start <= period2.start && period2.end <= period1.end) {
-			return period2;
+			return new TimePeriod(period2.start,period2.end);
 		}
 
 		//   <---->
 		// <--------->
 		if (period2.start <= period1.start && period1.end <= period2.end) {
-			return period1;
+			return new TimePeriod(period1.start,period1.end);
 		}
 		
 		// <------>
@@ -99,7 +99,7 @@ public class TimePeriod {
 		//   <---->
 		// <--------->
 		if (period2.start <= period1.start && period1.end <= period2.end) {
-			return null;
+			return new TimePeriod[] {};
 		}
 		
 		// <------>

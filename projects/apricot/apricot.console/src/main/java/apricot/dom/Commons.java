@@ -9,6 +9,7 @@ public class Commons {
 		int hours = time / 100;
 		return hours * 60 + minutes;
 	}
+
 	public static String formatTime(int time) {
 		int minutes = time % 60;
 		int hours = time / 60;
