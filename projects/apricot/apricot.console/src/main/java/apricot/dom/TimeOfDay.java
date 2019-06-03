@@ -3,7 +3,7 @@ package apricot.dom;
 /**
  * 時刻（任意の一日内における0時からの経過時間）を表すクラス。 精度は、現在の仕様上、時と分まで。
  */
-public class TimeOfDay {
+public class TimeOfDay implements Comparable<TimeOfDay> {
 
 	/** 0時からの経過時間(分) */
 	private final int minutesFromZero;
@@ -84,5 +84,10 @@ public class TimeOfDay {
 	@Override
 	public String toString() {
 		return format();
+	}
+
+	@Override
+	public int compareTo(TimeOfDay o) {
+		return this.minutesFromZero - o.minutesFromZero;
 	}
 }

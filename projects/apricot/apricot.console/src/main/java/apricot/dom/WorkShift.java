@@ -1,6 +1,5 @@
 package apricot.dom;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,10 +36,10 @@ public class WorkShift {
 		TimePeriod actualWorkTime = timeStamp.getDuplicationWith(workTime);
 		
 		// 実残業時間帯: 出勤～退勤と、各残業時間帯との重複
-		List<TimePeriod> actualOverworkTimes = getDuplications(actualWorkTime, overworkTimes);
+		List<TimePeriod> actualOverworkTimes = timeStamp.getDuplicationWith(overworkTimes);
 		
 		// 実休憩時間帯: 出勤～退勤と、各休憩時間帯との重複
-		List<TimePeriod> actualBreakTimes = getDuplications(actualWorkTime, breakTimes);
+		List<TimePeriod> actualBreakTimes = timeStamp.getDuplicationWith(breakTimes);
 		
 		// 実就業時間帯から実休憩時間帯に重複している部分を除外
 		List<TimePeriod> actualWorkTimesWithoutBreak = excludeBreakTimes(
@@ -64,7 +63,7 @@ public class WorkShift {
 			return Arrays.asList(actualWorkTime);
 		}
 		
-		return getSubtractions(actualWorkTime, actualBreakTimes);
+		return actualWorkTime.subtract(actualBreakTimes);
 	}
 
 	private static List<TimePeriod> excludeBreakTimesFromOverworkTimes(
@@ -75,25 +74,8 @@ public class WorkShift {
 			return actualOverworkTimes;
 		}
 		
-		List<TimePeriod> actualOverworkTimesWithoutBreak = new ArrayList<>();
-		for (TimePeriod overworkTime : actualOverworkTimes) {
-			actualOverworkTimesWithoutBreak.addAll(
-					getSubtractions(overworkTime, actualBreakTimes));
-		}
-		
-		return actualOverworkTimesWithoutBreak;
-	}
-	
-	private static List<TimePeriod> getDuplications(TimePeriod base, List<TimePeriod> list) {
-		return list.stream()
-				.map(p -> p.getDuplicationWith(base))
-				.filter(dup -> dup != null)
-				.collect(Collectors.toList());
-	}
-	
-	private static List<TimePeriod> getSubtractions(TimePeriod base, List<TimePeriod> subtractors) {
-		return subtractors.stream()
-				.flatMap(sub -> base.subtract(sub).stream())
+		return actualOverworkTimes.stream()
+				.flatMap(overwork -> overwork.subtract(actualBreakTimes).stream())
 				.collect(Collectors.toList());
 	}
 	
