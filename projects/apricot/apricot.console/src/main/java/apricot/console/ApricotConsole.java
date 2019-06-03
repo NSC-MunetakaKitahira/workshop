@@ -6,6 +6,8 @@ import apricot.dom.Calculator;
 import apricot.dom.Commons;
 import apricot.dom.WorkShift;
 import apricot.dom.WorkShiftRepository;
+import apricot.dom.TimePeriod;
+import apricot.dom.TimeOfDay;
 
 public class ApricotConsole {
 
@@ -30,7 +32,9 @@ public class ApricotConsole {
 			endTime = scan.nextLine();
 		}
 		
-		Calculator.calculate(Commons.parseTimeString(startTime), Commons.parseTimeString(endTime), workShift);
+		TimePeriod stamp = new TimePeriod(new TimeOfDay(Commons.parseTimeString(startTime)),new TimeOfDay( Commons.parseTimeString(endTime)));
+		
+		Calculator.calculate(stamp, workShift);
 	}
 	
 }

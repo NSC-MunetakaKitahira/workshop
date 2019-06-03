@@ -4,13 +4,14 @@ package apricot.dom;
 
 public class TimePeriod {
 
-		public int start;
-        public int end;
+		public TimeOfDay start;
+        public TimeOfDay end;
         
-        TimePeriod(int start, int end){
+        public TimePeriod(TimeOfDay start, TimeOfDay end){
         	this.start = start;
         	this.end = end;
-        }
+        }  
+   
         /**
     	 * start1/end1とstart2/end2の重複範囲を配列で返す。
     	 * 結果配列は、index:0が開始、index:1が終了。
@@ -21,45 +22,55 @@ public class TimePeriod {
     	 * @param end2
     	 * @return
     	 */
-    	public TimePeriod getDuplication(TimePeriod timePeriod) {
+        
+        public  static TimePeriod TP(TimeOfDay a, TimeOfDay b) {
+        	return new TimePeriod(a,b); 
+        }
+        
+        public static TimeOfDay TD(int n) {
+        	return new TimeOfDay(n);
+        }
+        
+    	public TimePeriod getDuplication(TimePeriod e) {
+    		
     		
     		// <--->
     		//       <--->
-    		if (this.end < timePeriod.start) {
+    		if (this.end.num < e.start.num) {
     			return null;
     		}
     		
     		//       <--->
     		// <--->
-    		if (this.end < timePeriod.start) {
+    		if (this.end.num< e.start.num) {
     			return null;
     		}
     		
     		// <--------->
     		//   <---->
-    		if (this.start <= timePeriod.start && timePeriod.end <= this.end) {
-    			return new TimePeriod(timePeriod.start, timePeriod.end);
+    		if (this.start.num <= e.start.num && e.end.num <= this.end.num) {
+    			return TP(TD(this.start.num),TD(this.end.num));
     			//return  timePeriod.start, timePeriod.end ;
     		}
 
     		//   <---->
     		// <--------->
-    		if (this.start <= timePeriod.start && timePeriod.end <= this.end) {
-    			return new TimePeriod(timePeriod.start, timePeriod.end);
+    		if (this.start.num <= e.start.num&& e.end.num <= this.end.num) {
+    			return  TP(TD(this.start.num),TD(this.end.num));
     			//return timePeriod.start, timePeriod.end;
     		}
     		
     		// <------>
     		//    <------>
-    		if (this.start <= timePeriod.start && timePeriod.end <= this.end) {
-    			return new TimePeriod(timePeriod.start, timePeriod.end);
+    		if (this.start.num <= e.start.num && e.end.num <= this.end.num) {
+    			return  TP(TD(this.start.num), TD(this.end.num));
     			//return timePeriod.start, timePeriod.end;
     		}
 
     		//    <------>
     		// <------>
-    		if (this.start <= timePeriod.start && timePeriod.end <= this.end) {
-    			return new TimePeriod(timePeriod.start, timePeriod.end);
+    		if (this.start.num <= e.start.num && e.end.num <= this.end.num) {
+    			return TP(TD(this.start.num), TD(this.end.num));
     			//return timePeriod.start,  timePeriod.end;
     		}
     		
@@ -78,71 +89,77 @@ public class TimePeriod {
     	 * @return
     	 */
     	
-    	public static TimePeriod getSubtraction(TimePeriod timePeriod) {
+    	public TimePeriod getSubtraction(TimePeriod e) {
+    		
 
     		// <--->
     		//       <--->
-    		if (timePeriod.end < timePeriod.start) {
-    			return new TimePeriod(timePeriod.start, timePeriod.end);
+    		if (this.end.num < e.start.num) {
+    			return TP(TD(e.start.num),TD(e.end.num));
     			//return timePeriod.start, timePeriod.end;
     		}
     		
     		//       <--->
     		// <--->
-    		if (timePeriod.end < timePeriod.start) {
-    			return new TimePeriod(timePeriod.start, timePeriod.end);
+    		if (this.end.num < e.start.num) {
+    			return TP(TD(e.start.num),TD(e.end.num));
     			//return timePeriod.start, timePeriod.end;
     		}
     		
     		// <--------->
     		// <---->
-    		if (timePeriod.start == timePeriod.start && timePeriod.end < timePeriod.end) {
-    			return new TimePeriod(timePeriod.start, timePeriod.end);
+    		if (this.start == e.start && e.end.num < this.end.num) {
+    			return TP(TD(e.start.num),TD(e.end.num));
     			//return  timePeriod.end, timePeriod.end;
     		}
 
     		// <--------->
     		//      <---->
-    		if (timePeriod.start < timePeriod.start && timePeriod.end == timePeriod.end) {
-    			return new TimePeriod(timePeriod.start, timePeriod.end);
+    		if (this.start.num < e.start.num && e.end == this.end) {
+    			return TP(TD(e.start.num),TD(e.end.num));
     			//return timePeriod.start, timePeriod.start ;
     		}
     		
     		// <--------->
     		//   <---->
-    		if (timePeriod.start < timePeriod.start && timePeriod.end < timePeriod.end) {
-    			return new TimePeriod(timePeriod.start, timePeriod.end);
+    		if (this.start.num < e.start.num && e.end.num < this.end.num) {
+    			return TP(TD(e.start.num),TD(e.end.num));
     			//return timePeriod.start, timePeriod.start, timePeriod.end, timePeriod.end;
     		}
 
     		//   <---->
     		// <--------->
-    		if (timePeriod.start <= timePeriod.start && timePeriod.end <= timePeriod.end) {
+    		if (this.start.num <= e.start.num && e.end.num <= this.end.num) {
     			return null;
     		}
     		
     		// <------>
     		//    <------>
-    		if (timePeriod.start <= timePeriod.start && timePeriod.end <= timePeriod.end) {
-    			return new TimePeriod(timePeriod.start, timePeriod.end);
+    		if (this.start.num <= e.start.num && e.end.num <= this.end.num) {
+    			return TP(TD(e.start.num),TD(e.end.num));
     			//return timePeriod.start, timePeriod.start;
     		}
 
     		//    <------>
     		// <------>
-    		if (timePeriod.start <= timePeriod.start && timePeriod.end <= timePeriod.end) {
-    			return new TimePeriod(timePeriod.start, timePeriod.end);
+    		if (this.start.num <= e.start.num && e.end.num <= this.end.num) {
+    			return TP(TD(e.start.num),TD(e.end.num));
     			//return timePeriod.end,  timePeriod.end1;
     		}
     		
     		throw new RuntimeException("たぶん他のケースは無い？");
     	}
     	
-    	public static String formatTime(int time) {
-    		int minutes = time % 60;
-    		int hours = time / 60;
-    		return String.format("%d:%02d", hours, minutes);
+    	public  void actualWorkTime() {
+    	
+    		
+			
     	}
+    	
+		public  int[] getSubtraction(int overworkStart, int overworkEnd, int breakStart, int breakEnd) {
+			
+			return null;
+		}
 
 
 

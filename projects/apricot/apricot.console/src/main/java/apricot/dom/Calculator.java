@@ -5,18 +5,21 @@ import java.util.List;
 
 public class Calculator {
 
-	public static void calculate(int timeStampStart, int timeStampEnd, WorkShift workShift) {
-		
+	public static void calculate(TimePeriod stampTimePeriod, WorkShift workShift) {
+		TimePeriod OTP;
+		TimePeriod BTP;
+		Object timeStampEnd;
+		Object timeStampStart;
 		// 実就業時間: 出勤～退勤と、始業～終業との重複範囲
-		int[] actualWorkTime = Commons.getDuplication(timeStampStart, timeStampEnd, workShift.getWorkStart(), workShift.getWorkEnd());
+		int[] actualWorkTime = WorkShift.getDuplication(OTP ,BTP, workShift.getWorkStart(), workShift.getWorkEnd());
 		// 実残業時間帯: 出勤～退勤と、各残業時間帯との重複
 		List<Integer[]> actualOverworkTimes = new ArrayList<>();
-		for (int i = 0; i < workShift.getOvertimeStarts().size(); i++) {
+		for (int i = 0; i < workShift.getoverTimePeriod().size(); i++) {
 			int[] duplication = Commons.getDuplication(
 					timeStampStart,
 					timeStampEnd,
-					workShift.getOvertimeStarts().get(i),
-					workShift.getOvertimeEnds().get(i));
+					workShift.getoverTimePeriod().get(i),
+					workShift.getoverTimePeriod().get(i));
 			
 			if (duplication.length != 2) continue;
 
@@ -26,11 +29,11 @@ public class Calculator {
 		
 		// 実休憩時間帯: 出勤～退勤と、各休憩時間帯との重複
 		List<Integer[]> actualBreakTimes = new ArrayList<>();
-		for (int i = 0; i < workShift.getBreakStarts().size(); i++) {
+		for (int i = 0; i < workShift.getBreakEnds().size(); i++) {
 			int[] duplication = Commons.getDuplication(
 					timeStampStart,
 					timeStampEnd,
-					workShift.getBreakStarts().get(i),
+					workShift.getBreakEnds().get(i),
 					workShift.getBreakEnds().get(i));
 			
 			if (duplication.length != 2) continue;
@@ -68,7 +71,12 @@ public class Calculator {
 				int breakStart = actualBreakTimes.get(j)[0];
 				int breakEnd = actualBreakTimes.get(j)[1];
 				
-				int[] subtraction = TimePeriod.getSubtraction(overworkStart, overworkEnd, breakStart, breakEnd);
+				TimePeriod overworkPeriod = new TimePeriod(new TimeOfDay(overworkStart),new TimeOfDay(overworkEnd));
+				TimePeriod breaktimePeriod = new TimePeriod(new TimeOfDay(breakStart),new TimeOfDay(breakEnd));
+				
+				TimePeriod subtraction = overworkPeriod.getSubtraction(breaktimePeriod);
+				
+				
 
 				if (subtraction.length == 2) {
 					actualOverworkTimesWithoutBreak.add(new Integer[] { subtraction[0], subtraction[1] });
@@ -83,32 +91,38 @@ public class Calculator {
 		
 		System.out.println("就業時間");
 		int sumWorkTime = 0;
+		List<Integer[]> actualWorkTimesWithoutBreak;
 		for (int i = 0; i < actualWorkTimesWithoutBreak.size(); i++) {
 			int start = actualWorkTimesWithoutBreak.get(i)[0];
 			int end = actualWorkTimesWithoutBreak.get(i)[1];
-			System.out.println(TimePeriod.formatTime(start) + "～" + TimePeriod.formatTime(end));
+			System.out.println(TimeOfDay.formatTime(start) + "～" + TimeOfDay.formatTime(end));
 			sumWorkTime += end - start;
 		}
-		System.out.println("合計: " + TimePeriod.formatTime(sumWorkTime));
+		System.out.println("合計: " + TimeOfDay.formatTime(sumWorkTime));
 		
 		System.out.println("残業時間");
 		int sumOverworkTime = 0;
 		for (int i = 0; i < actualOverworkTimesWithoutBreak.size(); i++) {
 			int start = actualOverworkTimesWithoutBreak.get(i)[0];
 			int end = actualOverworkTimesWithoutBreak.get(i)[1];
-			System.out.println(TimePeriod.formatTime(start) + "～" + TimePeriod.formatTime(end));
+			System.out.println(TimeOfDay.formatTime(start) + "～" + TimeOfDay.formatTime(end));
 			sumOverworkTime += end - start;
 		}
-		System.out.println("合計: " + TimePeriod.formatTime(sumOverworkTime));
+		System.out.println("合計: " + TimeOfDay.formatTime(sumOverworkTime));
 		
 		System.out.println("休憩時間");
 		int sumBreakTime = 0;
 		for (int i = 0; i < actualBreakTimes.size(); i++) {
 			int start = actualBreakTimes.get(i)[0];
 			int end = actualBreakTimes.get(i)[1];
-			System.out.println(TimePeriod.formatTime(start) + "～" + TimePeriod.formatTime(end));
+			System.out.println(TimeOfDay.formatTime(start) + "～" + TimeOfDay.formatTime(end));
 			sumBreakTime += end - start;
 		}
-		System.out.println("合計: " + TimePeriod.formatTime(sumBreakTime));
+		System.out.println("合計: " + TimeOfDay.formatTime(sumBreakTime));
 	}
+    
+	public static void caluculate(int parseTimeString,int parseTimeString2,WorkShift workShift) {
+		
+	}
+	
 }

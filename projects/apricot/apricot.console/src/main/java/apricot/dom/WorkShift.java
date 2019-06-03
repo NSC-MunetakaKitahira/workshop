@@ -24,15 +24,18 @@ public class WorkShift {
 	 */
     public TimePeriod  Period;
 	
-	private List<TimePeriod> overtimePeriod;
-	public void setovertimePeriod(List<TimePeriod>  overtimePeriod) {
-		this.overtimePeriod = overtimePeriod;
+	private List<TimePeriod> overTimePeriod;
+	public void setoverTimePeriod(List<Integer>  list) {
+		//this.overtimePeriod = overtimePeriod;
 	}
 	
-	public List<TimePeriod> getovertimePeriod() {
-		return overtimePeriod;
+	public List<TimePeriod> getoverTimePeriod() {
+		return overTimePeriod;
 	}
 	
+	public static TimePeriod CalCorrection(TimePeriod Period) {
+		return Period;
+	}
 	/**
 	 * 残業の終了時刻のリスト
 	 * 開始時刻と同じインデックスの要素がペア
@@ -44,8 +47,8 @@ public class WorkShift {
 	public  TimePeriod Break;
 	
 	private List<TimePeriod>  breakTimePeriod;
-	public void setbreaktimePeriod(List<TimePeriod>  breaktimePeriod) {
-		this.breakTimePeriod = breaktimePeriod;
+	public void setbreakTimePeriod(List<TimePeriod>  breakTimePeriod) {
+		this.breakTimePeriod = breakTimePeriod;
 	}
 	
 	public List<TimePeriod> getbreaktimePeriod() {
@@ -73,6 +76,31 @@ public class WorkShift {
 	public void setWorkEnd(int workEnd) {
 		this.workEnd = workEnd;
 	}
+    
+	public List<TimePeriod>getBreakEnds(){
+		return null;
+	}
+	
+	public void setOvertimeStarts(List<Integer> list) {
+		
+	}
+	public void setOvertimeEnds(List<Integer> list) {
+		
+	}
+    
+	public List<TimePeriod> getOvertimestarts(){
+		return null;
+	}
+	
+	public static int[] getDuplication(Object timeStampStart,Object timeStampEnd,int workstart2,int workEnd2) {
+		return null;
+	}
+
+
+	public void setBreakEnds(List<Integer> list) {
+		
+	}
+
 }
 	
 	
