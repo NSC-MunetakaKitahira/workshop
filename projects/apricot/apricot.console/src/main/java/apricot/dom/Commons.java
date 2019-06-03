@@ -1,6 +1,5 @@
 package apricot.dom;
 
-//import java.util.List;
 
 public class Commons {
 
@@ -23,39 +22,39 @@ public class Commons {
 	 * @return
 	 */
 	public static TimePeriod getDuplication(TimePeriod period1, TimePeriod period2) {
-		// return null;
+		
 
 		// <--->
-		// <--->
+		//       <--->
 		if (period1.end < period2.start) {
 			return null;
 		}
 
-		// <--->
+		//       <--->
 		// <--->
 		if (period2.end < period1.start) {
 			return null;
 		}
 
 		// <--------->
-		// <---->
+		//    <---->
 		if (period1.start <= period2.start && period2.end <= period1.end) {
 			return period2;
 		}
 
-		// <---->
+		//    <---->
 		// <--------->
 		if (period2.start <= period1.start && period1.end <= period2.end) {
 			return period1;
 		}
 
 		// <------>
-		// <------>
+		//    <------>
 		if (period1.start <= period2.start && period1.end <= period2.end) {
 			return new TimePeriod(period2.start, period1.end);
 		}
 
-		// <------>
+		//    <------>
 		// <------>
 		if (period2.start <= period1.start && period2.end <= period1.end) {
 			return new TimePeriod(period1.start, period2.end);
@@ -78,12 +77,12 @@ public class Commons {
 	public static TimePeriod[] getSubtraction(TimePeriod period1, TimePeriod period2) {
 
 		// <--->
-		// <--->
+		//       <--->
 		if (period1.end < period2.start) {
 			return new TimePeriod[] { new TimePeriod(period1.start, period1.end) };
 		}
 
-		// <--->
+		//       <--->
 		// <--->
 		if (period2.end < period1.start) {
 			return new TimePeriod[] { new TimePeriod(period1.start, period1.end) };
@@ -96,31 +95,31 @@ public class Commons {
 		}
 
 		// <--------->
-		// <---->
+		//      <---->
 		if (period1.start < period2.start && period1.end == period2.end) {
 			return new TimePeriod[] { new TimePeriod(period1.start, period2.start) };
 		}
 
 		// <--------->
-		// <---->
+		//    <---->
 		if (period1.start < period2.start && period2.end < period1.end) {
 			return new TimePeriod[] { new TimePeriod(period1.start, period2.start),
 					new TimePeriod(period2.end, period1.end) };
 		}
 
-		// <---->
+		//   <---->
 		// <--------->
 		if (period2.start <= period1.start && period1.end <= period2.end) {
 			return null;
 		}
 
 		// <------>
-		// <------>
+		//    <------>
 		if (period1.start <= period2.start && period1.end <= period2.end) {
 			return new TimePeriod[] { new TimePeriod(period1.start, period2.start) };
 		}
 
-		// <------>
+		//    <------>
 		// <------>
 		if (period2.start <= period1.start && period2.end <= period1.end) {
 			return new TimePeriod[] { new TimePeriod(period2.end, period1.end) };

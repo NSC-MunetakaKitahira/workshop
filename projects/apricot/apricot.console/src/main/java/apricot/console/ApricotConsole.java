@@ -4,14 +4,13 @@ import java.util.Scanner;
 
 import apricot.dom.Calculator;
 import apricot.dom.Commons;
-//import apricot.dom.TimePeriod;
+
 import apricot.dom.WorkShift;
 import apricot.dom.WorkShiftRepository;
 
 public class ApricotConsole {
 
-	// private static final String Timeperiod = null;
-
+	
 	/**
 	 * エントリポイント
 	 * 
@@ -32,15 +31,12 @@ public class ApricotConsole {
 			System.out.print("終了時刻 = ");
 			endTime = scan.nextLine();
 		}
-		TimePeriod();
+		
 
 		Calculator.calculate(Commons.parseTimeString(startTime), Commons.parseTimeString(endTime), workShift);
 	}
 
-	private static void TimePeriod() {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
+	
 
 }
 
