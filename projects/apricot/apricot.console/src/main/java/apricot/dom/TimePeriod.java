@@ -220,6 +220,4 @@ public class TimePeriod {
 		return result;
 	}
 	
-	
-	
 }

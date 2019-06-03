@@ -2,6 +2,7 @@ package apricot.console;
 
 import java.util.Scanner;
 
+import apricot.dom.CalculationResult;
 import apricot.dom.Commons;
 import apricot.dom.TimeOfDay;
 import apricot.dom.TimePeriod;
@@ -20,7 +21,7 @@ public class ApricotConsole {
 		WorkShift workShift = WorkShiftRepository.get();
 		TimePeriod timeStamp = readTimeStamp();
 		
-		WorkShift.CalculateResult result = workShift.calculate(timeStamp);
+		CalculationResult result = workShift.calculate(timeStamp);
 
 		printResult(result);
 	}
@@ -42,7 +43,7 @@ public class ApricotConsole {
 		return new TimePeriod(new TimeOfDay(startTime), new TimeOfDay(endTime));
 	}
 
-	private static void printResult(WorkShift.CalculateResult result) {
+	private static void printResult(CalculationResult result) {
 		System.out.println("就業時間");
 		for (TimePeriod period : result.workTimes) {
 			System.out.println(period.format());

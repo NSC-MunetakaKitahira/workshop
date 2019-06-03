@@ -30,7 +30,7 @@ public class WorkShift {
 		this.breakTimes = breakTimes;
 	}
 
-	public CalculateResult calculate(TimePeriod timeStamp) {
+	public CalculationResult calculate(TimePeriod timeStamp) {
 
 		// 実就業時間: 出勤～退勤と、始業～終業との重複範囲
 		TimePeriod actualWorkTime = timeStamp.getDuplicationWith(workTime);
@@ -49,7 +49,7 @@ public class WorkShift {
 		List<TimePeriod> actualOverworkTimesWithoutBreak = excludeBreakTimesFromOverworkTimes(
 				actualOverworkTimes, actualBreakTimes);
 		
-		return new CalculateResult(
+		return new CalculationResult(
 				actualWorkTimesWithoutBreak,
 				actualOverworkTimesWithoutBreak,
 				actualBreakTimes);
@@ -77,36 +77,5 @@ public class WorkShift {
 		return actualOverworkTimes.stream()
 				.flatMap(overwork -> overwork.subtract(actualBreakTimes).stream())
 				.collect(Collectors.toList());
-	}
-	
-	public static class CalculateResult {
-		public final List<TimePeriod> workTimes;
-		public final List<TimePeriod> overworkTimes;
-		public final List<TimePeriod> breakTimes;
-		
-		public CalculateResult(
-				List<TimePeriod> workTimes,
-				List<TimePeriod> overworkTimes,
-				List<TimePeriod> breakTimes) {
-			
-			this.workTimes = workTimes;
-			this.overworkTimes = overworkTimes;
-			this.breakTimes = breakTimes;
-		}
-		
-		public int sumWorkTime() {
-			return workTimes.stream()
-					.collect(Collectors.summingInt(p -> p.minutesOfLength()));
-		}
-		
-		public int sumOverworkTime() {
-			return overworkTimes.stream()
-					.collect(Collectors.summingInt(p -> p.minutesOfLength()));
-		}
-		
-		public int sumBreakTime() {
-			return breakTimes.stream()
-					.collect(Collectors.summingInt(p -> p.minutesOfLength()));
-		}
 	}
 }

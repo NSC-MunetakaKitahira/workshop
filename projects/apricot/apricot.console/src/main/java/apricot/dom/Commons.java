@@ -1,15 +1,10 @@
 package apricot.dom;
 
 public class Commons {
-	
+
 	/**
-	 * period1から、period2の範囲を除外した範囲をリストで返す。
-	 * start1/end1の範囲が完全に除外される場合、空のリストを返す。
-	 * @param start1
-	 * @param end1
-	 * @param start2
-	 * @param end2
-	 * @return
+	 * 本来はこのメソッドもCommonsから無くしたいが、「時刻」ではなく「時間」の処理であるため、TimeOfDayとは別のクラスが必要。
+	 * しかし、そこまでやるには「時間」に関する仕様情報が現状足りていないので、ひとまずただの共通関数としておく。
 	 */
 	public static String formatTime(int time) {
 		int minutes = time % 60;
