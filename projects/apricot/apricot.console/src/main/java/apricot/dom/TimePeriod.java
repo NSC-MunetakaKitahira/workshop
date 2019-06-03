@@ -26,13 +26,13 @@ public class TimePeriod {
 		
 		// <--->
 		//       <--->
-		if (this.end < timePeriod.start) {
+		if (this.end <= timePeriod.start) {
 			return null;
 		}
 		
 		//       <--->
 		// <--->
-		if (timePeriod.end < this.start) {
+		if (timePeriod.end <= this.start) {
 			return null;
 		}
 		
@@ -87,14 +87,14 @@ public class TimePeriod {
 		
 		// <--->
 		//       <--->
-		if (this.end < timePeriod.start) {
+		if (this.end <= timePeriod.start) {
 			sub.add( new TimePeriod(this.start, this.end));
 			return sub;
 		}
 		
 		//       <--->
 		// <--->
-		if (timePeriod.end < this.start) {
+		if (timePeriod.end <= this.start) {
 			sub.add( new TimePeriod(this.start, this.end));
 			return sub;
 		}

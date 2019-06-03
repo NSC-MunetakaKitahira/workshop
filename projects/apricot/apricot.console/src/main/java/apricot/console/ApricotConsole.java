@@ -9,7 +9,6 @@ import apricot.dom.WorkShift;
 import apricot.dom.WorkShiftRepository;
 
 public class ApricotConsole {
-
 	/**
 	 * エントリポイント
 	 * 

@@ -19,7 +19,6 @@ public class Commons {
 	}
 	
 	public static void actualTimesPrint(List<TimePeriod> actualTimes) {
-		
 		int sumTime = 0;
 		for (TimePeriod actualTime : actualTimes) {
 			int start = actualTime.getStart();
@@ -29,5 +28,13 @@ public class Commons {
 		}
 		System.out.println("合計: " + Commons.formatTime(sumTime));
 	}
-
+	
+	public static void actualAllTimePrint(List<TimePeriod> actualWorkTimesWithoutBreak, List<TimePeriod> actualOverworkTimesWithoutBreak,List<TimePeriod> actualBreakTimes) {
+		System.out.println("就業時間");
+		actualTimesPrint(actualWorkTimesWithoutBreak);
+		System.out.println("残業時間");
+		actualTimesPrint(actualOverworkTimesWithoutBreak);
+		System.out.println("休憩時間");
+		actualTimesPrint(actualBreakTimes);
+	}
 }
