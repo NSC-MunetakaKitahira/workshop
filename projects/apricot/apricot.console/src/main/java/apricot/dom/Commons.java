@@ -1,7 +1,5 @@
 package apricot.dom;
 
-import java.util.List;
-
 public class Commons {
 
 	public static int parseTimeString(String timeString) {
