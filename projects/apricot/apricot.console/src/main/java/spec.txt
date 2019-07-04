@@ -1,0 +1,6 @@
+出勤・退勤の時刻をユーザが入力すると、WorkShiftの定義に従って、
+・所定勤務時間（normal working hours）
+・残業時間（overtime working hours）
+を求め、表示します。
+
+WorkShiftは、WorkShiftRepositoryが固定の値で返します。

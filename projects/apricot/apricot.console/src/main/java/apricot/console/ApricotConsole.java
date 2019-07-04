@@ -1,65 +1,56 @@
 package apricot.console;
 
+import java.util.List;
 import java.util.Scanner;
 
-import apricot.dom.record.WorkRecord;
-import apricot.dom.time.TimeOfDay;
+import apricot.dom.CommonUtil;
 import apricot.dom.time.TimePeriod;
-import apricot.dom.time.TimePeriods;
 import apricot.dom.workshift.WorkShift;
 import apricot.dom.workshift.WorkShiftRepository;
 
 public class ApricotConsole {
 
-	/**
-	 * エントリポイント
-	 * 
-	 * @param args コマンドライン引数は使わない
-	 */
 	public static void main(String[] args) {
 
 		TimePeriod timeStamp = readTimeStamp();
 		
 		WorkShift workShift = WorkShiftRepository.get();
+
+		List<TimePeriod> actualNormalWorks = CommonUtil.getDuplications(timeStamp, workShift.getNormalWorks());
+		List<TimePeriod> actualOvertimeWorks = CommonUtil.getDuplications(timeStamp, workShift.getOverworks());
 		
-		WorkRecord record = workShift.workRecord(timeStamp);
-		
-		print(record);
+		print(actualNormalWorks, actualOvertimeWorks);
 	}
 
 	private static TimePeriod readTimeStamp() {
 		String startTime;
 		String endTime;
 
-		print("時刻は \"8:30\" の形式で入力してください。");
+		print("please input like as '8:30'");
 		
 		try(Scanner scan = new Scanner(System.in)) {
-			print("開始時刻 = ");
+			print("start = ");
 			startTime = scan.nextLine();
 	
-			print("終了時刻 = ");
+			print("end = ");
 			endTime = scan.nextLine();
 		}
 		
-		return new TimePeriod(new TimeOfDay(startTime), new TimeOfDay(endTime));
+		return new TimePeriod(CommonUtil.parse(startTime), CommonUtil.parse(endTime));
 	}
 
-	private static void print(WorkRecord result) {
-		print("就業時間");
-		print(result.workTimes);
-		print("合計: " + result.sumWorkTime().format());
+	private static void print(List<TimePeriod> actualNormalWorks, List<TimePeriod> actualOvertimeWorks) {
+		print("NORMAL WORKING");
+		print(actualNormalWorks);
+		print("total " + CommonUtil.format(CommonUtil.calculateTime(actualNormalWorks)));
 		
-		print("残業時間");
-		print(result.overworkTimes);
-		print("合計: " + result.sumOverworkTime().format());
-		
-		print("休憩時間");
-		print(result.breakTimes);
-		print("合計: " + result.sumBreakTime().format());
+		print("OVERTIME WORKING");
+		print(actualOvertimeWorks);
+		print("total " + CommonUtil.format(CommonUtil.calculateTime(actualOvertimeWorks)));
 	}
 	
-	private static void print(TimePeriods periods) {
-		periods.stream().forEach(p -> print(p.format()));
+	private static void print(List<TimePeriod> periods) {
+		periods.stream().forEach(p -> print(CommonUtil.format(p.getStart()) + " - " + CommonUtil.format(p.getEnd())));
 	}
 	
 	private static void print(String text) {
