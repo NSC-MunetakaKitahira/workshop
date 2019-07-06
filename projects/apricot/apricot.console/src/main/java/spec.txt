@@ -3,4 +3,5 @@
 ・残業時間（overtime working hours）
 を求め、表示します。
 
-WorkShiftは、WorkShiftRepositoryが固定の値で返します。
+WorkShiftはWorkShiftRepositoryから取得しますが、内容は固定とします。
+
