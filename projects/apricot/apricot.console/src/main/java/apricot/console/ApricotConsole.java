@@ -16,8 +16,8 @@ public class ApricotConsole {
 		
 		WorkShift workShift = WorkShiftRepository.get();
 
-		List<TimePeriod> actualNormalWorks = CommonUtil.getDuplications(timeStamp, workShift.getNormalWorks());
-		List<TimePeriod> actualOvertimeWorks = CommonUtil.getDuplications(timeStamp, workShift.getOverworks());
+		List<TimePeriod> actualNormalWorks = timeStamp.getDuplications(workShift.getNormalWorks());
+		List<TimePeriod> actualOvertimeWorks = timeStamp.getDuplications(workShift.getOverworks());
 		
 		print(actualNormalWorks, actualOvertimeWorks);
 	}
@@ -50,7 +50,7 @@ public class ApricotConsole {
 	}
 	
 	private static void print(List<TimePeriod> periods) {
-		periods.stream().forEach(p -> print(CommonUtil.format(p.getStart()) + " - " + CommonUtil.format(p.getEnd())));
+		periods.stream().forEach(p -> print(p.format()));
 	}
 	
 	private static void print(String text) {
