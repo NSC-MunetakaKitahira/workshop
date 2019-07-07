@@ -19,53 +19,31 @@ public class TimePeriod {
 	
 	public Optional<TimePeriod> getDuplication(TimePeriod other) {
 		
-		TimePeriod result;
+		// <--------->
+		//   <---->
+		if (this.start <= other.start && other.end <= this.end) {
+			return Optional.of(other);
+		}
 
-		// <------->
-		// <------->
-		if (this.start == other.start && this.end == other.end) {
-			result = this;
+		//   <---->
+		// <--------->
+		if (other.start <= this.start && this.end <= other.end) {
+			return Optional.of(this);
 		}
 		
-		// <------->
-		//    <--..
-		else if (this.start <= other.start && other.start < this.end) {
-			
-			// <------->
-			//    <---->
-			if (other.end <= this.end) {
-				result = other;
-			}
+		// <------>
+		//    <------>
+		if (this.start <= other.start && other.start < this.end && this.end <= other.end) {
+			return Optional.of(new TimePeriod(other.start, this.end));
+		}
 
-			// <------->
-			//    <------>
-			else {
-				result = new TimePeriod(other.start, this.end);
-			}
+		//    <------>
+		// <------>
+		if (other.start <= this.start && this.start < other.end && other.end <= this.end) {
+			return Optional.of(new TimePeriod(this.start, other.end));
 		}
 		
-		//    <--..
-		// <------->
-		else if (other.start <= this.start && this.start < other.end) {
-
-			//    <---->
-			// <------->
-			if (this.end <= other.end) {
-				result = this;
-			}
-
-			//    <------>
-			// <------->
-			else {
-				result = new TimePeriod(this.start, other.end);
-			}
-		}
-		
-		else {
-			result = null;
-		}
-
-		return Optional.ofNullable(result);
+		return Optional.empty();
 	}
 	
 	public List<TimePeriod> getDuplications(List<TimePeriod> others) {
