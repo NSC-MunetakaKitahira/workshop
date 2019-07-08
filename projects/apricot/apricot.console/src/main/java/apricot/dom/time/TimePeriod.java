@@ -1,9 +1,6 @@
 package apricot.dom.time;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import apricot.dom.CommonUtil;
 
@@ -46,15 +43,7 @@ public class TimePeriod {
 		
 		return Optional.empty();
 	}
-	
-	public List<TimePeriod> getDuplications(List<TimePeriod> others) {
-		return others.stream()
-				.map(o -> getDuplication(o))
-				.filter(d -> d.isPresent())
-				.map(d -> d.get())
-				.collect(Collectors.toList());
-	}
-	
+		
 	public int length() {
 		return end - start;
 	}

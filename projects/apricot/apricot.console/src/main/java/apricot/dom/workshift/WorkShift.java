@@ -1,25 +1,24 @@
 package apricot.dom.workshift;
 
-import java.util.List;
-
 import apricot.dom.time.TimePeriod;
+import apricot.dom.time.TimePeriods;
 
 public class WorkShift {
 
-	private final List<TimePeriod> normalWorks;
+	private final TimePeriods normalWorks;
 	
-	private final List<TimePeriod> overtimeWorks;
+	private final TimePeriods overtimeWorks;
 
-	public WorkShift(List<TimePeriod> normalWorks, List<TimePeriod> overtimeWorks) {
+	public WorkShift(TimePeriods normalWorks, TimePeriods overtimeWorks) {
 		this.normalWorks = normalWorks;
 		this.overtimeWorks = overtimeWorks;
 	}
 	
-	public List<TimePeriod> actualNormalWorks(TimePeriod timeStamp) {
-		return timeStamp.getDuplications(normalWorks);
+	public TimePeriods actualNormalWorks(TimePeriod timeStamp) {
+		return normalWorks.getDuplications(timeStamp);
 	}
 	
-	public List<TimePeriod> actualOvertimeWorks(TimePeriod timeStamp) {
-		return timeStamp.getDuplications(overtimeWorks);
+	public TimePeriods actualOvertimeWorks(TimePeriod timeStamp) {
+		return overtimeWorks.getDuplications(timeStamp);
 	}
 }

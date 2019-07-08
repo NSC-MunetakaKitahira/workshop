@@ -1,9 +1,5 @@
 package apricot.dom;
 
-import java.util.List;
-
-import apricot.dom.time.TimePeriod;
-
 public class CommonUtil {
 
 	public static String format(int minutes) {
@@ -20,11 +16,4 @@ public class CommonUtil {
 		return hours * 60 + minutes;
 	}
 	
-	public static int calculateTime(List<TimePeriod> periods) {
-		int total = 0;
-		for (TimePeriod period : periods) {
-			total += period.length();
-		}
-		return total;
-	}
 }

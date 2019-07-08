@@ -1,10 +1,10 @@
 package apricot.console;
 
-import java.util.List;
 import java.util.Scanner;
 
 import apricot.dom.CommonUtil;
 import apricot.dom.time.TimePeriod;
+import apricot.dom.time.TimePeriods;
 import apricot.dom.workshift.WorkShift;
 import apricot.dom.workshift.WorkShiftRepository;
 
@@ -16,8 +16,8 @@ public class ApricotConsole {
 		
 		WorkShift workShift = WorkShiftRepository.get();
 
-		List<TimePeriod> actualNormalWorks = workShift.actualNormalWorks(timeStamp);
-		List<TimePeriod> actualOvertimeWorks = workShift.actualOvertimeWorks(timeStamp);
+		TimePeriods actualNormalWorks = workShift.actualNormalWorks(timeStamp);
+		TimePeriods actualOvertimeWorks = workShift.actualOvertimeWorks(timeStamp);
 		
 		print(actualNormalWorks, actualOvertimeWorks);
 	}
@@ -39,18 +39,18 @@ public class ApricotConsole {
 		return new TimePeriod(CommonUtil.parse(startTime), CommonUtil.parse(endTime));
 	}
 
-	private static void print(List<TimePeriod> actualNormalWorks, List<TimePeriod> actualOvertimeWorks) {
+	private static void print(TimePeriods actualNormalWorks, TimePeriods actualOvertimeWorks) {
 		print("NORMAL WORKING");
 		print(actualNormalWorks);
-		print("total " + CommonUtil.format(CommonUtil.calculateTime(actualNormalWorks)));
+		print("total " + CommonUtil.format(actualNormalWorks.calculateTime()));
 		
 		print("OVERTIME WORKING");
 		print(actualOvertimeWorks);
-		print("total " + CommonUtil.format(CommonUtil.calculateTime(actualOvertimeWorks)));
+		print("total " + CommonUtil.format(actualOvertimeWorks.calculateTime()));
 	}
 	
-	private static void print(List<TimePeriod> periods) {
-		periods.stream().forEach(p -> print(p.format()));
+	private static void print(TimePeriods periods) {
+		periods.forEach(p -> print(p.format()));
 	}
 	
 	private static void print(String text) {
