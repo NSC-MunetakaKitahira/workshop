@@ -4,8 +4,16 @@ public class TimeOfDay {
 
 	private Minutes minutes;
 
-	private TimeOfDay(Minutes minutes) {
+	public TimeOfDay(Minutes minutes) {
 		this.minutes = minutes;
+	}
+	
+	public TimeOfDay(int hours, int minutesInHour) {
+		this(new Minutes(hours * 60 + minutesInHour));
+	}
+	
+	public TimeOfDay(String timeString) {
+		this(Minutes.parse(timeString));
 	}
 
 	@Override
@@ -25,4 +33,19 @@ public class TimeOfDay {
 		return other != null && minutes.equals(other.minutes);
 	}
 	
+	public boolean isBefore(TimeOfDay other) {
+		return minutes.compareTo(other.minutes) < 0;
+	}
+	
+	public boolean isBeforeOrEqual(TimeOfDay other) {
+		return minutes.compareTo(other.minutes) <= 0;
+	}
+	
+	public Minutes minutesFrom(TimeOfDay base) {
+		return minutes.minus(base.minutes);
+	}
+	
+	public String format() {
+		return minutes.format();
+	}
 }

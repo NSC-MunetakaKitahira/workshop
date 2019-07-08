@@ -8,6 +8,15 @@ public class Minutes implements Comparable<Minutes> {
 		this.value = value;
 	}
 	
+	public static Minutes parse(String timeString) {
+		String timeStringNoColon = timeString.replace(":", "");
+		int time = Integer.parseInt(timeStringNoColon);
+		int minutes = time % 100;
+		int hours = time / 100;
+		return new Minutes(hours * 60 + minutes);
+	}
+	
+	
 	public String format() {
 		int hours = value / 60;
 		int minutesInHour = value % 60;
@@ -35,4 +44,13 @@ public class Minutes implements Comparable<Minutes> {
 	public boolean equals(Minutes other) {
 		return other != null && value == other.value;
 	}
+	
+	public Minutes plus(Minutes other) {
+		return new Minutes(value + other.value);
+	}
+	
+	public Minutes minus(Minutes other) {
+		return new Minutes(value - other.value);
+	}
+
 }

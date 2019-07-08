@@ -2,7 +2,7 @@ package apricot.console;
 
 import java.util.Scanner;
 
-import apricot.dom.CommonUtil;
+import apricot.dom.time.TimeOfDay;
 import apricot.dom.time.TimePeriod;
 import apricot.dom.time.TimePeriods;
 import apricot.dom.workshift.WorkShift;
@@ -36,17 +36,17 @@ public class ApricotConsole {
 			endTime = scan.nextLine();
 		}
 		
-		return new TimePeriod(CommonUtil.parse(startTime), CommonUtil.parse(endTime));
+		return new TimePeriod(new TimeOfDay(startTime), new TimeOfDay(endTime));
 	}
 
 	private static void print(TimePeriods actualNormalWorks, TimePeriods actualOvertimeWorks) {
 		print("NORMAL WORKING");
 		print(actualNormalWorks);
-		print("total " + CommonUtil.format(actualNormalWorks.calculateTime()));
+		print("total " + actualNormalWorks.calculateTime().format());
 		
 		print("OVERTIME WORKING");
 		print(actualOvertimeWorks);
-		print("total " + CommonUtil.format(actualOvertimeWorks.calculateTime()));
+		print("total " + actualOvertimeWorks.calculateTime().format());
 	}
 	
 	private static void print(TimePeriods periods) {

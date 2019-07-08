@@ -2,15 +2,13 @@ package apricot.dom.time;
 
 import java.util.Optional;
 
-import apricot.dom.CommonUtil;
-
 public class TimePeriod {
 
-	private final int start;
+	private final TimeOfDay start;
 	
-	private final int end;
+	private final TimeOfDay end;
 	
-	public TimePeriod(int start, int end) {
+	public TimePeriod(TimeOfDay start, TimeOfDay end) {
 		this.start = start;
 		this.end = end;
 	}
@@ -44,20 +42,20 @@ public class TimePeriod {
 		return Optional.empty();
 	}
 		
-	public int length() {
-		return end - start;
+	public Minutes length() {
+		return end.minutesFrom(start);
 	}
 	
 	public String format() {
-		return CommonUtil.format(start) + " - " + CommonUtil.format(end);
+		return start.format() + " - " + end.format();
 	}
 
-	private boolean contains(int time) {
-		return start <= time && time <= end;
+	private boolean contains(TimeOfDay time) {
+		return start.isBeforeOrEqual(time) && time.isBeforeOrEqual(end);
 	}
 	
-	private static Optional<TimePeriod> optionalPeriod(int start, int end) {
-		return start < end
+	private static Optional<TimePeriod> optionalPeriod(TimeOfDay start, TimeOfDay end) {
+		return start.isBefore(end)
 				? Optional.of(new TimePeriod(start, end))
 				: Optional.empty();
 	}

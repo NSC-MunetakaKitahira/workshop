@@ -23,10 +23,10 @@ public class TimePeriods {
 		periods.forEach(action);
 	}
 
-	public int calculateTime() {
-		int total = 0;
+	public Minutes calculateTime() {
+		Minutes total = new Minutes(0);
 		for (TimePeriod period : periods) {
-			total += period.length();
+			total = total.plus(period.length());
 		}
 		return total;
 	}
