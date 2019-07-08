@@ -16,8 +16,8 @@ public class ApricotConsole {
 		
 		WorkShift workShift = WorkShiftRepository.get();
 
-		List<TimePeriod> actualNormalWorks = timeStamp.getDuplications(workShift.getNormalWorks());
-		List<TimePeriod> actualOvertimeWorks = timeStamp.getDuplications(workShift.getOverworks());
+		List<TimePeriod> actualNormalWorks = workShift.actualNormalWorks(timeStamp);
+		List<TimePeriod> actualOvertimeWorks = workShift.actualOvertimeWorks(timeStamp);
 		
 		print(actualNormalWorks, actualOvertimeWorks);
 	}

@@ -14,12 +14,12 @@ public class WorkShift {
 		this.normalWorks = normalWorks;
 		this.overtimeWorks = overtimeWorks;
 	}
-
-	public List<TimePeriod> getNormalWorks() {
-		return normalWorks;
+	
+	public List<TimePeriod> actualNormalWorks(TimePeriod timeStamp) {
+		return timeStamp.getDuplications(normalWorks);
 	}
-
-	public List<TimePeriod> getOverworks() {
-		return overtimeWorks;
+	
+	public List<TimePeriod> actualOvertimeWorks(TimePeriod timeStamp) {
+		return timeStamp.getDuplications(overtimeWorks);
 	}
 }
