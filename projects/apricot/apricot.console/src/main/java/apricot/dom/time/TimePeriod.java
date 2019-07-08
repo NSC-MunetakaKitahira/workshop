@@ -19,26 +19,26 @@ public class TimePeriod {
 		
 		// <--------->
 		//   <---->
-		if (this.start <= other.start && other.end <= this.end) {
+		if (contains(other.start) && contains(other.end)) {
 			return Optional.of(other);
 		}
 
 		//   <---->
 		// <--------->
-		if (other.start <= this.start && this.end <= other.end) {
+		if (other.contains(start) && other.contains(end)) {
 			return Optional.of(this);
 		}
 		
 		// <------>
 		//    <------>
-		if (this.start <= other.start && other.start < this.end && this.end <= other.end) {
-			return Optional.of(new TimePeriod(other.start, this.end));
+		if (contains(other.start) && other.contains(end)) {
+			return optionalPeriod(other.start, this.end);
 		}
 
 		//    <------>
 		// <------>
-		if (other.start <= this.start && this.start < other.end && other.end <= this.end) {
-			return Optional.of(new TimePeriod(this.start, other.end));
+		if (other.contains(start) && contains(other.end)) {
+			return optionalPeriod(this.start, other.end);
 		}
 		
 		return Optional.empty();
@@ -52,4 +52,13 @@ public class TimePeriod {
 		return CommonUtil.format(start) + " - " + CommonUtil.format(end);
 	}
 
+	private boolean contains(int time) {
+		return start <= time && time <= end;
+	}
+	
+	private static Optional<TimePeriod> optionalPeriod(int start, int end) {
+		return start < end
+				? Optional.of(new TimePeriod(start, end))
+				: Optional.empty();
+	}
 }
