@@ -1,17 +1,26 @@
 package tsurisen;
 
-import java.util.Map;
-
 public class ChargeGivingMachine {
 
 	private final CashRegister cashRegister;
+	private final ChangeStock changeStock;
 
-	public ChargeGivingMachine(CashRegister cashRegister) {
+	public ChargeGivingMachine(CashRegister cashRegister, ChangeStock changeStock) {
 		this.cashRegister = cashRegister;
+		this.changeStock = changeStock;
 	}
 	
-	public Map<MoneyType, Integer> getChange(int deposit) {
-		int change = deposit - cashRegister.amount();
-		return ChangeCompositeRule.compositeChange(change);
+	public Moneys getChange(Moneys receivedMoney) {
+		int change = cashRegister.calculateChange(receivedMoney.amount());
+		Moneys changeMoneys = ChangeCompositeRule.createChangeMoneysOf(change);
+		
+		changeStock.accept(receivedMoney);
+		changeStock.discharge(changeMoneys);
+		
+		return changeMoneys;
+	}
+	
+	public boolean isEnoughStock() {
+		return changeStock.isEnough();
 	}
 }

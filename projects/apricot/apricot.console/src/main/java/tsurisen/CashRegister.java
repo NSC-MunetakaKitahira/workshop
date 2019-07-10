@@ -8,7 +8,7 @@ public class CashRegister {
 		amount += price;
 	}
 	
-	public int amount() {
-		return amount;
+	public int calculateChange(int receivedAmount) {
+		return amount - receivedAmount;
 	}
 }
