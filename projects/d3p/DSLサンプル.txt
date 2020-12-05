@@ -1,0 +1,96 @@
+enum 利用停止モード
+	resp
+		・・・・
+	consts
+		1: 担当者モード
+		2: 管理者モード
+	
+	methods
+		+ 利用できる(roles: ログインユーザロール): boolean
+			roles.have.システム管理者
+				|| roles.have.会社管理者
+				|| this == 担当者モード && roles.いずれかの担当者
+
+
+//フィールド名省略可能（同一の型のフィールドが１つしか無いならば）
+
+value 利用停止状態
+	resp
+		・・・・・
+	fields
+		+ システム利用状態
+		+ 利用停止モード
+		+ 停止予告のメッセージ: StopMessage
+		+ 利用停止のメッセージ: StopMessage
+
+	methods
+		+ ステータス(roles: ログインユーザロール): 計画停止.ステータス
+			switch
+				@利用停止モード:
+					$ == 利用停止中		-> 計画停止.ステータス.利用可能
+					$.利用できる(roles)	-> 計画停止.ステータス.利用可能(i18n:Msg_1475)
+				default 				-> 計画停止.ステータス.利用不可(@利用停止のメッセージ)
+
+
+aggregate テナント単位の利用停止の設定 : 利用停止
+	resp
+		・・・・
+	id
+		+ テナントコード
+	fields
+		+ mutable 利用停止状態
+
+	commands
+		+ 変更する
+			args
+				状態
+
+			content
+				@利用停止状態 << 状態
+
+		+ 変更する2
+			content
+				@利用停止状態 << args
+
+
+service システムが利用できるか
+	resp
+		システム利用停止の状況に応じて、
+		指定のユーザがログインできるか判断する
+
+	methods
+		+ チェックする
+			args
+				require
+				テナントコード
+				会社ID
+				ユーザID
+
+			body
+				switch
+					tenant?.利用停止中	-> tenant!
+					company?.利用停止中	-> company!
+					default				-> 計画停止.ステータス.利用可能
+
+			let
+				tenant? = require.テナント単位の利用停止の設定(テナントコード)?.ステータス(roles)
+				company? = require.会社単位の利用停止の設定(会社ID)?.ステータス(roles)
+				roles = require.ログインユーザロール(ユーザID)
+
+			require
+				テナント単位の利用停止の設定? < テナントコード
+				会社単位の利用停止の設定? < 会社ID
+				ログインユーザロール < ユーザID
+
+
+			// 別パターン
+			body
+				tenant? = require.テナント単位の利用停止の設定(テナントコード)?.ステータス(roles)
+				if tenant?.利用停止中
+					return tenant!
+
+				company? = require.会社単位の利用停止の設定(会社ID)?.ステータス(roles)
+				if company?.利用停止中
+					return company!
+
+				return 計画停止.ステータス.利用可能

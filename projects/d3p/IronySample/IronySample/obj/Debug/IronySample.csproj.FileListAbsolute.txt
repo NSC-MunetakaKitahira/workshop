@@ -1,0 +1,11 @@
+C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySample\bin\Debug\IronySample.exe.config
+C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySample\bin\Debug\IronySample.exe
+C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySample\bin\Debug\IronySample.pdb
+C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySample\bin\Debug\Irony.dll
+C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySample\obj\Debug\IronySample.csprojAssemblyReference.cache
+C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySample\obj\Debug\IronySample.csproj.CoreCompileInputs.cache
+C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySample\obj\Debug\IronySample.csproj.CopyComplete
+C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySample\obj\Debug\IronySample.exe
+C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySample\obj\Debug\IronySample.pdb
+C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySample\bin\Debug\IronySamleGrammer.dll
+C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySample\bin\Debug\IronySamleGrammer.pdb
