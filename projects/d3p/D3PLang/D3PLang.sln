@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30516.212
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D3PLang", "D3PLang\D3PLang.csproj", "{DF90BCB4-6956-4256-9374-C6C71FC0D86E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D3PLangTests", "D3PLangTests\D3PLangTests.csproj", "{59FB5ABD-0F3B-4208-83B6-D92371FF50BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF90BCB4-6956-4256-9374-C6C71FC0D86E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF90BCB4-6956-4256-9374-C6C71FC0D86E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF90BCB4-6956-4256-9374-C6C71FC0D86E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF90BCB4-6956-4256-9374-C6C71FC0D86E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59FB5ABD-0F3B-4208-83B6-D92371FF50BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59FB5ABD-0F3B-4208-83B6-D92371FF50BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59FB5ABD-0F3B-4208-83B6-D92371FF50BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59FB5ABD-0F3B-4208-83B6-D92371FF50BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {738E06C1-73F6-482A-8F27-26B82C9460E8}
+	EndGlobalSection
+EndGlobal

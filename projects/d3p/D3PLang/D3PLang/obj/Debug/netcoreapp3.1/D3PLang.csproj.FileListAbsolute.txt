@@ -1,0 +1,9 @@
+C:\biz\Work\Dev\Lab\Workshop\mkrepo\projects\d3p\D3PLang\D3PLang\bin\Debug\netcoreapp3.1\D3PLang.deps.json
+C:\biz\Work\Dev\Lab\Workshop\mkrepo\projects\d3p\D3PLang\D3PLang\bin\Debug\netcoreapp3.1\D3PLang.dll
+C:\biz\Work\Dev\Lab\Workshop\mkrepo\projects\d3p\D3PLang\D3PLang\bin\Debug\netcoreapp3.1\D3PLang.pdb
+C:\biz\Work\Dev\Lab\Workshop\mkrepo\projects\d3p\D3PLang\D3PLang\obj\Debug\netcoreapp3.1\D3PLang.csprojAssemblyReference.cache
+C:\biz\Work\Dev\Lab\Workshop\mkrepo\projects\d3p\D3PLang\D3PLang\obj\Debug\netcoreapp3.1\D3PLang.AssemblyInfoInputs.cache
+C:\biz\Work\Dev\Lab\Workshop\mkrepo\projects\d3p\D3PLang\D3PLang\obj\Debug\netcoreapp3.1\D3PLang.AssemblyInfo.cs
+C:\biz\Work\Dev\Lab\Workshop\mkrepo\projects\d3p\D3PLang\D3PLang\obj\Debug\netcoreapp3.1\D3PLang.csproj.CoreCompileInputs.cache
+C:\biz\Work\Dev\Lab\Workshop\mkrepo\projects\d3p\D3PLang\D3PLang\obj\Debug\netcoreapp3.1\D3PLang.dll
+C:\biz\Work\Dev\Lab\Workshop\mkrepo\projects\d3p\D3PLang\D3PLang\obj\Debug\netcoreapp3.1\D3PLang.pdb
