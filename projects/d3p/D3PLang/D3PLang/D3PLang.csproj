@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -9,7 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MetaModel\" />
+    <Folder Include="MetaModel\Class\Method\Output\" />
+    <Folder Include="MetaModel\Statement\" />
   </ItemGroup>
 
 </Project>
