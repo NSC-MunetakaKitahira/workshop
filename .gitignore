@@ -8,3 +8,5 @@ bin/
 .metadata/
 *.class
 .vs/
+obj/
+packages/
