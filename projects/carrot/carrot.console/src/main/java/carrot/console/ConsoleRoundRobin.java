@@ -3,14 +3,14 @@ package carrot.console;
 import java.util.Arrays;
 import java.util.List;
 
-import carrot.janken.competition.roundrobin.RoundRobinCompetition;
-import carrot.janken.competition.roundrobin.WinPoints;
-import carrot.janken.game.JankenGame;
-import carrot.janken.game.JankenGameResult;
-import carrot.janken.player.JankenPlayer;
-import carrot.janken.player.sample.AlwaysPaPlayer;
-import carrot.janken.player.sample.CountingPlayer;
-import carrot.janken.player.sample.PreviousHandPlayer;
+import carrot.game.competition.roundrobin.RoundRobinCompetition;
+import carrot.game.competition.roundrobin.WinPoints;
+import carrot.game.match.JankenMatch;
+import carrot.game.match.JankenMatchResult;
+import carrot.game.player.JankenPlayer;
+import carrot.game.player.sample.AlwaysPaPlayer;
+import carrot.game.player.sample.CountingPlayer;
+import carrot.game.player.sample.PreviousHandPlayer;
 
 /**
  * 総当たり戦をコンソールに出力
@@ -38,14 +38,14 @@ public class ConsoleRoundRobin {
 		
 	}
 
-	private static void gameStarting(JankenGame game) {
+	private static void gameStarting(JankenMatch game) {
 		// ゲーム開始時
 		System.out.println(
 				"P1:" + game.player1.getClass().getSimpleName() 
 				+ " vs P2:" + game.player2.getClass().getSimpleName());
 	}
 
-	private static void gameFinished(JankenGameResult gameResult) {
+	private static void gameFinished(JankenMatchResult gameResult) {
 		// ゲーム結果
 		System.out.println(gameResult.format());
 		System.out.println("---------------------------------");

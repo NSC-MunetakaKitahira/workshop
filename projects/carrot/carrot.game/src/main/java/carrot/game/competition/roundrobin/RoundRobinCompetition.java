@@ -1,13 +1,13 @@
-package carrot.janken.competition.roundrobin;
+package carrot.game.competition.roundrobin;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import carrot.janken.game.JankenGame;
-import carrot.janken.game.JankenGameResult;
-import carrot.janken.player.JankenPlayer;
+import carrot.game.match.JankenMatch;
+import carrot.game.match.JankenMatchResult;
+import carrot.game.player.JankenPlayer;
 
 /**
  * 総当たり戦のコントロール
@@ -23,18 +23,18 @@ public class RoundRobinCompetition {
 	}
 	
 	public void start(
-			Consumer<JankenGame> gameNotifier,
-			Consumer<JankenGameResult> gameResultNotifier,
+			Consumer<JankenMatch> gameNotifier,
+			Consumer<JankenMatchResult> gameResultNotifier,
 			Consumer<WinPoints> competitionResultNotifier
 			) {
 		
 		WinPoints winPoints = new WinPoints(playerClasses());
 		
-		for (JankenGame game : createRoundRobin()) {
+		for (JankenMatch game : createRoundRobin()) {
 			
 			gameNotifier.accept(game);
 			
-			JankenGameResult result = game.start(s -> {});
+			JankenMatchResult result = game.start(s -> {});
 			winPoints.process(result, game.player1.getClass(), game.player2.getClass());
 
 			gameResultNotifier.accept(result);
@@ -47,16 +47,16 @@ public class RoundRobinCompetition {
 		return players.stream().map(p -> p.getClass()).collect(Collectors.toList());
 	}
 	
-	private List<JankenGame> createRoundRobin() {
+	private List<JankenMatch> createRoundRobin() {
 		
-		List<JankenGame> games = new ArrayList<>();
+		List<JankenMatch> games = new ArrayList<>();
 		
 		for (int i = 0; i < players.size() - 1; i++) {
 			JankenPlayer player1 = players.get(i);
 			
 			for (int j = i + 1; j < players.size(); j++) {
 				JankenPlayer player2 = players.get(j);
-				games.add(new JankenGame(numberOfRounds, player1, player2));
+				games.add(new JankenMatch(numberOfRounds, player1, player2));
 			}
 		}
 		

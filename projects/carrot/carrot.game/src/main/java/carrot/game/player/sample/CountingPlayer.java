@@ -1,8 +1,8 @@
-package carrot.janken.player.sample;
+package carrot.game.player.sample;
 
-import carrot.janken.judge.JankenHand;
-import carrot.janken.player.JankenPlayer;
-import carrot.janken.player.SubjectiveGameStatus;
+import carrot.game.judge.JankenHand;
+import carrot.game.player.JankenPlayer;
+import carrot.game.player.SubjectiveGameStatus;
 
 /**
  * 相手が最も頻繁に出す手をそのまま返すプレイヤー

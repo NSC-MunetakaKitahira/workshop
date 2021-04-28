@@ -1,17 +1,17 @@
-package carrot.janken.game;
+package carrot.game.match;
 
 import java.util.function.Consumer;
 
-import carrot.janken.judge.JankenHand;
-import carrot.janken.player.JankenPlayer;
-import carrot.janken.player.SubjectiveGameStatus;
+import carrot.game.judge.JankenHand;
+import carrot.game.player.JankenPlayer;
+import carrot.game.player.SubjectiveGameStatus;
 
 /**
- * ゲーム進行をコントロールするクラス
+ * ひとつのマッチ進行をコントロールするクラス
  */
-public class JankenGame {
+public class JankenMatch {
 	
-	/** このゲームのラウンド数 */
+	/** このマッチのラウンド数 */
 	public final int numberOfRounds;
 	
 	/** プレイヤー１ */
@@ -20,37 +20,37 @@ public class JankenGame {
 	/** プレイヤー２ */
 	public final JankenPlayer player2;
 
-	public JankenGame(int numberOfRounds, JankenPlayer player1, JankenPlayer player2) {
+	public JankenMatch(int numberOfRounds, JankenPlayer player1, JankenPlayer player2) {
 		this.numberOfRounds = numberOfRounds;
 		this.player1 = player1;
 		this.player2 = player2;
 	}
 	
 	/**
-	 * ゲームを開始
-	 * @param roundNotifier 1ラウンドごとにゲーム進行状況を受け取る関数
+	 * マッチを開始
+	 * @param roundNotifier 1ラウンドごとにマッチ進行状況を受け取る関数
 	 * @return 結果
 	 */
-	public JankenGameResult start(Consumer<JankenGameStatus> roundNotifier) {
+	public JankenMatchResult start(Consumer<JankenMatchStatus> roundNotifier) {
 		
 		player1.newGame();
 		player2.newGame();
 		
-		JankenGameStatus gameStatus = JankenGameStatus.init(numberOfRounds);
+		JankenMatchStatus gameStatus = JankenMatchStatus.init(numberOfRounds);
 		
 		for (int i = 0; i < numberOfRounds; i++) {
 			NextHand nextP1Hand = NextHand.attempt(player1, gameStatus.forPlayer1());
 			NextHand nextP2Hand = NextHand.attempt(player2, gameStatus.forPlayer2());
 			
 			if (nextP1Hand.hasCrashed || nextP2Hand.hasCrashed) {
-				return JankenGameResult.crashed(nextP1Hand.hasCrashed, nextP2Hand.hasCrashed);
+				return JankenMatchResult.crashed(nextP1Hand.hasCrashed, nextP2Hand.hasCrashed);
 			}
 			
 			gameStatus = gameStatus.processRound(nextP1Hand.nextHand, nextP2Hand.nextHand);
 			roundNotifier.accept(gameStatus);
 		}
 		
-		return JankenGameResult.finished(gameStatus.player1Score, gameStatus.player2Score);
+		return JankenMatchResult.finished(gameStatus.player1Score, gameStatus.player2Score);
 	}
 	
 	private static class NextHand {

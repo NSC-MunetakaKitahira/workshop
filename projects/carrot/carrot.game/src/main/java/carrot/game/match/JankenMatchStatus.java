@@ -1,13 +1,13 @@
-package carrot.janken.game;
+package carrot.game.match;
 
-import carrot.janken.judge.JankenHand;
-import carrot.janken.judge.JankenJudgement;
-import carrot.janken.player.SubjectiveGameStatus;
+import carrot.game.judge.JankenHand;
+import carrot.game.judge.JankenJudgement;
+import carrot.game.player.SubjectiveGameStatus;
 
 /**
- * あるラウンド完了時点でのゲーム状況
+ * あるラウンド完了時点でのマッチ状況
  */
-public class JankenGameStatus {
+public class JankenMatchStatus {
 
 	/** 最大ラウンド数 */
 	public final int maxRound;
@@ -27,7 +27,7 @@ public class JankenGameStatus {
 	/** 現在のプレイヤー２のスコア */
 	public final int player2Score;
 
-	private JankenGameStatus(
+	private JankenMatchStatus(
 			int maxRound,
 			int round,
 			JankenHand previousPlayer1Hand,
@@ -44,10 +44,10 @@ public class JankenGameStatus {
 	}
 	
 	/**
-	 * ゲームの開始状態を作る
+	 * マッチの開始状態を作る
 	 */
-	public static JankenGameStatus init(int maxRound) {
-		return new JankenGameStatus(maxRound, 0, null, null, 0, 0);
+	public static JankenMatchStatus init(int maxRound) {
+		return new JankenMatchStatus(maxRound, 0, null, null, 0, 0);
 	}
 	
 	/**
@@ -55,9 +55,9 @@ public class JankenGameStatus {
 	 * @param player1Hand
 	 * @param player2Hand
 	 */
-	public JankenGameStatus processRound(JankenHand player1Hand, JankenHand player2Hand) {
+	public JankenMatchStatus processRound(JankenHand player1Hand, JankenHand player2Hand) {
 		JankenJudgement judgement = JankenJudgement.judge(player1Hand, player2Hand);
-		return new JankenGameStatus(
+		return new JankenMatchStatus(
 				maxRound,
 				processedRounds + 1,
 				player1Hand,

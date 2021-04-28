@@ -1,11 +1,11 @@
-package carrot.janken.competition.roundrobin;
+package carrot.game.competition.roundrobin;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import carrot.janken.game.JankenGameResult;
+import carrot.game.match.JankenMatchResult;
 
 /**
  * 総当たり戦の勝ち点を管理する
@@ -22,7 +22,7 @@ public class WinPoints {
 				.collect(Collectors.toMap(p -> p, p -> Item.init(p)));
 	}
 	
-	public void process(JankenGameResult result, Class<?> player1, Class<?> player2) {
+	public void process(JankenMatchResult result, Class<?> player1, Class<?> player2) {
 
 		switch (result.resultClass()) {
 		case PLAYER1_WIN:

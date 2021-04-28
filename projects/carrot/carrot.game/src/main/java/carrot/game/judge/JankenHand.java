@@ -1,4 +1,4 @@
-package carrot.janken.judge;
+package carrot.game.judge;
 
 import java.util.Arrays;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
 rootProject.name = 'Carrot'
 
-include 'carrot.janken'
+include 'carrot.game'
 include 'carrot.console'

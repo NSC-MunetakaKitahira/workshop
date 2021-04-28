@@ -1,6 +1,9 @@
-package carrot.janken.game;
+package carrot.game.match;
 
-public class JankenGameResult {
+/**
+ * ひとつのマッチの結果
+ */
+public class JankenMatchResult {
 	/** プレイヤー１のスコア */
 	public final int player1Score;
 	
@@ -13,7 +16,7 @@ public class JankenGameResult {
 	/** プレイヤー２の処理がクラッシュしたか */
 	public final boolean hasPlayer2Crashed;
 
-	private JankenGameResult(int player1Score, int player2Score, boolean hasPlayer1Crashed, boolean hasPlayer2Crashed) {
+	private JankenMatchResult(int player1Score, int player2Score, boolean hasPlayer1Crashed, boolean hasPlayer2Crashed) {
 		this.player1Score = player1Score;
 		this.player2Score = player2Score;
 		this.hasPlayer1Crashed = hasPlayer1Crashed;
@@ -21,13 +24,13 @@ public class JankenGameResult {
 	}
 	
 	/**
-	 * 最後までゲームが完了した
+	 * 最後までマッチが完了した
 	 * @param player1Score
 	 * @param player2Score
 	 * @return
 	 */
-	public static JankenGameResult finished(int player1Score, int player2Score) {
-		return new JankenGameResult(player1Score, player2Score, false, false);
+	public static JankenMatchResult finished(int player1Score, int player2Score) {
+		return new JankenMatchResult(player1Score, player2Score, false, false);
 	}
 	
 	/**
@@ -36,8 +39,8 @@ public class JankenGameResult {
 	 * @param hasPlayer2Crashed
 	 * @return
 	 */
-	public static JankenGameResult crashed(boolean hasPlayer1Crashed, boolean hasPlayer2Crashed) {
-		return new JankenGameResult(0, 0, hasPlayer1Crashed, hasPlayer2Crashed);
+	public static JankenMatchResult crashed(boolean hasPlayer1Crashed, boolean hasPlayer2Crashed) {
+		return new JankenMatchResult(0, 0, hasPlayer1Crashed, hasPlayer2Crashed);
 	}
 	
 	public ResultClass resultClass() {

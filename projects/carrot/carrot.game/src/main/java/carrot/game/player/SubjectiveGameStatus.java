@@ -1,6 +1,6 @@
-package carrot.janken.player;
+package carrot.game.player;
 
-import carrot.janken.judge.JankenHand;
+import carrot.game.judge.JankenHand;
 
 /**
  * いずれかのプレイヤーから見た主観的なゲーム状況
