@@ -1,30 +1,41 @@
 package carrot.console;
 
 import java.util.Arrays;
+import java.util.List;
 
-import carrot.game.JankenGame;
-import carrot.game.JankenGame.Result;
-import carrot.game.roundrobin.RoundRobinCompetition;
-import carrot.game.roundrobin.WinPoints;
-import carrot.player.kitahira.AlwaysPaPlayer;
-import carrot.player.kitahira.PreviousHandPlayer;
+import carrot.janken.competition.roundrobin.RoundRobinCompetition;
+import carrot.janken.competition.roundrobin.WinPoints;
+import carrot.janken.game.JankenGame;
+import carrot.janken.game.JankenGameResult;
+import carrot.janken.player.JankenPlayer;
+import carrot.janken.player.sample.AlwaysPaPlayer;
+import carrot.janken.player.sample.CountingPlayer;
+import carrot.janken.player.sample.PreviousHandPlayer;
 
 /**
  * 総当たり戦をコンソールに出力
  */
 public class ConsoleRoundRobin {
-
+	
 	public static void start(int numberOfRounds) {
 		
-		RoundRobinCompetition compet = new RoundRobinCompetition(numberOfRounds, Arrays.asList(
-				new AlwaysPaPlayer(),
-				new PreviousHandPlayer()
-				));
+		List<JankenPlayer> players = getPlayers();
+		RoundRobinCompetition compet = new RoundRobinCompetition(numberOfRounds, players);
 		
 		compet.start(
 				game -> gameStarting(game),
 				gameResult -> gameFinished(gameResult),
 				winPoints -> competitionFinished(winPoints));
+	}
+
+	private static List<JankenPlayer> getPlayers() {
+		
+		return Arrays.asList(
+				new AlwaysPaPlayer(),
+				new CountingPlayer(),
+				new PreviousHandPlayer()
+				);
+		
 	}
 
 	private static void gameStarting(JankenGame game) {
@@ -34,13 +45,17 @@ public class ConsoleRoundRobin {
 				+ " vs P2:" + game.player2.getClass().getSimpleName());
 	}
 
-	private static void gameFinished(Result gameResult) {
+	private static void gameFinished(JankenGameResult gameResult) {
 		// ゲーム結果
 		System.out.println(gameResult.format());
 		System.out.println("---------------------------------");
 		
 		// 入力待ちにして一時停止
-		ConsoleInput.waitEnter();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 

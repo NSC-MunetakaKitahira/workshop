@@ -1,11 +1,12 @@
 package carrot.console;
 
-import carrot.game.JankenGame;
-import carrot.game.JankenGameStatus;
-import carrot.judge.JankenHand;
-import carrot.player.JankenPlayer;
-import carrot.player.kitahira.AlwaysPaPlayer;
-import carrot.player.kitahira.PreviousHandPlayer;
+import carrot.janken.game.JankenGame;
+import carrot.janken.game.JankenGameResult;
+import carrot.janken.game.JankenGameStatus;
+import carrot.janken.judge.JankenHand;
+import carrot.janken.player.JankenPlayer;
+import carrot.janken.player.sample.AlwaysPaPlayer;
+import carrot.janken.player.sample.PreviousHandPlayer;
 
 /**
  * 一対一の１ゲームをコンソールに出力
@@ -23,7 +24,7 @@ public class ConsoleOneGame {
 		
 		JankenGame game = new JankenGame(numberOfRounds, player1, player2);
 		
-		JankenGame.Result result = game.start(status -> {
+		JankenGameResult result = game.start(status -> {
 			System.out.println(format(status));
 		});
 		
