@@ -23,8 +23,8 @@ public class RoundRobinCompetition {
 	}
 	
 	public void start(
-			Consumer<JankenMatch> gameNotifier,
-			Consumer<JankenMatchResult> gameResultNotifier,
+			Consumer<JankenMatch> matchNotifier,
+			Consumer<JankenMatchResult> matchResultNotifier,
 			Consumer<WinPoints> competitionResultNotifier
 			) {
 		
@@ -32,12 +32,12 @@ public class RoundRobinCompetition {
 		
 		for (JankenMatch game : createRoundRobin()) {
 			
-			gameNotifier.accept(game);
+			matchNotifier.accept(game);
 			
 			JankenMatchResult result = game.start(s -> {});
 			winPoints.process(result, game.player1.getClass(), game.player2.getClass());
 
-			gameResultNotifier.accept(result);
+			matchResultNotifier.accept(result);
 		}
 
 		competitionResultNotifier.accept(winPoints);
