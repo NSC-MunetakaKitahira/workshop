@@ -1,3 +1,4 @@
 rootProject.name = 'Carrot'
 
+include 'carrot.game'
 include 'carrot.console'
