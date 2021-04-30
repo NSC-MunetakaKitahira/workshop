@@ -81,6 +81,7 @@ public class SingleEliminationLog {
 		public final String player1;
 		public final String player2;
 		public JankenMatchResult result = null;
+		public String winner = null;
 		
 		private final List<Round> rounds = new ArrayList<>();
 
@@ -96,6 +97,17 @@ public class SingleEliminationLog {
 		
 		public void matchFinished(JankenMatchResult result) {
 			this.result = result;
+			switch (result.resultClass()) {
+			case PLAYER1_WIN:
+				this.winner = this.player1;
+				break;
+			case PLAYER2_WIN:
+				this.winner = this.player2;
+				break;
+			default:
+				this.winner = null;
+				break;
+			}
 		}
 	}
 	
