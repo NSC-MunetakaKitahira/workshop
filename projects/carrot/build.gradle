@@ -54,6 +54,7 @@ subprojects {
 
 project (':carrot.console') {
 	dependencies {
+		implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
 		compile project(':carrot.game')
 	}
 }

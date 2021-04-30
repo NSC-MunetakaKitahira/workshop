@@ -5,25 +5,34 @@ package carrot.game.judge;
  */
 public class JankenJudgement {
 
+	public final JankenHand player1Hand;
+	public final JankenHand player2Hand;
 	public final int player1Gain;
 	public final int player2Gain;
 	
-	private JankenJudgement(int player1Gain, int player2Gain) {
-		this.player1Gain = player1Gain;
-		this.player2Gain = player2Gain;
+	@SuppressWarnings("incomplete-switch")
+	private JankenJudgement(JankenHand player1Hand, JankenHand player2Hand) {
+		
+		this.player1Hand = player1Hand;
+		this.player2Hand = player2Hand;
+
+		int p1Gain = 0;
+		int p2Gain = 0;
+		switch (player1Hand.competeAgainst(player2Hand)) {
+		case WIN:
+			p1Gain = player1Hand.winnerGain;
+			break;
+		case LOSE:
+			p2Gain = player2Hand.winnerGain;
+			break;
+		}
+		
+		this.player1Gain = p1Gain;
+		this.player2Gain = p2Gain;
 	}
 	
 	public static JankenJudgement judge(JankenHand player1Hand, JankenHand player2Hand) {
-		
-		switch (player1Hand.competeAgainst(player2Hand)) {
-		case WIN:
-			return new JankenJudgement(player1Hand.winnerGain, 0);
-		case LOSE:
-			return new JankenJudgement(0, player2Hand.winnerGain);
-		default:
-			return new JankenJudgement(0, 0);
-		}
-		
+		return new JankenJudgement(player1Hand, player2Hand);
 	}
 	
 }

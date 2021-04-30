@@ -67,6 +67,14 @@ public class JankenMatchStatus {
 	}
 	
 	/**
+	 * 前ラウンドの判定結果を返す
+	 * @return
+	 */
+	public JankenJudgement previousJudgement() {
+		return JankenJudgement.judge(previousPlayer1Hand, previousPlayer2Hand);
+	}
+	
+	/**
 	 * プレイヤー１用のSubjectiveオブジェクトを返す
 	 * @return
 	 */
