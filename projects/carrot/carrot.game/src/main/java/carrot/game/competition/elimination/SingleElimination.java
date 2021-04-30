@@ -2,6 +2,7 @@ package carrot.game.competition.elimination;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import carrot.game.match.JankenMatch;
@@ -26,7 +27,7 @@ public class SingleElimination {
 	
 	public void start(
 			Consumer<Integer> notifyLevel,
-			Consumer<JankenMatch> notifyMatchStarting,
+			BiConsumer<Integer, JankenMatch> notifyMatchStarting,
 			Consumer<JankenMatchStatus> notifyRoundResult,
 			Consumer<JankenMatchResult> notifyMatchResult,
 			Consumer<JankenPlayer> notifyChampion
@@ -54,7 +55,8 @@ public class SingleElimination {
 				JankenPlayer player1 = currentLevelPlayers.get(i);
 				JankenPlayer player2 = currentLevelPlayers.get(i + 1);
 				
-				operateMatch(notifyMatchStarting, notifyRoundResult, notifyMatchResult, nextLevelPlayers, player1, player2);
+				int count = i / 2 + 1;
+				operateMatch(count, notifyMatchStarting, notifyRoundResult, notifyMatchResult, nextLevelPlayers, player1, player2);
 			}
 			
 			if (nextLevelPlayers.size() <= 1) {
@@ -66,7 +68,8 @@ public class SingleElimination {
 	}
 
 	private void operateMatch(
-			Consumer<JankenMatch> notifyMatchStarting,
+			int count,
+			BiConsumer<Integer, JankenMatch> notifyMatchStarting,
 			Consumer<JankenMatchStatus> notifyRoundResult,
 			Consumer<JankenMatchResult> notifyMatchResult,
 			List<JankenPlayer> nextLayerPlayers,
@@ -74,7 +77,7 @@ public class SingleElimination {
 			JankenPlayer player2) {
 		
 		JankenMatch match = new JankenMatch(numberOfRounds, player1, player2);
-		notifyMatchStarting.accept(match);
+		notifyMatchStarting.accept(count, match);
 		
 		JankenMatchResult matchResult = match.start(matchStatus -> {
 			notifyRoundResult.accept(matchStatus);
@@ -90,7 +93,7 @@ public class SingleElimination {
 			break;
 		default:
 			// 引き分けたら決着がつくまで再試合
-			operateMatch(notifyMatchStarting, notifyRoundResult, notifyMatchResult, nextLayerPlayers, player1, player2);
+			operateMatch(count, notifyMatchStarting, notifyRoundResult, notifyMatchResult, nextLayerPlayers, player1, player2);
 			break;
 		}
 	}

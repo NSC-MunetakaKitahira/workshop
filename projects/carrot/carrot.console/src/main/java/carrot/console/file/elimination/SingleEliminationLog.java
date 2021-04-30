@@ -15,9 +15,7 @@ public class SingleEliminationLog {
 	
 	public final List<String> players;
 	public String champion = null;
-	
-	/** 回戦ごとのマッチ結果 */
-	public final List<List<Match>> matchesByLevel = new ArrayList<>();
+	public final List<Level> levels = new ArrayList<>();
 	
 	public SingleEliminationLog(List<JankenPlayer> players) {
 		this.players = players.stream()
@@ -26,46 +24,68 @@ public class SingleEliminationLog {
 	}
 
 	public void levelStarting(int level) {
-		matchesByLevel.add(new ArrayList<>());
+		levels.add(new Level(level));
 	}
 	
-	public void matchStarting(JankenMatch match) {
-		getCurrentLevelMatches().add(new Match(match.player1, match.player2));
+	public void matchStarting(int count, JankenMatch match) {
+		getCurrentLevel().matchStarting(count, match);
 	}
 
-	private List<Match> getCurrentLevelMatches() {
-		return matchesByLevel.get(matchesByLevel.size() - 1);
+	private Level getCurrentLevel() {
+		return levels.get(levels.size() - 1);
 	}
 	
 	public void roundFinished(JankenMatchStatus matchStatus) {
-		Match match = getCurrentMatch();
-		match.roundFinished(matchStatus.previousJudgement());
+		getCurrentLevel().roundFinished(matchStatus);
 	}
 	
 	public void matchFinished(JankenMatchResult result) {
-		Match match = getCurrentMatch();
-		match.matchFinished(result);
-	}
-
-	private Match getCurrentMatch() {
-		List<Match> matches = getCurrentLevelMatches();
-		return matches.get(matches.size() - 1);
+		getCurrentLevel().matchFinished(result);
 	}
 	
 	public void competitionFinished(JankenPlayer champion) {
 		this.champion = champion.getClass().getSimpleName();
 	}
 	
+	public static class Level {
+		
+		public final int levelCount;
+		public final List<Match> matches = new ArrayList<>();
+		
+		public Level(int count) {
+			this.levelCount = count;
+		}
+		
+		public void matchStarting(int count, JankenMatch match) {
+			matches.add(new Match(count, match.player1, match.player2));
+		}
+		
+		public void roundFinished(JankenMatchStatus matchStatus) {
+			Match match = getCurrentMatch();
+			match.roundFinished(matchStatus.previousJudgement());
+		}
+		
+		public void matchFinished(JankenMatchResult result) {
+			Match match = getCurrentMatch();
+			match.matchFinished(result);
+		}
+		
+		private Match getCurrentMatch() {
+			return matches.get(matches.size() - 1);
+		}
+	}
+	
 	public static class Match {
 		
+		public final int matchCount;
 		public final String player1;
 		public final String player2;
 		public JankenMatchResult result = null;
 		
 		private final List<Round> rounds = new ArrayList<>();
 
-		public Match(JankenPlayer player1, JankenPlayer player2) {
-			super();
+		public Match(int count, JankenPlayer player1, JankenPlayer player2) {
+			this.matchCount = count;
 			this.player1 = player1.getClass().getSimpleName();
 			this.player2 = player2.getClass().getSimpleName();
 		}
