@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,8 +23,8 @@ public class JsonSingleElimination {
 				level -> {
 					log.levelStarting(level);
 				},
-				match -> {
-					log.matchStarting(match);
+				(count, match) -> {
+					log.matchStarting(count, match);
 				},
 				matchStatus -> {
 					log.roundFinished(matchStatus);
