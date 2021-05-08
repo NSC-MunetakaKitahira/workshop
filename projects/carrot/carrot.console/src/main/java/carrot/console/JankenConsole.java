@@ -47,7 +47,6 @@ public class JankenConsole {
 				new Hirako_DynamicRandomPlayer(),
 				new Hirako_PerceptronPlayer(),
 				new Hirako_RandomPlayer(),
-				new IkamiPlayer32(),
 				new IkamiPlayer42(),
 				new SakurataniPlayerOne(),
 				new SakurataniPlayerTwo(),

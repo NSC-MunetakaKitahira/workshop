@@ -80,10 +80,9 @@ public class SingleEliminationLog {
 		public final int matchCount;
 		public final String player1;
 		public final String player2;
+		public final List<Round> rounds = new ArrayList<>();
 		public JankenMatchResult result = null;
 		public String winner = null;
-		
-		private final List<Round> rounds = new ArrayList<>();
 
 		public Match(int count, JankenPlayer player1, JankenPlayer player2) {
 			this.matchCount = count;
