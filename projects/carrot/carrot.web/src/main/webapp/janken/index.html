@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.0.16/svg.min.js" integrity="sha512-p3Tp2zn+wApBreZCgRkmMwnfpN8MUPXzzOihXx7iGYXqE7t6m9drY8HeyMeeFuDWiTFKrGUrq3jpbT0vX6zY/Q==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+
+    <div id="match">
+      <select id="select-player1" class="player"></select>
+      vs
+      <select id="select-player2" class="player"></select>
+      
+      <button id="start-match">FIGHT</button>
+    </div>
+
+    <div id="match-state">
+      <table>
+        <tr>
+          <td>Rounds:</td>
+          <td id="roundCount"></td>
+        </tr>
+        <tr id="player1">
+          <td class="player-name"></td>
+          <td class="score"></td>
+          <td class="hands"></td>
+        </tr>
+        <tr id="player2">
+          <td class="player-name"></td>
+          <td class="score"></td>
+          <td class="hands"></td>
+        </tr>
+      </table>
+    </div>
+
+    <script src="main.js" charset="shif-jis"></script>
+  </body>
+</html>

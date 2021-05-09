@@ -1,28 +1,35 @@
 package carrot.game.player.sample;
 
+import java.util.Random;
+
 import carrot.game.judge.JankenHand;
 import carrot.game.player.JankenPlayer;
 import carrot.game.player.SubjectiveGameStatus;
 
 /**
- * 直前ラウンドの相手の手に勝つ手を選ぶプレイヤー
+ * ランダムに手を選ぶプレイヤー
  */
-public class PreviousHandPlayer implements JankenPlayer {
+public class RandomPlayer implements JankenPlayer {
 
+	private Random random;
+	
 	@Override
 	public void newGame() {
-		// 何もしない
+		this.random = new Random();
 	}
-	
+
 	@Override
 	public JankenHand nextHand(SubjectiveGameStatus currentGameStatus) {
 		
-		// 最初のラウンドは固定でチョキ
-		if (currentGameStatus.isFirstRound()) {
+		int value = random.nextInt(3);
+		switch (value) {
+		case 0:
+			return JankenHand.GU;
+		case 1:
 			return JankenHand.CHOKI;
+		default:
+			return JankenHand.PA;
 		}
-		
-		return currentGameStatus.previousOpponentHand.handToWin();
 	}
 
 }

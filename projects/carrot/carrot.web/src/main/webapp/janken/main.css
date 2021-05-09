@@ -1,0 +1,60 @@
+body {
+  background: #333;
+  color: #ccc;
+  font-size: 16pt;
+  width: 1600px;
+}
+
+#start-match {
+  background: #333;
+  color: #eee;
+  font-size: 20pt;
+  font-family: "Arial Black";
+  padding: 6px 30px;
+}
+
+#match select.player {
+  background: #111;
+  color: #eee;
+  font-size: 20pt;
+  font-family: "Arial Black";
+}
+
+#match-state .score {
+  width: 80px;
+  padding-right: 15px;
+  text-align: right;;
+}
+
+#match-state .hands {
+  padding: 10px 0;
+}
+
+#match-state .hands > .hand {
+  display: inline-block;
+  height: 60px;
+  overflow: hidden;
+  margin: 0;
+  color: transparent;
+}
+
+#match-state .hands > .hand.gu {
+  width: 2px;
+  background: #f55;
+}
+
+#match-state .hands > .hand.choki {
+  width: 4px;
+  background: #ee2;
+}
+
+#match-state .hands > .hand.pa {
+  width: 5px;
+  background: #66f;
+}
+
+#match-state .hands > .hand.draw {
+  width: 1px;
+  background: #444;
+}
+
