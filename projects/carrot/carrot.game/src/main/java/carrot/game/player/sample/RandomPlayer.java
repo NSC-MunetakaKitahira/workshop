@@ -4,7 +4,7 @@ import java.util.Random;
 
 import carrot.game.judge.JankenHand;
 import carrot.game.player.JankenPlayer;
-import carrot.game.player.SubjectiveGameStatus;
+import carrot.game.player.SubjectiveMatchStatus;
 
 /**
  * ランダムに手を選ぶプレイヤー
@@ -19,7 +19,7 @@ public class RandomPlayer implements JankenPlayer {
 	}
 
 	@Override
-	public JankenHand nextHand(SubjectiveGameStatus currentGameStatus) {
+	public JankenHand nextHand(SubjectiveMatchStatus currentMatchStatus) {
 		
 		int value = random.nextInt(3);
 		switch (value) {

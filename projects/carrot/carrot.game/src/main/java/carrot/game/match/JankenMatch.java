@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 import carrot.game.judge.JankenHand;
 import carrot.game.player.JankenPlayer;
-import carrot.game.player.SubjectiveGameStatus;
+import carrot.game.player.SubjectiveMatchStatus;
 
 /**
  * ひとつのマッチ進行をコントロールするクラス
@@ -72,7 +72,7 @@ public class JankenMatch {
 		 * @param gameStatus
 		 * @return
 		 */
-		public static NextHand attempt(JankenPlayer player, SubjectiveGameStatus gameStatus) {
+		public static NextHand attempt(JankenPlayer player, SubjectiveMatchStatus gameStatus) {
 			try {
 				JankenHand hand = player.nextHand(gameStatus);
 				if (JankenHand.isValid(hand)) {

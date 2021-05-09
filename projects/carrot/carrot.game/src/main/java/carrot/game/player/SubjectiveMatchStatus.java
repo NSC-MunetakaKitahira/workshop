@@ -3,9 +3,9 @@ package carrot.game.player;
 import carrot.game.judge.JankenHand;
 
 /**
- * いずれかのプレイヤーから見た主観的なゲーム状況
+ * いずれかのプレイヤーから見た主観的なマッチ状況
  */
-public class SubjectiveGameStatus {
+public class SubjectiveMatchStatus {
 	
 	/** 現在のラウンド */
 	public final int round;
@@ -22,7 +22,7 @@ public class SubjectiveGameStatus {
 	/** 前ラウンドで相手が出した手 */
 	public final JankenHand previousOpponentHand;
 	
-	public SubjectiveGameStatus(int round, int maxRound, int ownScore, int opponentScore, JankenHand previousOpponentHand) {
+	public SubjectiveMatchStatus(int round, int maxRound, int ownScore, int opponentScore, JankenHand previousOpponentHand) {
 		this.round = round;
 		this.maxRound = maxRound;
 		this.ownScore = ownScore;

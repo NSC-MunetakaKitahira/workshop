@@ -2,7 +2,7 @@ package carrot.game.match;
 
 import carrot.game.judge.JankenHand;
 import carrot.game.judge.JankenJudgement;
-import carrot.game.player.SubjectiveGameStatus;
+import carrot.game.player.SubjectiveMatchStatus;
 
 /**
  * あるラウンド完了時点でのマッチ状況
@@ -78,15 +78,15 @@ public class JankenMatchStatus {
 	 * プレイヤー１用のSubjectiveオブジェクトを返す
 	 * @return
 	 */
-	public SubjectiveGameStatus forPlayer1() {
-		return new SubjectiveGameStatus(processedRounds + 1, maxRound, player1Score, player2Score, previousPlayer2Hand);
+	public SubjectiveMatchStatus forPlayer1() {
+		return new SubjectiveMatchStatus(processedRounds + 1, maxRound, player1Score, player2Score, previousPlayer2Hand);
 	}
 	
 	/**
 	 * プレイヤー２用のSubjectiveオブジェクトを返す
 	 * @return
 	 */
-	public SubjectiveGameStatus forPlayer2() {
-		return new SubjectiveGameStatus(processedRounds + 1, maxRound, player2Score, player1Score, previousPlayer1Hand);
+	public SubjectiveMatchStatus forPlayer2() {
+		return new SubjectiveMatchStatus(processedRounds + 1, maxRound, player2Score, player1Score, previousPlayer1Hand);
 	}
 }
