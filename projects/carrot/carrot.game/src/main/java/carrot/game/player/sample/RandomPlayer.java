@@ -7,7 +7,7 @@ import carrot.game.player.JankenPlayer;
 import carrot.game.player.SubjectiveMatchStatus;
 
 /**
- * ランダムに手を選ぶプレイヤー
+ * ランダムに手を選ぶプレイヤー（課題がつまらなくなるのでランダム禁止）
  */
 public class RandomPlayer implements JankenPlayer {
 
