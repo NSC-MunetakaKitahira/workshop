@@ -15,8 +15,8 @@ public class JankenConsole {
 		// １ゲームのラウンド数
 		int numberOfRounds = 300;
 		
-		// 一対一の１ゲーム限り
-		ConsoleOneGame.start(
+		// 一対一の１マッチ限り
+		ConsoleOneMatch.start(
 				numberOfRounds,
 				new PreviousHandPlayer(),
 				new RandomPlayer());
