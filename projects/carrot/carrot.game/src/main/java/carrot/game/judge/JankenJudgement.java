@@ -10,7 +10,6 @@ public class JankenJudgement {
 	public final int player1Gain;
 	public final int player2Gain;
 	
-	@SuppressWarnings("incomplete-switch")
 	private JankenJudgement(JankenHand player1Hand, JankenHand player2Hand) {
 		
 		this.player1Hand = player1Hand;
@@ -24,6 +23,10 @@ public class JankenJudgement {
 			break;
 		case LOSE:
 			p2Gain = player2Hand.winnerGain;
+			break;
+		case DRAW:
+			// 引き分けは両者に1点
+			p1Gain = p2Gain = 1;
 			break;
 		}
 		
