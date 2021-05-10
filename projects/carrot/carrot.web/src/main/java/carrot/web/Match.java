@@ -21,8 +21,8 @@ public class Match {
 			@QueryParam("player1") String player1Name,
 			@QueryParam("player2") String player2Name) {
 
-		JankenPlayer player1 = Players.findByName(player1Name).get();
-		JankenPlayer player2 = Players.findByName(player2Name).get();
+		JankenPlayer player1 = Player.findByName(player1Name).get();
+		JankenPlayer player2 = Player.findByName(player2Name).get();
 		JankenMatch match = new JankenMatch(numberOfRounds, player1, player2);
 		
 		return MatchLog.log(match);

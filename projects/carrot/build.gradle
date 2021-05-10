@@ -49,6 +49,8 @@ subprojects {
         
 		// https://mvnrepository.com/artifact/commons-io/commons-io
 		compile group: 'commons-io', name: 'commons-io', version: '2.5'
+		
+		compile group: 'org.reflections', name: 'reflections', version: '0.9.12'
 	}
 }
 
