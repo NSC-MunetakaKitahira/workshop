@@ -11,15 +11,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.reflections.Reflections;
-
 import carrot.game.player.JankenPlayer;
 import carrot.game.player.Players;
 import carrot.game.player.sample.AlwaysPaPlayer;
 import carrot.game.player.sample.CountingPlayer;
 import carrot.game.player.sample.PreviousHandPlayer;
 import carrot.game.player.sample.RandomPlayer;
-import lombok.val;
 
 /**
  * 参加可能なプレイヤーを定義する
@@ -44,7 +41,7 @@ public class Player {
 	@GET
 	@Path("names")
 	public List<String> playerNames() {
-		return Players.ALL.stream()
+		return Players.findAll().stream()
 				.map(p -> p.getClass().getSimpleName())
 				.collect(toList());
 	}
