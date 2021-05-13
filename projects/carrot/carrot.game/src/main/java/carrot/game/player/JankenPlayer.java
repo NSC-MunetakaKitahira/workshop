@@ -6,5 +6,5 @@ public interface JankenPlayer {
 	
 	void newGame();
 
-	JankenHand nextHand(SubjectiveMatchStatus currentGameStatus);
+	JankenHand nextHand(SubjectiveMatchStatus status);
 }
