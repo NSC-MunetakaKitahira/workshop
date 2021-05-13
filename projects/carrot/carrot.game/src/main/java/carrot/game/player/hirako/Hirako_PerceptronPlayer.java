@@ -1,4 +1,4 @@
-package carrot.game.player.kitahira;
+package carrot.game.player.hirako;
 
 import java.util.Random;
 
