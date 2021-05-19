@@ -36,8 +36,11 @@ async function startMatch() {
   
   let $player1Score = $player1.find(".score").empty();
   let $player2Score = $player2.find(".score").empty();
-  let $player1Hands = $player1.find(".hands").empty();
-  let $player2Hands = $player2.find(".hands").empty();
+  let $player1Gains = $player1.find(".gains").empty();
+  let $player2Gains = $player2.find(".gains").empty();
+  let $player1Hands = $("#round-results .player1").empty();
+  let $player2Hands = $("#round-results .player2").empty();
+  let $drawHands = $("#round-results .draw").empty();
 
   let $roundCount = $("#roundCount");
 
@@ -60,13 +63,24 @@ async function startMatch() {
     $player1Score.text(player1Score);
     $player2Score.text(player2Score);
 
-    if (result.player1Gain > 0) {
-      createHandBlock(result.player1Hand).appendTo($player1Hands);
-    } else if (result.player2Gain > 0) {
-      createHandBlock(result.player2Hand).appendTo($player2Hands);
-    } else {
-      createHandBlock("draw").appendTo($player1Hands);
-      createHandBlock("draw").appendTo($player2Hands);
+    if (result.player1Gain > result.player2Gain) {
+      createGainBlock(result.player1Hand).appendTo($player1Gains);
+      createHandBlock(result.player1Hand, "win").appendTo($player1Hands);
+      createHandBlock(result.player2Hand, "lose").appendTo($player2Hands);
+      createHandBlock("", "").appendTo($drawHands);
+    }
+    else if (result.player2Gain > result.player1Gain) {
+      createGainBlock(result.player2Hand).appendTo($player2Gains);
+      createHandBlock(result.player1Hand, "lose").appendTo($player1Hands);
+      createHandBlock(result.player2Hand, "win").appendTo($player2Hands);
+      createHandBlock("", "").appendTo($drawHands);
+    }
+    else {
+      createGainBlock("draw").appendTo($player1Gains);
+      createGainBlock("draw").appendTo($player2Gains);
+      createHandBlock(result.player1Hand, "").appendTo($player1Hands);
+      createHandBlock(result.player2Hand, "").appendTo($player2Hands);
+      createHandBlock(result.player1Hand, "draw").appendTo($drawHands);
     }
 
     rc++;
@@ -75,11 +89,19 @@ async function startMatch() {
   processRound();
 }
 
-function createHandBlock(hand) {
+function createGainBlock(hand) {
   return $("<div>")
     .addClass("hand")
     .addClass(hand.toLowerCase())
     .text("_")
+}
+
+function createHandBlock(hand, result) {
+  return $("<div>")
+    .addClass("hand")
+    .addClass(hand.toLowerCase())
+    .addClass(result.toLowerCase())
+  .text("_")
 }
 
 function getSelectedLevel() {
