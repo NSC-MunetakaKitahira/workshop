@@ -1,36 +1,35 @@
-package carrot.game.player.sample;
+package carrot.game.player.entry;
 
 import carrot.game.judge.JankenHand;
 import carrot.game.player.JankenPlayer;
 import carrot.game.player.SubjectiveMatchStatus;
 import java.util.Random;
 
-public class NewPro implements JankenPlayer {
-	
-	
+public class mei implements JankenPlayer {
+
 	private Random random;
+
 	@Override
 	public void newGame() {
-	this.random =new Random();	
+		this.random = new Random();
 	}
-	
+
 	@Override
 	public JankenHand nextHand(SubjectiveMatchStatus currentMatchStatus) {
-		
+
+		if(currentMatchStatus.round <= 200) {
 		if (currentMatchStatus.isFirstRound()) {
-			
 			return JankenHand.CHOKI;
 		}
-		int i=random.nextInt(11);
-		if(0<=i&&i<=3) {
-			return JankenHand.GU;
-		}
-		else if(4<=i&&i<=8) {
-			return JankenHand.CHOKI;
-		}
-		else {
-			return JankenHand.PA;
-			
+
+		return currentMatchStatus.previousOpponentHand.handToWin();
+		}else {
+			int value = random.nextInt(100);
+			if (value < 70) {
+				return JankenHand.CHOKI;
+			}else {
+				return JankenHand.PA;
+			}
 		}
 	}
 
