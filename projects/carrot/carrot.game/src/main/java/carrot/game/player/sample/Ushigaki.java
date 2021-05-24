@@ -24,6 +24,7 @@ public class Ushigaki implements JankenPlayer {
 		countHand(currentMatchStatus);
 
 		//10Rごとに集計
+		
 		if(currentMatchStatus.round%10==0) {
 			handVias();
 			gc=cc=pc=0;
@@ -36,6 +37,7 @@ public class Ushigaki implements JankenPlayer {
 
 	//カウント
 	public void countHand(SubjectiveMatchStatus currentMatchStatus) {
+		
 		if (!currentMatchStatus.isFirstRound()) {
 			switch (currentMatchStatus.previousOpponentHand) {
 			case GU:
@@ -89,34 +91,36 @@ public class Ushigaki implements JankenPlayer {
 
 	public JankenHand ran0() {
 		int value0=random.nextInt(3);
+		
 		switch(value0) {
-		case 0 :
-			return JankenHand.CHOKI;
-		case 1 :
-			return JankenHand.PA;
-		default:
-			return JankenHand.PA;
+			case 0 :
+				return JankenHand.GU;
+			case 1 :
+				return JankenHand.PA;
+			default:
+				return JankenHand.PA;
 		}
 	}
 
 	public JankenHand ran1(){
 		int value1=random.nextInt(3);
+		
 		switch(value1) {
-		case 0 :
-			return JankenHand.GU;
-		case 1 :
-			return JankenHand.CHOKI;
-		default:
-			return JankenHand.CHOKI;
+			case 0 :
+				return JankenHand.GU;
+			case 1 :
+				return JankenHand.CHOKI;
+			default:
+				return JankenHand.CHOKI;
 		}
 	}
 
 	public JankenHand ran2(){
 		int value2=random.nextInt(3);
 		switch(value2) {
-		case 0 :
+		case 0:
 			return JankenHand.PA;
-		case 1 :
+		case 1:
 			return JankenHand.CHOKI;
 		default:
 			return JankenHand.CHOKI;
