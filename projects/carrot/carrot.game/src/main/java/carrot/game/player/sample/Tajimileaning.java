@@ -1,5 +1,6 @@
 package carrot.game.player.sample;
 
+import java.util.List;
 import java.util.Map;
 
 import carrot.game.judge.JankenHand;
@@ -8,16 +9,17 @@ import carrot.game.player.SubjectiveMatchStatus;
 
 public class Tajimileaning implements JankenPlayer {
 
-	private String memory1 = "";
-	private String memory2 = "";
-	private String memory3 = "";
+	//グーの回数
 	private int countGu = 0;
-
+	//手の記録用
+	private List<String> handHistory;
+	//履歴のカウント用
 	private Map<String, Integer> counter;
 	
 	@Override
 	public void newGame() {
 		counter.clear();
+		handHistory.clear();
 	}
 
 	@Override
@@ -25,22 +27,15 @@ public class Tajimileaning implements JankenPlayer {
 		if (currentMatchStatus.isFirstRound()) {
 			return JankenHand.CHOKI;
 		}
-
 		// 手の記憶
-		String oneTimeMemory = handToIdentify(currentMatchStatus);
-		// 72行目がtrueでuntilThree, 
-		//               falseならtoDropFourだけどmemoryとreferenceDataの結果って、
-		//mostHandとreferenceの中でしか使わないから、現状、untilThreeいらないはず。
-		//		untilThree(currentMatchStatus, oneTimeMemory);
-		String referenceData = recordLastThreeHand(oneTimeMemory);
+		handToIdentify(currentMatchStatus);
+		
 		if (currentMatchStatus.round <= 4) {
-			// データ参照・カウント
 			return JankenHand.CHOKI;
 		}
 		else {
-			// 4手目以降
-			reference(referenceData);
 			// データ参照・カウント
+			reference();
 			return decisionNextHand();
 		}
 	}
@@ -49,50 +44,54 @@ public class Tajimileaning implements JankenPlayer {
 	 * 4ラウンド以降に、最終的に何の手を出すか決める
 	 */
 	private JankenHand decisionNextHand() {
-		JankenHand next = mostHand();
+		JankenHand enemyMostHand = getEnemyMostHand();
+		
 		// 相手が次に出す手の予想
-		switch (next) {
+		switch (enemyMostHand) {
 			// 予想に対して勝利するように手を出す。
 			case GU:
 			case PA:
-				return next.handToWin();
+				return enemyMostHand.handToWin();
 			case CHOKI:
 				if(countGu <= 150) {
 					countGu++;
-					return next.handToWin();
+					return enemyMostHand.handToWin();
 				}else {
 					return JankenHand.CHOKI;	
 				}
 			default:
-				throw new RuntimeException("新概念の手を出そうとしてます。:"+next);
+				throw new RuntimeException("新概念の手を出そうとしてます。:"+enemyMostHand);
 		}
 	}
 
 	// 今相手が出した手を記憶し、変数に入れるメソッド
-	public String handToIdentify(SubjectiveMatchStatus currentMatchStatus) {
+	public void handToIdentify(SubjectiveMatchStatus currentMatchStatus) {
+		if(handHistory.size() == 3) {
+			handHistory.remove(0);
+		}
+		
+		String identify;
 		switch (currentMatchStatus.previousOpponentHand) {
 			case GU:
-				return "g";
+				identify = "g";
+				break;
 			case CHOKI:
-				return "c";
+				identify = "c";
+				break;
 			case PA:
-				return "p";
+				identify = "p";
+				break;
 			default:
 				throw new RuntimeException("ありえない手を相手が出しました。");
 		}
+		handHistory.add(identify);
 	}
 
 
-	// 4手目以降
-	public String recordLastThreeHand(String oneTimeMemory) {
-		memory1 = memory2;
-		memory2 = memory3;
-		memory3 = oneTimeMemory;
-		return memory1 + memory2 + memory3;
-	}
 
 	// データ参照・カウント
-	public void reference(String referenceData) {
+	public void reference() {
+		String referenceData = String.join("", handHistory);
 		if(counter.containsKey(referenceData)) {
 			int count = counter.get(referenceData);
 			counter.replace(referenceData, count++);
@@ -102,28 +101,33 @@ public class Tajimileaning implements JankenPlayer {
 	}
 
 	// 直近2手を収集、referenceと参照,3択の内、一番多い手を選出
-	public JankenHand mostHand() {
-		String twoHand = memory2 + memory3;
+	public JankenHand getEnemyMostHand() {
+		String twoHand = handHistory.get(1) + handHistory.get(2);
 		
 		//全switchに共通して落ちてた、最後の手が全て0回だった場合パーを返す。
-		if(counter.get(twoHand + "0") == 0
-	       && counter.get(twoHand + "1") == 0
-	       && counter.get(twoHand + "2") == 0) {
+		if(counter.get(twoHand + "g") == 0
+	       && counter.get(twoHand + "c") == 0
+	       && counter.get(twoHand + "p") == 0) {
 			return JankenHand.PA;
 		}
 		
-		if(  counter.get(twoHand + "0") >= counter.get(twoHand + "1")
-	    && counter.get(twoHand + "0") >= counter.get(twoHand + "2")) {
+		if(moreThanCount(twoHand, "g", "c")
+	    && moreThanCount(twoHand, "g", "p")) {
 				return JankenHand.GU;
 		}
-		else if(counter.get(twoHand + "1") >= counter.get(twoHand + "0")
-		&&   counter.get(twoHand + "1") >= counter.get(twoHand + "2")) {
+		else if(moreThanCount(twoHand, "c", "g")
+		&&  moreThanCount(twoHand, "c", "p")) {
 			return JankenHand.CHOKI;
 		}
-		else if(    counter.get(twoHand + "2") >= counter.get(twoHand + "0")
-				&&  counter.get(twoHand + "2") >= counter.get(twoHand + "1")) {
+		else if(moreThanCount(twoHand, "p", "g")
+		&&  moreThanCount(twoHand, "p", "c")) {
 			return JankenHand.PA;
 		}
 		throw new RuntimeException("ありえない手の組み合わせでした。:"+twoHand);
+	}
+	
+	
+	private boolean moreThanCount(String historyTwoHand, String target, String otherHand) {
+		return counter.get(historyTwoHand + target) >= counter.get(historyTwoHand + otherHand); 
 	}
 }
