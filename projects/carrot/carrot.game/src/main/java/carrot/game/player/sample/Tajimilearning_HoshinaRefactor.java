@@ -7,7 +7,7 @@ import carrot.game.judge.JankenHand;
 import carrot.game.player.JankenPlayer;
 import carrot.game.player.SubjectiveMatchStatus;
 
-public class Tajimileaning implements JankenPlayer {
+public class Tajimilearning_HoshinaRefactor implements JankenPlayer {
 
 	//記録する履歴の最大件数
 	private final int maxRecord = 3;
@@ -77,17 +77,19 @@ public class Tajimileaning implements JankenPlayer {
 	// データ参照・カウント
 	public void reference() {
 		String referenceData = String.join("", handHistory);
+		//handHistory 
 		if(counter.containsKey(referenceData)) {
 			int count = counter.get(referenceData);
 			counter.replace(referenceData, count++);
 			return;
 		}
-		counter.put(referenceData, 0);
+		
+		counter.put(referenceData, 1);
 	}
 
 	// 直近2手を収集、referenceと参照,3択の内、一番多い手を選出
 	public JankenHand expectEnemyHand() {
-		String latestTwoHand = handHistory.get(1) + handHistory.get(2);
+		String latestTwoHand = handHistory.get(1) + handHistory.get(2) ;
 		
 		//全switchに共通して落ちてた、最後の手が全て0回だった場合パーを返す。
 		if(counter.get(latestTwoHand + "g") == 0
@@ -123,11 +125,11 @@ public class Tajimileaning implements JankenPlayer {
 	private String getIdentify(SubjectiveMatchStatus currentMatchStatus) {
 		switch (currentMatchStatus.previousOpponentHand) {
 			case GU:
-				return "g";
+				return "g"; 
 			case CHOKI:
-				return "c";
+				return "c"; 
 			case PA:
-				return "p";
+				return "p"; 
 			default:
 				throw new RuntimeException("ありえない手を相手が出しました。");
 		}
