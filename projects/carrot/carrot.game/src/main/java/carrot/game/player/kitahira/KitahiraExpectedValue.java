@@ -15,7 +15,7 @@ import static carrot.game.judge.JankenHand.*;
 import static carrot.game.judge.JankenHand.Judgement.*;
 import carrot.game.judge.JankenHand.Judgement;
 
-public class ExpectedValuePlayer implements JankenPlayer {
+public class KitahiraExpectedValue implements JankenPlayer {
 
 	private Records records;
 	private JankenHand previousHand;

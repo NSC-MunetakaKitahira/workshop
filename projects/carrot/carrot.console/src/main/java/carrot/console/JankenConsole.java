@@ -2,7 +2,7 @@ package carrot.console;
 
 import carrot.game.player.hirako.Hirako_DynamicRandomPlayer;
 import carrot.game.player.hirako.Hirako_PerceptronPlayer;
-import carrot.game.player.kitahira.ExpectedValuePlayer;
+import carrot.game.player.kitahira.KitahiraExpectedValue;
 import carrot.game.player.sample.PreviousHandPlayer;
 import carrot.game.player.sample.RandomPlayer;
 
@@ -21,7 +21,7 @@ public class JankenConsole {
 		// 一対一の１マッチ限り
 		ConsoleOneMatch.start(
 				numberOfRounds,
-				new ExpectedValuePlayer(),
+				new KitahiraExpectedValue(),
 				new Hirako_DynamicRandomPlayer());
 	}
 }
