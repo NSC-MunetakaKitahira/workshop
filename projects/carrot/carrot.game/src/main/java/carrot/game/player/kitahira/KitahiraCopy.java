@@ -1,5 +1,6 @@
 package carrot.game.player.kitahira;
 
+import static carrot.game.judge.JankenHand.*;
 import static java.util.stream.Collectors.*;
 
 import java.util.ArrayList;
@@ -7,11 +8,12 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.reflections.Reflections;
 
 import carrot.game.judge.JankenHand;
-import static carrot.game.judge.JankenHand.*;
 import carrot.game.player.JankenPlayer;
 import carrot.game.player.SubjectiveMatchStatus;
 
@@ -31,13 +33,13 @@ public class KitahiraCopy implements JankenPlayer {
 	private List<JankenHand> opponentHands;
 	
 	/** Mirror */
-	private CopyPlayers mirror;
+	private Simulator mirror;
 	
 	@Override
 	public void newGame() {
 		myPreviousHand = null;
 		opponentHands = new ArrayList<>();
-		mirror = new CopyPlayers();
+		mirror = new Simulator();
 	}
 
 	@Override
@@ -68,26 +70,167 @@ public class KitahiraCopy implements JankenPlayer {
 				myPreviousHand);
 		
 	}
+	
+	private static JankenHand getMost(List<JankenHand> hands) {
+		
+		Map<JankenHand, Integer> counters = new HashMap<>();
+		counters.put(GU, 0);
+		counters.put(CHOKI, 0);
+		counters.put(PA, 0);
+		
+		hands.forEach(hand -> {
+			if (hand == null) return;
+			counters.compute(hand, (h, count) -> count + 1);
+		});
+	
+		return counters.entrySet().stream()
+				.max(Comparator.comparing(e -> e.getValue()))
+				.get()
+				.getKey();
+	}
 
-	private static class CopyPlayers {
-
-		/**
-		 * key: プレイヤー名
-		 * value: コピープレイヤーのインスタンス
-		 */
-		private Map<String, JankenPlayer> copyPlayers = initPlayers();
+	private static class Simulator {
 		
 		/**
 		 * key: プレイヤー名
-		 * value: コピープレイヤーが出した手の記録
+		 * value: コピープレイヤー
 		 */
-		private Map<String, Record> records = initRecords();
+		private Map<String, CopyPlayerContainer> containers = initCopies();
 		
 		public void nextHand(SubjectiveMatchStatus reversedStatus) {
-			copyPlayers.forEach((playerName, player) -> {
-				JankenHand nextHand = tryNextHand(player, reversedStatus);
-				records.get(playerName).add(nextHand);
-			});
+			containers.values().forEach(p -> p.nextHand(reversedStatus));
+		}
+		
+		/**
+		 * 最も一致率の高いプレイヤーの次の手を返す
+		 * @return
+		 */
+		public JankenHand mostProbableNextHand(List<JankenHand> opponentHands) {
+			
+			// 初手は人気手を探す
+			if (opponentHands.isEmpty()) {
+				return mostPopularHand();
+			}
+			
+			// 最も一致率の高いコピープレイヤーの記録を探す
+			CopyPlayerContainer mostProbable = containers.values().stream()
+					.max(Comparator.comparing(r -> r.rateOfConcordance(opponentHands)))
+					.get();
+			
+//			System.out.println(String.format(
+//					"%s: %d%%",
+//					mostProbable.playerName,
+//					(int)(mostProbable.rateOfConcordance(opponentHands) * 100)));
+			
+			return mostProbable.getMostProbableNextHand();
+		}
+
+		/**
+		 * 全コピープレイヤーの人気手を返す
+		 * @return
+		 */
+		private JankenHand mostPopularHand() {
+			
+			List<JankenHand> hands = containers.values().stream()
+				.flatMap(c -> c.instances.stream())
+				.map(i -> i.latestHand())
+				.collect(toList());
+
+			return getMost(hands);
+		}
+		
+		private static Map<String, CopyPlayerContainer> initCopies() {
+			return OTHER_PLAYER_CLASSES.stream()
+					.map(c -> new CopyPlayerContainer(c))
+					.peek(c -> c.newGame())
+					.collect(toMap(p -> p.playerName, p -> p));
+		}
+		
+		private static List<Class<? extends JankenPlayer>> OTHER_PLAYER_CLASSES;
+		static {
+			OTHER_PLAYER_CLASSES = new Reflections("carrot")
+					.getSubTypesOf(JankenPlayer.class)
+					.stream()
+					.filter(c -> !c.getName().contains("Kitahira"))
+					.collect(toList());
+		}
+	}
+	
+	/**
+	 * コピープレイヤーのインスタンスをたくさん放り込むやつ
+	 */
+	private static class CopyPlayerContainer {
+		
+		private static final int size = 10;
+		
+		final String playerName;
+		
+		final List<CopyPlayerInstance> instances;
+		
+		public CopyPlayerContainer(Class<? extends JankenPlayer> playerClass) {
+			
+			playerName = playerClass.getName();
+			
+			instances = IntStream.range(0, size)
+					.mapToObj(n -> new CopyPlayerInstance(create(playerClass)))
+					.collect(toList());
+		}
+		
+		public void newGame() {
+			instances.forEach(i -> i.newGame());
+		}
+		
+		public void nextHand(SubjectiveMatchStatus reversedStatus) {
+			instances.forEach(i -> i.nextHand(reversedStatus));
+		}
+		
+		public JankenHand getMostProbableNextHand() {
+			
+			return getMost(
+					instances.stream().map(i -> i.latestHand()).collect(toList()));
+		}
+		
+		public double rateOfConcordance(List<JankenHand> targets) {
+			
+			return instances.stream()
+					.collect(Collectors.averagingDouble(i -> i.rateOfConcordance(targets)));
+			
+		}
+		
+		private static JankenPlayer create(Class<? extends JankenPlayer> playerClass) {
+			try {
+				return playerClass.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+	
+	
+	/**
+	 * コピープレイヤーのインスタンス
+	 */
+	private static class CopyPlayerInstance {
+		
+		final JankenPlayer player;
+		
+		final List<JankenHand> hands = new ArrayList<>();
+
+		public CopyPlayerInstance(JankenPlayer player) {
+			this.player = player;
+		}
+		
+		public void newGame() {
+			player.newGame();
+		}
+		
+		public JankenHand latestHand() {
+			return hands.get(hands.size() - 1);
+		}
+		
+		public void nextHand(SubjectiveMatchStatus reversedStatus) {
+			JankenHand nextHand = tryNextHand(player, reversedStatus);
+			hands.add(nextHand);
 		}
 		
 		/**
@@ -105,105 +248,11 @@ public class KitahiraCopy implements JankenPlayer {
 		}
 		
 		/**
-		 * 最も一致率の高いプレイヤーの次の手を返す
-		 * @return
-		 */
-		public JankenHand mostProbableNextHand(List<JankenHand> opponentHands) {
-			
-			// 初手は人気手を探す
-			if (opponentHands.isEmpty()) {
-				return mostPopularHand();
-			}
-			
-			// 最も一致率の高いコピープレイヤーの記録を探す
-			Record mostProbable = records.values().stream()
-					.max(Comparator.comparing(r -> r.countMatches(opponentHands)))
-					.get();
-			
-			System.out.println(mostProbable.playerName);
-			
-			return mostProbable.latestHand();
-		}
-
-		/**
-		 * 全コピープレイヤーの人気手を返す
-		 * @return
-		 */
-		private JankenHand mostPopularHand() {
-			
-			Map<JankenHand, Integer> hands = new HashMap<>();
-			hands.put(GU, 0);
-			hands.put(CHOKI, 0);
-			hands.put(PA, 0);
-			
-			for (Record record : records.values()) {
-				hands.compute(record.latestHand(), (hand, count) -> count + 1);
-			}
-			
-			return hands.entrySet().stream()
-					.max(Comparator.comparing(e -> e.getValue()))
-					.get()
-					.getKey();
-		}
-		
-		private static Map<String, JankenPlayer> initPlayers() {
-			return OTHER_PLAYER_CLASSES.stream()
-					.map(c -> create(c))
-					.peek(p -> { try { p.newGame(); } catch (Exception ex) {} })
-					.collect(toMap(p -> p.getClass().getName(), p -> p));
-		}
-		
-		private static Map<String, Record> initRecords() {
-			return OTHER_PLAYER_CLASSES.stream()
-					.map(c -> c.getName())
-					.collect(toMap(n -> n, n -> new Record(n)));
-		}
-		
-		private static List<Class<? extends JankenPlayer>> OTHER_PLAYER_CLASSES;
-		static {
-			OTHER_PLAYER_CLASSES = new Reflections("carrot")
-					.getSubTypesOf(JankenPlayer.class)
-					.stream()
-					.filter(c -> !c.equals(KitahiraCopy.class))
-					.collect(toList());
-		}
-		
-		private static JankenPlayer create(Class<?> playerClass) {
-			try {
-				return (JankenPlayer) playerClass.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
-	
-	/**
-	 * 各コピープレイヤーの出した手の記録
-	 */
-	private static class Record {
-		
-		final String playerName;
-		
-		final List<JankenHand> hands = new ArrayList<>();
-
-		public Record(String playerName) {
-			this.playerName = playerName;
-		}
-		
-		public void add(JankenHand hand) {
-			hands.add(hand);
-		}
-		
-		public JankenHand latestHand() {
-			return hands.get(hands.size() - 1);
-		}
-		
-		/**
 		 * targetsとの一致数を返す
 		 * @param targets
 		 * @return
 		 */
-		public int countMatches(List<JankenHand> targets) {
+		public double rateOfConcordance(List<JankenHand> targets) {
 			
 			int matches = 0;
 			for (int i = 0; i < targets.size(); i++) {
@@ -212,7 +261,7 @@ public class KitahiraCopy implements JankenPlayer {
 				}
 			}
 			
-			return matches;
+			return (double) matches / targets.size();
 		}
 	}
 }
