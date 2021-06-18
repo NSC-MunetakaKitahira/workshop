@@ -1,6 +1,7 @@
 package carrot.game.player.kitahira;
 
-import static java.util.stream.Collectors.*;
+import static carrot.game.judge.JankenHand.*;
+import static carrot.game.judge.JankenHand.Judgement.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,12 +9,9 @@ import java.util.List;
 import java.util.Random;
 
 import carrot.game.judge.JankenHand;
+import carrot.game.judge.JankenHand.Judgement;
 import carrot.game.player.JankenPlayer;
 import carrot.game.player.SubjectiveMatchStatus;
-
-import static carrot.game.judge.JankenHand.*;
-import static carrot.game.judge.JankenHand.Judgement.*;
-import carrot.game.judge.JankenHand.Judgement;
 
 public class KitahiraExpectedValue implements JankenPlayer {
 
