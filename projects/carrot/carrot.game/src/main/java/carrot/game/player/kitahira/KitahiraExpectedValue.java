@@ -93,7 +93,6 @@ public class KitahiraExpectedValue implements JankenPlayer {
 			}
 			
 			if (isYabaiMode) {
-				System.out.print("  yaba  ");
 				return random.nextBoolean() ? hand : hand.handToLose();
 			}
 			
@@ -112,15 +111,20 @@ public class KitahiraExpectedValue implements JankenPlayer {
 		
 		private double probability(JankenHand hand, Judgement judgement) {
 			
-			List<Record> recordsTheHand = amplifiedRecords().stream()
-					.filter(r -> r.hand.equals(hand))
-					.collect(toList());
+			long count = 0;
+			long size = 0;
 			
-			long count = recordsTheHand.stream()
-					.filter(r -> r.judgement.equals(judgement))
-					.count();
+			for (Record record : amplifiedRecords()) {
+				if (record.hand.equals(hand)) {
+					size++;
+					
+					if (record.judgement.equals(judgement)) {
+						count++;
+					}
+				}
+			}
 			
-			return (double) count / (double) recordsTheHand.size();
+			return (double) count / (double) size;
 		}
 		
 		/**
