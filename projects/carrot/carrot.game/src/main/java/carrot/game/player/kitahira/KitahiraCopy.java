@@ -117,11 +117,6 @@ public class KitahiraCopy implements JankenPlayer {
 					.max(Comparator.comparing(r -> r.rateOfConcordance(opponentHands)))
 					.get();
 			
-//			System.out.println(String.format(
-//					"%s: %d%%",
-//					mostProbable.playerName,
-//					(int)(mostProbable.rateOfConcordance(opponentHands) * 100)));
-			
 			return mostProbable.getMostProbableNextHand();
 		}
 
@@ -140,19 +135,10 @@ public class KitahiraCopy implements JankenPlayer {
 		}
 		
 		private static Map<String, CopyPlayerContainer> initCopies() {
-			return OTHER_PLAYER_CLASSES.stream()
+			return Players.OTHER_PLAYER_CLASSES.stream()
 					.map(c -> new CopyPlayerContainer(c))
 					.peek(c -> c.newGame())
 					.collect(toMap(p -> p.playerName, p -> p));
-		}
-		
-		private static List<Class<? extends JankenPlayer>> OTHER_PLAYER_CLASSES;
-		static {
-			OTHER_PLAYER_CLASSES = new Reflections("carrot")
-					.getSubTypesOf(JankenPlayer.class)
-					.stream()
-					.filter(c -> !c.getName().contains("Kitahira"))
-					.collect(toList());
 		}
 	}
 	
@@ -161,7 +147,7 @@ public class KitahiraCopy implements JankenPlayer {
 	 */
 	private static class CopyPlayerContainer {
 		
-		private static final int size = 10;
+		private static final int size = 4;
 		
 		final String playerName;
 		
@@ -172,7 +158,7 @@ public class KitahiraCopy implements JankenPlayer {
 			playerName = playerClass.getName();
 			
 			instances = IntStream.range(0, size)
-					.mapToObj(n -> new CopyPlayerInstance(create(playerClass)))
+					.mapToObj(n -> new CopyPlayerInstance(Players.create(playerClass)))
 					.collect(toList());
 		}
 		
@@ -196,16 +182,7 @@ public class KitahiraCopy implements JankenPlayer {
 					.collect(Collectors.averagingDouble(i -> i.rateOfConcordance(targets)));
 			
 		}
-		
-		private static JankenPlayer create(Class<? extends JankenPlayer> playerClass) {
-			try {
-				return playerClass.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
-				throw new RuntimeException(e);
-			}
-		}
 	}
-	
 	
 	/**
 	 * コピープレイヤーのインスタンス
@@ -262,6 +239,29 @@ public class KitahiraCopy implements JankenPlayer {
 			}
 			
 			return (double) matches / targets.size();
+		}
+	}
+	
+	/**
+	 * JankenPlayerのクラスやインスタンスを取扱う
+	 */
+	private static class Players {
+		
+		private static List<Class<? extends JankenPlayer>> OTHER_PLAYER_CLASSES;
+		static {
+			OTHER_PLAYER_CLASSES = new Reflections("carrot")
+					.getSubTypesOf(JankenPlayer.class)
+					.stream()
+					.filter(c -> !c.equals(KitahiraCopy.class) && !c.getName().contains("Kitahira"))
+					.collect(toList());
+		}
+		
+		private static JankenPlayer create(Class<? extends JankenPlayer> playerClass) {
+			try {
+				return playerClass.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 }
