@@ -35,19 +35,23 @@ body {
 
 #match-state {
   width: 100%;
+  position: relative;
+}
+
+#match-state .player > div {
+  overflow: hidden;
+  line-height: 150px;
+  font-size: 20pt;
 }
 
 #match-state .player .player-name {
   width: 200px;
-  overflow: hidden;
-  line-height: 150px;
 }
 
 #match-state .player .score {
   width: 100px;
   padding-right: 15px;
   text-align: right;
-  line-height: 150px;
 }
 
 #match-state .player .gains, #match-state .hands {
@@ -83,6 +87,14 @@ body {
 #match-state .player .gains > .hand.draw {
   width: 1px;
   background: #444;
+}
+
+#view {
+  position: absolute;
+  top: 0px;
+  left: 330px;
+  width: 1700px;
+  overflow-x: scroll;
 }
 
 
