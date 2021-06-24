@@ -19,10 +19,10 @@ public class UuuusuiPlayer implements JankenPlayer {
 	int yourPa;
 
 	int feverTimeMinutes;
-
+	private Random random;
 	@Override
 	public void newGame() {
-
+	this.random = new Random();
 	}
 
 	@Override
@@ -70,6 +70,20 @@ public class UuuusuiPlayer implements JankenPlayer {
 		}
 		if (myChi % 90 == 0 && myChi > 0) {
 			superFeverTimeNow = true;
+		}
+		if(myGu>50 || myChi>50|| myPa>50) {
+
+			int value = random.nextInt(99);
+			if (value < 60) {
+				return JankenHand.CHOKI;
+			}
+			if (value >= 60 && value < 80) {
+				return JankenHand.PA;
+			}
+			if (value >= 90) {
+				return JankenHand.GU;
+			}
+			return JankenHand.CHOKI;
 		}
 		// 相手の得点が奇数の時の戦略
 		if (currentMatchStatus.opponentScore % 2 == 1) {
