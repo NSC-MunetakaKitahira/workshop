@@ -20,54 +20,74 @@ body {
   font-family: "Arial Black";
 }
 
-#match-state, #match-state table {
+#match-state .player > div {
+  display: inline-block;
+}
+
+#match-state .stack-container {
+  overflow-x: scroll;
+  width: 1200px;
+}
+
+#match-state .stack {
+  white-space: nowrap;
+}
+
+#match-state {
   width: 100%;
 }
 
-#match-state table .player-name {
+#match-state .player .player-name {
   width: 200px;
   overflow: hidden;
+  line-height: 150px;
 }
 
-#match-state .score {
-  width: 80px;
+#match-state .player .score {
+  width: 100px;
   padding-right: 15px;
   text-align: right;
+  line-height: 150px;
 }
 
-#match-state .gains, #match-state .hands {
+#match-state .player .gains, #match-state .hands {
   padding: 10px 0;
 }
 
-#match-state .gains > .hand, #round-results .hands .hand {
+#match-state .player .gains > .hand, #round-results .hands .hand {
   display: inline-block;
   overflow: hidden;
   margin: 0;
   color: transparent;
 }
 
-#match-state .gains > .hand {
+#match-state .player .gains > .hand {
   height: 60px;
 }
 
-#match-state .gains > .hand.gu {
+#match-state .player .gains > .hand.gu {
   width: 2px;
   background: #f55;
 }
 
-#match-state .gains > .hand.choki {
+#match-state .player .gains > .hand.choki {
   width: 4px;
   background: #ee2;
 }
 
-#match-state .gains > .hand.pa {
+#match-state .player .gains > .hand.pa {
   width: 5px;
   background: #66f;
 }
 
-#match-state .gains > .hand.draw {
+#match-state .player .gains > .hand.draw {
   width: 1px;
   background: #444;
+}
+
+
+#round-results {
+  margin-left: 330px;
 }
 
 #round-results .hands > div {

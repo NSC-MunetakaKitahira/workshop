@@ -23,7 +23,7 @@ async function startMatch() {
   clearTimeout(timer);
 
   let match = await fetchJson(
-    "match/onematch?rounds=300"
+    "match/onematch?rounds=3000"
     + "&player1="
     + $selectPlayer1.val()
     + "&player2="
@@ -38,6 +38,7 @@ async function startMatch() {
   let $player2Score = $player2.find(".score").empty();
   let $player1Gains = $player1.find(".gains").empty();
   let $player2Gains = $player2.find(".gains").empty();
+  let $resultsHands = $("#round-results .hands");
   let $player1Hands = $("#round-results .player1").empty();
   let $player2Hands = $("#round-results .player2").empty();
   let $drawHands = $("#round-results .draw").empty();
@@ -47,7 +48,12 @@ async function startMatch() {
   let rc = 0;
   let player1Score = 0;
   let player2Score = 0;
+
   function processRound() {
+
+    $player1Gains.scrollLeft(100000);
+    $player2Gains.scrollLeft(100000);
+    $resultsHands.scrollLeft(100000);
 
     let round = match.rounds[rc];
     if (round === undefined) {
@@ -84,7 +90,11 @@ async function startMatch() {
     }
 
     rc++;
-    timer = setTimeout(processRound, 50);
+    if (rc % 10 == 0) {
+    	timer = setTimeout(processRound, 0);
+    } else {
+    	processRound();
+    }
   }
   processRound();
 }
