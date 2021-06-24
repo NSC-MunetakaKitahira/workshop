@@ -9,10 +9,13 @@ public class mei implements JankenPlayer {
 
 	private Random random;
 
+
 	@Override
 	public void newGame() {
 		this.random = new Random();
+
 	}
+
 
 	@Override
 	public JankenHand nextHand(SubjectiveMatchStatus currentMatchStatus) {
@@ -20,7 +23,10 @@ public class mei implements JankenPlayer {
 		if(currentMatchStatus.round <= 200) {
 		if (currentMatchStatus.isFirstRound()) {
 			return JankenHand.CHOKI;
+
+
 		}
+
 
 		return currentMatchStatus.previousOpponentHand.handToWin();
 		}else {
