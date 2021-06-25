@@ -17,22 +17,21 @@
     </div>
 
     <div id="match-state">
-      <table>
-        <tr>
-          <td>Rounds:</td>
-          <td id="roundCount"></td>
-        </tr>
-        <tr id="player1">
-          <td class="player-name"></td>
-          <td class="score"></td>
-          <td class="hands"></td>
-        </tr>
-        <tr id="player2">
-          <td class="player-name"></td>
-          <td class="score"></td>
-          <td class="hands"></td>
-        </tr>
-      </table>
+      <div>
+        <span>Rounds:</span>
+        <span id="roundCount"></span>
+      </div>
+      <div id="player1" class="player">
+        <div class="player-name">?</div>
+        <div class="score">?</div>
+      </div>
+      <div id="player2" class="player">
+        <div class="player-name">?</div>
+        <div class="score">?</div>
+      </div>
+      <div id="view">
+        <canvas width="15000" height="400"></canvas>
+      </div>
     </div>
 
     <script src="main.js" charset="shif-jis"></script>

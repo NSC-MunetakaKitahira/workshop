@@ -1,8 +1,0 @@
-C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySamleGrammer\bin\Debug\IronySamleGrammer.dll
-C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySamleGrammer\bin\Debug\IronySamleGrammer.pdb
-C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySamleGrammer\bin\Debug\Irony.dll
-C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySamleGrammer\obj\Debug\IronySamleGrammer.csprojAssemblyReference.cache
-C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySamleGrammer\obj\Debug\IronySamleGrammer.csproj.CoreCompileInputs.cache
-C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySamleGrammer\obj\Debug\IronySamleGrammer.csproj.CopyComplete
-C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySamleGrammer\obj\Debug\IronySamleGrammer.dll
-C:\biz\Work\Dev\Lab\Exp\D3P\IronySample\IronySamleGrammer\obj\Debug\IronySamleGrammer.pdb

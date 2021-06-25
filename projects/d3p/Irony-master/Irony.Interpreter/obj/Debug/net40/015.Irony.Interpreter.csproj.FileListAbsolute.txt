@@ -1,9 +1,0 @@
-C:\biz\Work\Dev\Lab\Exp\D3P\Irony-master\Irony.Interpreter\bin\Debug\net40\Irony.Interpreter.dll
-C:\biz\Work\Dev\Lab\Exp\D3P\Irony-master\Irony.Interpreter\bin\Debug\net40\Irony.Interpreter.pdb
-C:\biz\Work\Dev\Lab\Exp\D3P\Irony-master\Irony.Interpreter\bin\Debug\net40\Irony.dll
-C:\biz\Work\Dev\Lab\Exp\D3P\Irony-master\Irony.Interpreter\bin\Debug\net40\Irony.pdb
-C:\biz\Work\Dev\Lab\Exp\D3P\Irony-master\Irony.Interpreter\obj\Debug\net40\015.Irony.Interpreter.csprojAssemblyReference.cache
-C:\biz\Work\Dev\Lab\Exp\D3P\Irony-master\Irony.Interpreter\obj\Debug\net40\015.Irony.Interpreter.csproj.CoreCompileInputs.cache
-C:\biz\Work\Dev\Lab\Exp\D3P\Irony-master\Irony.Interpreter\obj\Debug\net40\015.Irony.Interpreter.csproj.CopyComplete
-C:\biz\Work\Dev\Lab\Exp\D3P\Irony-master\Irony.Interpreter\obj\Debug\net40\Irony.Interpreter.dll
-C:\biz\Work\Dev\Lab\Exp\D3P\Irony-master\Irony.Interpreter\obj\Debug\net40\Irony.Interpreter.pdb

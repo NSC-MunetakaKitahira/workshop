@@ -2,7 +2,7 @@ body {
   background: #333;
   color: #ccc;
   font-size: 16pt;
-  width: 1600px;
+  width: 2000px;
 }
 
 #start-match {
@@ -20,41 +20,125 @@ body {
   font-family: "Arial Black";
 }
 
-#match-state .score {
-  width: 80px;
-  padding-right: 15px;
-  text-align: right;;
+#match-state .player > div {
+  display: inline-block;
 }
 
-#match-state .hands {
+#match-state .stack-container {
+  overflow-x: scroll;
+  width: 1200px;
+}
+
+#match-state .stack {
+  white-space: nowrap;
+}
+
+#match-state {
+  width: 100%;
+  position: relative;
+}
+
+#match-state .player > div {
+  overflow: hidden;
+  line-height: 150px;
+  font-size: 20pt;
+}
+
+#match-state .player .player-name {
+  width: 200px;
+}
+
+#match-state .player .score {
+  width: 100px;
+  padding-right: 15px;
+  text-align: right;
+}
+
+#match-state .player .gains, #match-state .hands {
   padding: 10px 0;
 }
 
-#match-state .hands > .hand {
+#match-state .player .gains > .hand, #round-results .hands .hand {
   display: inline-block;
-  height: 60px;
   overflow: hidden;
   margin: 0;
   color: transparent;
 }
 
-#match-state .hands > .hand.gu {
+#match-state .player .gains > .hand {
+  height: 60px;
+}
+
+#match-state .player .gains > .hand.gu {
   width: 2px;
   background: #f55;
 }
 
-#match-state .hands > .hand.choki {
+#match-state .player .gains > .hand.choki {
   width: 4px;
   background: #ee2;
 }
 
-#match-state .hands > .hand.pa {
+#match-state .player .gains > .hand.pa {
   width: 5px;
   background: #66f;
 }
 
-#match-state .hands > .hand.draw {
+#match-state .player .gains > .hand.draw {
   width: 1px;
   background: #444;
 }
 
+#view {
+  position: absolute;
+  top: 0px;
+  left: 330px;
+  width: 1700px;
+  overflow-x: scroll;
+}
+
+
+#round-results {
+  margin-left: 330px;
+}
+
+#round-results .hands > div {
+  line-height: 16px;
+}
+
+#round-results .hands > div.draw {
+  line-height: 12px;
+}
+
+#round-results .hands .hand {
+  width: 4px;
+  height: 10px;
+}
+
+#round-results .hands > div.draw .hand.draw {
+  height: 6px;
+}
+
+#round-results .hands .hand.gu.win {
+  background: #f55;
+}
+
+#round-results .hands .hand.choki.win {
+  background: #ee2;
+}
+
+#round-results .hands .hand.pa.win {
+  background: #66f;
+}
+
+#round-results .hands .hand.gu.draw {
+  background: #822;
+}
+
+#round-results .hands .hand.choki.draw {
+  background: #661;
+}
+
+#round-results .hands .hand.pa.draw {
+  background: #228;
+}
