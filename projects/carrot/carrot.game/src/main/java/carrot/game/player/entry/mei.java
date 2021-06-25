@@ -1,4 +1,4 @@
-package carrot.game.player.sample;
+package carrot.game.player.entry;
 
 import carrot.game.judge.JankenHand;
 import carrot.game.player.JankenPlayer;
