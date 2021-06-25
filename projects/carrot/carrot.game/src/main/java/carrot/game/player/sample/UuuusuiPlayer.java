@@ -71,8 +71,10 @@ public class UuuusuiPlayer implements JankenPlayer {
 		if (myChi % 90 == 0 && myChi > 0) {
 			superFeverTimeNow = true;
 		}
-		if(myGu>50 || myChi>50|| myPa>50) {
-
+		//真のfever time
+		if(feverTimeNow && myGu>50 || myChi>50|| myPa>50) {
+			feverTimeIsFifteenMinutes(currentMatchStatus);
+			feverTimeMinutes++;
 			int value = random.nextInt(99);
 			if (value < 60) {
 				return JankenHand.CHOKI;
