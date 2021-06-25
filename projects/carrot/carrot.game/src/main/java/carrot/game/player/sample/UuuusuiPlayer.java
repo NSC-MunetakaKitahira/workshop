@@ -10,6 +10,7 @@ public class UuuusuiPlayer implements JankenPlayer {
 
 	private boolean feverTimeNow = false;
 	private boolean superFeverTimeNow = false;
+	private boolean lastFeverNow = true;
 	int myGu;
 	int myChi;
 	int myPa;
@@ -17,12 +18,13 @@ public class UuuusuiPlayer implements JankenPlayer {
 	int yourGu;
 	int yourChi;
 	int yourPa;
-
 	int feverTimeMinutes;
+
 	private Random random;
+
 	@Override
 	public void newGame() {
-	this.random = new Random();
+		this.random = new Random();
 	}
 
 	@Override
@@ -40,6 +42,29 @@ public class UuuusuiPlayer implements JankenPlayer {
 				yourPa++;
 				break;
 			}
+		}
+		// 最後のfever time
+		if (currentMatchStatus.round > 1500 && lastFeverNow) {
+			lastFeverTimeIsFifteenMinutes(currentMatchStatus);
+			feverTimeMinutes++;
+			return JankenHand.PA;
+		}
+
+		// 真のfever time
+		if (feverTimeNow && myGu > 50 || myChi > 50 || myPa > 50) {
+			feverTimeIsFifteenMinutes(currentMatchStatus);
+			feverTimeMinutes++;
+			int value = random.nextInt(99);
+			if (value < 60) {
+				return JankenHand.CHOKI;
+			}
+			if (value >= 60 && value < 80) {
+				return JankenHand.PA;
+			}
+			if (value >= 90) {
+				return JankenHand.GU;
+			}
+			return JankenHand.CHOKI;
 		}
 		// fever time中の戦略
 		if (feverTimeNow) {
@@ -71,22 +96,7 @@ public class UuuusuiPlayer implements JankenPlayer {
 		if (myChi % 90 == 0 && myChi > 0) {
 			superFeverTimeNow = true;
 		}
-		//真のfever time
-		if(feverTimeNow && myGu>50 || myChi>50|| myPa>50) {
-			feverTimeIsFifteenMinutes(currentMatchStatus);
-			feverTimeMinutes++;
-			int value = random.nextInt(99);
-			if (value < 60) {
-				return JankenHand.CHOKI;
-			}
-			if (value >= 60 && value < 80) {
-				return JankenHand.PA;
-			}
-			if (value >= 90) {
-				return JankenHand.GU;
-			}
-			return JankenHand.CHOKI;
-		}
+
 		// 相手の得点が奇数の時の戦略
 		if (currentMatchStatus.opponentScore % 2 == 1) {
 
@@ -151,10 +161,20 @@ public class UuuusuiPlayer implements JankenPlayer {
 		if (feverTimeMinutes == 14) {
 			feverTimeNow = false;
 			superFeverTimeNow = false;
+
+			feverTimeMinutes = -1;
+		}
+
+	}
+
+	// fever timeが15分経過したら終了させ、カウントをリセット
+	public void lastFeverTimeIsFifteenMinutes(SubjectiveMatchStatus currentMatchStatus) {
+		if (feverTimeMinutes == 14) {
+			lastFeverNow = false;
+
 			feverTimeMinutes = -1;
 
 		}
 
 	}
-
 }
