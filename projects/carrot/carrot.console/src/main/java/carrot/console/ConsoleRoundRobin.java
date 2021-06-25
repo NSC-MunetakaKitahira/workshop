@@ -8,9 +8,9 @@ import carrot.game.competition.roundrobin.WinPoints;
 import carrot.game.match.JankenMatch;
 import carrot.game.match.JankenMatchResult;
 import carrot.game.player.JankenPlayer;
-import carrot.game.player.sample.AlwaysPaPlayer;
-import carrot.game.player.sample.CountingPlayer;
-import carrot.game.player.sample.PreviousHandPlayer;
+//import carrot.game.player.sample.AlwaysPaPlayer;
+//import carrot.game.player.sample.CountingPlayer;
+//import carrot.game.player.sample.PreviousHandPlayer;
 
 /**
  * 総当たり戦をコンソールに出力
@@ -31,9 +31,9 @@ public class ConsoleRoundRobin {
 	private static List<JankenPlayer> getPlayers() {
 		
 		return Arrays.asList(
-				new AlwaysPaPlayer(),
-				new CountingPlayer(),
-				new PreviousHandPlayer()
+//				new AlwaysPaPlayer(),
+//				new CountingPlayer(),
+//				new PreviousHandPlayer()
 				);
 		
 	}
