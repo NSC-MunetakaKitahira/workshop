@@ -3,6 +3,7 @@ package carrot.game.player;
 import static java.util.stream.Collectors.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ public class Players {
 	private static final List<JankenPlayer> ALL = new Reflections("carrot")
 			.getSubTypesOf(JankenPlayer.class)
 			.stream()
+			.sorted(Comparator.comparing(c -> c.getName()))
 			.map(c -> create(c))
 			.collect(toList());
 	
