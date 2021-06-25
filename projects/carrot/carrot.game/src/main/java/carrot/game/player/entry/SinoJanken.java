@@ -1,4 +1,4 @@
-package carrot.game.player.sample;
+package carrot.game.player.entry;
 
 import java.util.HashMap;
 import java.util.Map;
