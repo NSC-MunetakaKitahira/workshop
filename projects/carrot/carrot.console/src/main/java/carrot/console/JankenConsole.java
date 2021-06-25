@@ -1,7 +1,7 @@
 package carrot.console;
 
-import carrot.game.player.sample.PreviousHandPlayer;
-import carrot.game.player.sample.RandomPlayer;
+//import carrot.game.player.sample.PreviousHandPlayer;
+//import carrot.game.player.sample.RandomPlayer;
 
 public class JankenConsole {
 
@@ -16,9 +16,9 @@ public class JankenConsole {
 		int numberOfRounds = 300;
 		
 		// 一対一の１マッチ限り
-		ConsoleOneMatch.start(
-				numberOfRounds,
-				new PreviousHandPlayer(),
-				new RandomPlayer());
+//		ConsoleOneMatch.start(
+//				numberOfRounds,
+//				new PreviousHandPlayer(),
+//				new RandomPlayer());
 	}
 }
