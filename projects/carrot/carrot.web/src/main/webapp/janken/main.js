@@ -51,10 +51,10 @@ async function startMatch() {
 
   function viewRoundHand(player, round, hand) {
     let w = 2;
-    let h = 8;
-    let y1 = 167;
-    let y2 = y1 + h * 4;
-    let yDraw = y1 + h * 2;
+    let h = 20;
+    let y1 = 300;
+    let y2 = y1 + h * 3;
+    let yDraw = y1 + h * 1.5;
 
     let x = w * round;
     let y = (player === "draw") ? yDraw : ((player === 1) ? y1 : y2);
@@ -78,9 +78,9 @@ async function startMatch() {
 
   function viewGains(player, currentScore, gain) {
 
-    let h = 40;
-    let y1 = 85;
-    let y2 = y1 + 163;
+    let h = 100;
+    let y1 = 140;
+    let y2 = y1 + 310;
 
     let w = gain;
     let x = currentScore;

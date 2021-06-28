@@ -40,7 +40,7 @@ body {
 
 #match-state .player > div {
   overflow: hidden;
-  line-height: 150px;
+  line-height: 300px;
   font-size: 20pt;
 }
 
@@ -65,29 +65,6 @@ body {
   color: transparent;
 }
 
-#match-state .player .gains > .hand {
-  height: 60px;
-}
-
-#match-state .player .gains > .hand.gu {
-  width: 2px;
-  background: #f55;
-}
-
-#match-state .player .gains > .hand.choki {
-  width: 4px;
-  background: #ee2;
-}
-
-#match-state .player .gains > .hand.pa {
-  width: 5px;
-  background: #66f;
-}
-
-#match-state .player .gains > .hand.draw {
-  width: 1px;
-  background: #444;
-}
 
 #view {
   position: absolute;
@@ -113,32 +90,4 @@ body {
 #round-results .hands .hand {
   width: 4px;
   height: 10px;
-}
-
-#round-results .hands > div.draw .hand.draw {
-  height: 6px;
-}
-
-#round-results .hands .hand.gu.win {
-  background: #f55;
-}
-
-#round-results .hands .hand.choki.win {
-  background: #ee2;
-}
-
-#round-results .hands .hand.pa.win {
-  background: #66f;
-}
-
-#round-results .hands .hand.gu.draw {
-  background: #822;
-}
-
-#round-results .hands .hand.choki.draw {
-  background: #661;
-}
-
-#round-results .hands .hand.pa.draw {
-  background: #228;
 }
